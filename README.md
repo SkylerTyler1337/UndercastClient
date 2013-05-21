@@ -63,6 +63,6 @@ __How to contribute__
 * Clone the repo. 
 * Make your code changes
     * Please use normal java coding conventions
-* Make a pull request
+* Make a pull request to one branch (if we pull the changes and they apply for both version we'll translate them)
 
 
