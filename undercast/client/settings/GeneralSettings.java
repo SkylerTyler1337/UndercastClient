@@ -9,6 +9,7 @@ import net.minecraft.src.mod_Undercast;
 import org.lwjgl.input.Keyboard;
 public class GeneralSettings extends GuiScreen {
 
+    public GuiScreen parentScreen;
     // Toggle settings
     public String[] toggleSettings = new String[]{ "showGuiChat", "showGuiMulti", "toggleTitleScreenButton", "filterTips", "matchOnServerJoin", "enableButtonTooltips"};
     public String[] enabledStrings = new String[]{ "Chat gui shown", "Overcast Button shown", "Death screen cleared", "Tips filtered", "/match on server join", "Button tooltips shown"};
@@ -27,6 +28,12 @@ public class GeneralSettings extends GuiScreen {
     // Allowed chars
     public String allowedChars = "0123456789-\b";
 
+    public GeneralSettings(GuiScreen gs) {
+        super();
+        parentScreen = gs;
+    }
+
+    
     @Override
     public void initGui() {
         // Positioning
@@ -142,7 +149,7 @@ public class GeneralSettings extends GuiScreen {
             mod_Undercast.CONFIG.x = x;
             mod_Undercast.CONFIG.setProperty("Y", y);
             mod_Undercast.CONFIG.y = y;
-            ModLoader.openGUI(mc.thePlayer, new SettingsGUI());
+            ModLoader.openGUI(mc.thePlayer, parentScreen);
         }
 
         //Handle +/-

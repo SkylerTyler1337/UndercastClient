@@ -7,9 +7,16 @@ import net.minecraft.src.GuiScreen;
 import net.minecraft.src.ModLoader;
 
 public class AchievementSettings extends GuiScreen {
+    public GuiScreen parentScreen;
     public String[] toggleSettings = new String[]{"showAchievements", "showDeathAchievements", "showKillAchievements", "showFirstBloodAchievement", "showLastKillAchievement"};
     public String[] enabledStrings = new String[]{ "Enabled Achievements shown", "Death Achievements shown", "Kill Achievements shown", "First Blood shown", "Last Kill shown"};
     public String[] disabledStrings = new String[]{ "No Achievements shown", "No Death Achievements", "No Kill Achievements", "No First Blood Achievement", "No Last Kill Achievement"};
+
+    public AchievementSettings(GuiScreen gs) {
+        super();
+        parentScreen = gs;
+    }
+
     @Override
     public void initGui() {
         // Add buttons          
@@ -53,7 +60,7 @@ public void drawScreen(int par1, int par2, float par3) {
             SettingsToggleButton button = (SettingsToggleButton) guibutton;
             button.buttonPressed();
         } else {
-            ModLoader.openGUI(mc.thePlayer, new SettingsGUI());
+            ModLoader.openGUI(mc.thePlayer, parentScreen);
         }
     }
 

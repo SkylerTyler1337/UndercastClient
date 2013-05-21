@@ -7,6 +7,8 @@ package net.minecraft.src;
 import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -24,6 +26,7 @@ import undercast.client.achievements.UndercastKillsHandler;
 import undercast.client.controls.UndercastControls;
 import undercast.client.server.UndercastServerGUI;
 import undercast.client.settings.SettingsGUI;
+import undercast.client.settings.UndercastGuiConfigButton;
 import undercast.client.update.UndercastUpdaterThread;
 
 public class mod_Undercast extends BaseMod {
@@ -39,6 +42,7 @@ public class mod_Undercast extends BaseMod {
     private PlayTimeCounterThread playTimeCounter;
     private UndercastKillsHandler achievementHandler;
     private int buttonListSize;
+    private Integer buttonListSizeOfGuiOptions;
 
     @Override
     public String getVersion() {
@@ -265,6 +269,17 @@ public class mod_Undercast extends BaseMod {
         if(UndercastData.isOC && screen instanceof GuiMainMenu) {
             clientDisconnect(null);
         }
+        if(screen instanceof GuiOptions) {
+            List customButtonList = new ArrayList();
+            customButtonList = screen.buttonList;
+            if (this.buttonListSizeOfGuiOptions == null) {
+                this.buttonListSizeOfGuiOptions = customButtonList.size();
+            }
+            if (customButtonList.size() == this.buttonListSizeOfGuiOptions) {
+                customButtonList.add(new UndercastGuiConfigButton(301, screen.width / 2 + 5, screen.height / 6 + 60, 150, 20, "Undercast config", screen));
+            }
+            screen.buttonList = customButtonList;
+        }
         return true;
     }
 
@@ -357,7 +372,7 @@ public class mod_Undercast extends BaseMod {
                     mc.sndManager.playSoundFX("random.click", 0.5F, 1.0F);
                 }
             } else if (keybinding == UndercastData.keybind4) {
-                ModLoader.openGUI(mc.thePlayer, new SettingsGUI());
+                ModLoader.openGUI(mc.thePlayer, new SettingsGUI(null));
             }
         }
     }

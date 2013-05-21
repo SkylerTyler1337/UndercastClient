@@ -8,6 +8,12 @@ import net.minecraft.src.mod_Undercast;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 public class SettingsGUI extends GuiScreen {
+    public GuiScreen parentScreen;
+    
+    public SettingsGUI(GuiScreen gs) {
+        super();
+        parentScreen = gs;
+    }
     @Override
     public void initGui() {
         // Add buttons		
@@ -41,16 +47,16 @@ public class SettingsGUI extends GuiScreen {
     @Override
     protected void actionPerformed(GuiButton guibutton) {
         if (guibutton.id == 1) {
-            ModLoader.openGUI(mc.thePlayer, new OverlaySettings());
+            ModLoader.openGUI(mc.thePlayer, new OverlaySettings(this));
         }
         if (guibutton.id == 2) {
-            ModLoader.openGUI(mc.thePlayer, new GeneralSettings());
+            ModLoader.openGUI(mc.thePlayer, new GeneralSettings(this));
         }
         if (guibutton.id == 3) {
-            ModLoader.openGUI(mc.thePlayer, new AchievementSettings());
+            ModLoader.openGUI(mc.thePlayer, new AchievementSettings(this));
         }
         if (guibutton.id == 4) {
-            mc.displayGuiScreen(null);
+            mc.displayGuiScreen(parentScreen);
         }
     }
 
