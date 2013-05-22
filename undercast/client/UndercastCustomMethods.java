@@ -134,7 +134,7 @@ public class UndercastCustomMethods {
                 if(UndercastData.matchTimeSec < 10) {
                     return "Match Time: \u00A7E" + UndercastData.matchTimeMin + ":0" + UndercastData.matchTimeSec;
                 } else {
-                    return "Playing Time: \u00A7E" + UndercastData.matchTimeMin + ":" + UndercastData.matchTimeSec;
+                    return "Match Time: \u00A7E" + UndercastData.matchTimeMin + ":" + UndercastData.matchTimeSec;
                 }
             } else {
                 if(UndercastData.matchTimeMin < 10) {
