@@ -219,8 +219,8 @@ public class UndercastGuiAchievement extends GuiAchievement {
                     GL11.glPushMatrix(); // New GL11 matrix to not affect other part of the gui
                     try {
                       //Loading the buffer as a readable image and set it as GL11 texture
-                        //100 is a unique id, and both 16 are for the size of the image
-                        this.imgLoader.setupTexture(this.killerBuffer, 100, 16, 16);
+                        //222 is a unique id, and both 16 are for the size of the image
+                        this.imgLoader.setupTexture(this.killerBuffer, 222, 16, 16);
                     } catch (NullPointerException e) {
                         e.printStackTrace();
                     }
