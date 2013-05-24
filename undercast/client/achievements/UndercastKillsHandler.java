@@ -30,7 +30,11 @@ public class UndercastKillsHandler {
     public void handleMessage(String message, String username, EntityPlayer player) {
         //When you die from someone
         if (UndercastConfig.showDeathAchievements && message.startsWith(username)&& !message.toLowerCase().contains(" the game ") && !message.toLowerCase().endsWith(" team") && (message.contains(" by ") || message.contains(" took ") || message.contains("fury of"))) {
-            killer = message.substring(message.indexOf("by") + 3, message.lastIndexOf("'s") == -1 ? message.length() : message.lastIndexOf("'s"));
+            if (!message.contains("fury of")) {
+                killer = message.substring(message.indexOf("by") + 3, message.lastIndexOf("'s") == -1 ? message.length() : message.lastIndexOf("'s"));
+            } else {
+                killer = message.substring(message.indexOf("fury of ") + 8).split("'s")[0];
+            }
             killOrKilled = false;
             this.printAchievement();
         } //if you kill a person
