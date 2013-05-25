@@ -106,7 +106,6 @@ class Parser extends HTMLEditorKit.ParserCallback {
             // Write the data
             mapData[mapCount][count-1] = ServerStatusHTMLParser.stripLastSpace(new String(data).replace("Now: ", ""));
             mapData[mapCount][4] = gametype;
-            System.out.println(gametype);
             count++;
         }
         if (inP)
