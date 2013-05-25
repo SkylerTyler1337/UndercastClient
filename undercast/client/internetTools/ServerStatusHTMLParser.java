@@ -19,7 +19,7 @@ import javax.swing.text.html.parser.ParserDelegator;
  * a class which will try parse the given html to get the current map, name, players and next map.
  * Returns: A String[][] with as first value the server (0 = alpha, 11 = nostalgia)
  * and as second value the thing you want.
- * 0 = Name, 1 = Players, 2 = Now playing map, 3 = Next map
+ * 0 = Name, 1 = Players, 2 = Now playing map, 3 = Next map, 4 = Gametype
  * So, data[0][2] will give the now playing map on Alpha and
  *     data[11][1] will give the players on Nostalgia
  */
@@ -65,12 +65,16 @@ public class ServerStatusHTMLParser {
 class Parser extends HTMLEditorKit.ParserCallback {
     // Currently in a h4 tag?
     private boolean inTD = false;
+    //Currently in a p tag?
+    private boolean inP = false;
     // The number of attributes already gotten (such as name, players, map)
     private int count = 0;
     // # of map currently parsing
     private int mapCount = -1;
     // Data
-    public String[][] mapData = new String[30][4];
+    public String[][] mapData = new String[30][5];
+    //The current gametype
+    public String gametype;
 
     // Function called when a tag (<tagName>) is opened
     public void handleStartTag(HTML.Tag t, MutableAttributeSet a, int pos) {
@@ -80,6 +84,9 @@ class Parser extends HTMLEditorKit.ParserCallback {
             count = 1;
             mapCount++;
         }
+        if(t.equals(HTML.Tag.P)) {
+            inP = true;
+        }
     }
 
     public void handleEndTag(HTML.Tag t, int pos) {
@@ -88,6 +95,8 @@ class Parser extends HTMLEditorKit.ParserCallback {
             inTD = false;
             count = 0;
         }
+        if(t.equals(HTML.Tag.P))
+            inP = false;
     }
 
     public void handleText(char[] data, int pos) {
@@ -96,8 +105,12 @@ class Parser extends HTMLEditorKit.ParserCallback {
         {
             // Write the data
             mapData[mapCount][count-1] = ServerStatusHTMLParser.stripLastSpace(new String(data).replace("Now: ", ""));
+            mapData[mapCount][4] = gametype;
+            System.out.println(gametype);
             count++;
         }
+        if (inP)
+            gametype = new String(data);
     }
 }
 class NextParser extends HTMLEditorKit.ParserCallback {
