@@ -42,7 +42,7 @@ public class UndercastChatHandler {
             message = message.replace("Now playing ", "");
             UndercastData.setMap((message.split(" by ")[0]));
             if(UndercastData.getKills() == 0 && UndercastData.getDeaths() == 0) { // new match or observer or noob
-                UndercastData.reload();
+                UndercastData.reload(false);
             }
         }
         //if you die

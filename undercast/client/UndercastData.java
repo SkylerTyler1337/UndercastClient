@@ -4,6 +4,7 @@ package undercast.client;
 //You may not claim this to be your own
 //You may not remove these comments
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.src.KeyBinding;
 import org.lwjgl.input.Keyboard;
 
@@ -115,7 +116,9 @@ public class UndercastData {
                     }
                     serverInformation[c].currentMap = mapData[c][2];
                     serverInformation[c].nextMap = mapData[c][3];
-                    serverInformation[c].matchState = MatchState.Started; //API support
+                    if(serverInformation[c].matchState == null) {
+                        serverInformation[c].matchState = MatchState.Unknown;
+                    }
                     try {
                     serverInformation[c].type = ServerType.valueOf(mapData[c][4].replace(" ", ""));
                     } catch (Exception e) {
@@ -144,7 +147,7 @@ public class UndercastData {
         }
     }
 
-    public static void reload() {
+    public static void reload(boolean getMatchState) {
         map = "Loading...";
         nextMap = "Loading...";
 
@@ -153,6 +156,10 @@ public class UndercastData {
         } catch(Exception e) {
             System.out.println("[UndercastMod]: Failed to load maps");
             System.out.println("[UndercastMod]: ERROR: " + e.toString());
+        }
+        
+        if(isOC && getMatchState) {
+            Minecraft.getMinecraft().thePlayer.sendChatMessage("/servers");
         }
         mapLoaderFinished = false;
     }
@@ -262,7 +269,7 @@ public class UndercastData {
 
     public static void setServer(String servers) {
         server = servers;
-        reload();
+        reload(false);
     }
 
     public static String getServer() {

@@ -25,6 +25,7 @@ import undercast.client.UndercastData.Teams;
 import undercast.client.UndercastMenuButton;
 import undercast.client.achievements.UndercastKillsHandler;
 import undercast.client.controls.UndercastControls;
+import undercast.client.internetTools.ServersCommandParser;
 import undercast.client.server.UndercastServerGUI;
 import undercast.client.settings.SettingsGUI;
 import undercast.client.settings.UndercastGuiConfigButton;
@@ -117,6 +118,7 @@ public class mod_Undercast extends BaseMod {
             // stop global msg to go through
             if(!message.startsWith("<") && UndercastData.isOC) {
                 new UndercastChatHandler(message, username, player);
+                ServersCommandParser.handleChatMessage(message, var1);
                 if(CONFIG.showAchievements) {
                     achievementHandler.handleMessage(message, username, player);
                 }

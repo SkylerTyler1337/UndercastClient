@@ -77,7 +77,7 @@ class UndercastServerInfoSlotGui extends UndercastServerSlotGui {
         case Waiting:
             return 0x000000; // white
         default:
-            return 0xFFFF00; // yellow
+            return 0xF87431; // Sienna1 = orange
         }
     }
 }
