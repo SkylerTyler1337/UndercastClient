@@ -145,7 +145,6 @@ public class UndercastChatHandler {
             }
         // start and sync the match timer
         } else if(message.toLowerCase().contains("time:") || message.toLowerCase().contains("score:") || message.toLowerCase().contains("time remaining: ")) {
-             System.out.println(message);
             String time = "-2:-2";
             String messageToReplace;
             // stop the timer
@@ -179,10 +178,8 @@ public class UndercastChatHandler {
             UndercastData.matchTimer = new MatchTimer();
         } else if(message.startsWith("Current class:")) {
             UndercastData.currentGSClass = message.replace("Current class: ", "");
-            System.out.println(UndercastData.currentGSClass);
         } else if(message.startsWith("You have selected")){
             UndercastData.currentGSClass = message.replace("You have selected ", "");
-            System.out.println(UndercastData.currentGSClass);
         }
     }
 }
