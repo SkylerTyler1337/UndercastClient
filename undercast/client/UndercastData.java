@@ -10,6 +10,7 @@ import org.lwjgl.input.Keyboard;
 
 import undercast.client.internetTools.InformationLoaderThread;
 import undercast.client.internetTools.ServerStatusHTMLParser;
+import undercast.client.internetTools.ServersCommandParser;
 import undercast.client.server.UndercastServer;
 
 import java.net.URL;
@@ -159,6 +160,7 @@ public class UndercastData {
         }
         
         if(isOC && getMatchState) {
+            ServersCommandParser.castedByMod = true;
             Minecraft.getMinecraft().thePlayer.sendChatMessage("/servers");
         }
         mapLoaderFinished = false;
