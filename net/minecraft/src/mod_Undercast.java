@@ -150,9 +150,10 @@ public class mod_Undercast extends BaseMod {
         String fps = mc.debug.split(",")[0];
         int height = CONFIG.x;
         int width = CONFIG.y;
+        boolean isInGameGuiEmpty = !this.mc.gameSettings.showDebugInfo && !this.mc.gameSettings.keyBindPlayerList.pressed;
         //if the gui is enabled display
         //if chat is open and config says yes then show gui
-        if (UndercastData.guiShowing && (mc.inGameHasFocus || CONFIG.showGuiChat && mc.currentScreen instanceof GuiChat)) {
+        if (UndercastData.guiShowing && (mc.inGameHasFocus || CONFIG.showGuiChat && mc.currentScreen instanceof GuiChat) && isInGameGuiEmpty) {
             //show fps
             if (CONFIG.showFPS) {
                 mc.fontRenderer.drawStringWithShadow(fps, width, height, 0xffff);
@@ -161,7 +162,7 @@ public class mod_Undercast extends BaseMod {
         }
         //if on Ares server then display this info.
         //if chat is open and config says yes then show gui
-        if (UndercastData.isPlayingOvercast() && UndercastData.guiShowing && (mc.inGameHasFocus || CONFIG.showGuiChat && mc.currentScreen instanceof GuiChat)) {
+        if (UndercastData.isPlayingOvercast() && UndercastData.guiShowing && (mc.inGameHasFocus || CONFIG.showGuiChat && mc.currentScreen instanceof GuiChat) && isInGameGuiEmpty) {
             // Server display
             if (CONFIG.showServer) {
                 mc.fontRenderer.drawStringWithShadow("Server: \u00A76" + UndercastData.getServer(), width, height, 16777215);
@@ -255,7 +256,7 @@ public class mod_Undercast extends BaseMod {
         }
         
         //gui display for obs if you have brightness
-        if(UndercastData.isPlayingOvercast() && UndercastData.guiShowing && (mc.inGameHasFocus || CONFIG.showGuiChat && mc.currentScreen instanceof GuiChat)){
+        if(UndercastData.isPlayingOvercast() && UndercastData.guiShowing && (mc.inGameHasFocus || CONFIG.showGuiChat && mc.currentScreen instanceof GuiChat) && isInGameGuiEmpty){
             if(brightActive && CONFIG.fullBright && (UndercastData.team == Teams.Observers || UndercastData.isGameOver)){
                 mc.fontRenderer.drawStringWithShadow("Full Bright: \u00A72ON", width, height, 16777215);
                  height += 8;
