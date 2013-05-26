@@ -29,7 +29,7 @@ public class UndercastKillsHandler {
 
     public void handleMessage(String message, String username, EntityPlayer player) {
         //When you die from someone
-        if (UndercastConfig.showDeathAchievements && message.startsWith(username)&& !message.toLowerCase().contains(" the game ") && !message.toLowerCase().endsWith(" team") && (message.contains(" by ") || message.contains(" took ") || message.contains("fury of"))) {
+        if (UndercastConfig.showDeathAchievements && message.startsWith(username) && !message.toLowerCase().endsWith(" team") && (message.contains(" by ") || message.contains(" took ") || message.contains("fury of"))) {
             if (!message.contains("fury of") && !message.contains("took ")) {
                 killer = message.substring(message.indexOf("by") + 3, message.lastIndexOf("'s") == -1 ? message.length() : message.lastIndexOf("'s"));
             } else if (message.contains("fury of")) {
@@ -52,7 +52,7 @@ public class UndercastKillsHandler {
                 UndercastData.isNextKillFirstBlood = false;
             }
         } //when you die, but nobody killed you.
-        else if (UndercastConfig.showDeathAchievements && message.startsWith(username) && !message.toLowerCase().endsWith(" team")) {
+        else if (UndercastConfig.showDeathAchievements && message.startsWith(username) && !message.toLowerCase().endsWith(" team") && !message.toLowerCase().contains(" the game")) {
             killer = username;
             killOrKilled = false;
             this.printAchievement();
