@@ -20,6 +20,7 @@ import undercast.client.UndercastChatHandler;
 import undercast.client.UndercastConfig;
 import undercast.client.UndercastCustomMethods;
 import undercast.client.UndercastData;
+import undercast.client.UndercastData.ServerType;
 import undercast.client.UndercastData.Teams;
 import undercast.client.UndercastMenuButton;
 import undercast.client.achievements.UndercastKillsHandler;
@@ -170,6 +171,11 @@ public class mod_Undercast extends BaseMod {
             // Team display (based on color)
             if (CONFIG.showTeam && !UndercastData.isLobby) {
                 mc.fontRenderer.drawStringWithShadow("Team: " + UndercastData.getTeam(), width, height, getTeamColors());
+                height += 8;
+            }
+         // Class display (Ghost Squadron only)
+            if (CONFIG.showGSClass && UndercastData.currentServerType == ServerType.GhostSquadron) {
+                mc.fontRenderer.drawStringWithShadow("Class: " + UndercastData.currentGSClass, width, height, 2446535);
                 height += 8;
             }
             // Friend display:

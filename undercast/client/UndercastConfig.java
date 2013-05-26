@@ -15,7 +15,7 @@ public class UndercastConfig {
     private static final String FILE_NAME = "UndercastMod.cfg";
     
     // update this value to change the config version.
-    private static int version = 6;
+    private static int version = 7;
 
     // main variables
     public static boolean showFPS;
@@ -35,6 +35,7 @@ public class UndercastConfig {
     public static boolean showPlayingTime;
     public static boolean showMatchTime;
     public static boolean showMatchTimeSeconds;
+    public static boolean showGSClass;
     public static int x;
     public static int y;
     public static boolean toggleTitleScreenButton;
@@ -75,6 +76,7 @@ public class UndercastConfig {
         defaults.setProperty("showPlayingTime", "false");
         defaults.setProperty("showMatchTime", "true");
         defaults.setProperty("showMatchTimeSeconds", "true");
+        defaults.setProperty("showGSClass", "true");
         defaults.setProperty("X", "2");
         defaults.setProperty("Y", "2");
         defaults.setProperty("toggleTitleScreenButton", "true");
@@ -152,6 +154,7 @@ public class UndercastConfig {
             config.setProperty("showPlayingTime", "false");
             config.setProperty("showMatchTime", "true");
             config.setProperty("showMatchTimeSeconds", "true");
+            config.setProperty("showGSClass", "true");
             config.setProperty("X", "2");
             config.setProperty("Y", "2");
             config.setProperty("toggleTitleScreenButton", "true");
@@ -194,6 +197,7 @@ public class UndercastConfig {
         showPlayingTime = this.getBoolProperty("showPlayingTime");
         showMatchTime = this.getBoolProperty("showMatchTime");
         showMatchTimeSeconds = this.getBoolProperty("showMatchTimeSeconds");
+        showGSClass = this.getBoolProperty("showGSClass");
         x = this.getIntProperty("X");
         y = this.getIntProperty("Y");
         toggleTitleScreenButton = this.getBoolProperty("toggleTitleScreenButton");
@@ -336,6 +340,10 @@ public class UndercastConfig {
                     config.setProperty("showMatchTimeSeconds", "true");
                 }
             case 6:
+                if(showGSClass == true) {
+                    config.setProperty("showGSClass", "true");
+                }
+            case 7:
                 // for the next version.
             }
             config.setProperty("configVersion", ""+version);

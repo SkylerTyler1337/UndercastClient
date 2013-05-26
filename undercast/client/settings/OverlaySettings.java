@@ -1,23 +1,28 @@
 package undercast.client.settings;
 
 import java.io.IOException;
+
+import net.minecraft.client.Minecraft;
 import net.minecraft.src.GuiButton;
 import net.minecraft.src.GuiScreen;
 import net.minecraft.src.ModLoader;
 import net.minecraft.src.mod_Undercast;
 
 import org.lwjgl.input.Keyboard;
+
+import undercast.client.UndercastData;
+import undercast.client.UndercastData.ServerType;
 public class OverlaySettings extends GuiScreen {
     
     public int pageIndex = 0;
     public int buttonPerPage = 14;
     GuiScreen parentScreen;
     public String[] toggleSettings = new String[]{ "showFPS", "showKills", "showDeaths", "showKilled", "showServer", "showTeam", "showKD", "showKK", "showFriends", "showMap",
-            "showNextMap", "showStreak", "showPlayingTime", "fullBright", "showMatchTime", "showMatchTimeSeconds"};
+            "showNextMap", "showStreak", "showPlayingTime", "fullBright", "showMatchTime", "showMatchTimeSeconds", "showGSClass"};
     public String[] enabledStrings = new String[]{ "FPS Shown", "Kills shown", "Deaths shown", "Killed shown", "Server shown", "Team shown", "KD Shown", "KK Shown", "Friends shown", "Current map shown",
-            "Next map shown", "Killstreak shown", "Playing time shown", "Full bright enabled", "Match Time shown", "Match time seconds shown"};
+            "Next map shown", "Killstreak shown", "Playing time shown", "Full bright enabled", "Match Time shown", "Match time seconds shown", "Ghost Squadron class shown"};
     public String[] disabledStrings = new String[]{ "FPS Hidden", "Kills hidden", "Deaths hidden", "Killed hidden", "Server hidden", "Team hidden", "KD Hidden", "KK Hidden", "Friends hidden", "Current map hidden",
-            "Next map hidden", "Killstreak hidden", "Playing time hidden", "Full bright disabled", "Match time hidden", "Match time seconds hidden"};
+            "Next map hidden", "Killstreak hidden", "Playing time hidden", "Full bright disabled", "Match time hidden", "Match time seconds hidden", "Ghost Squadron class hidden"};
 
     public OverlaySettings(GuiScreen gs) {
         super();
@@ -69,6 +74,9 @@ public void drawScreen(int par1, int par2, float par3) {
     @Override
     protected void keyTyped(char par1, int par2) {
         if (par2 == Keyboard.KEY_ESCAPE) {
+            if(mod_Undercast.CONFIG.showGSClass && UndercastData.currentGSClass.equals("Unknown") && UndercastData.currentServerType == ServerType.GhostSquadron) {
+                Minecraft.getMinecraft().thePlayer.sendChatMessage("/class");
+            }
             mc.displayGuiScreen(null);
             return;
         }
@@ -89,6 +97,9 @@ public void drawScreen(int par1, int par2, float par3) {
             this.buttonList.clear();
             this.initGui();
         } else {
+            if(mod_Undercast.CONFIG.showGSClass && UndercastData.currentGSClass.equals("Unknown") && UndercastData.currentServerType == ServerType.GhostSquadron) {
+                Minecraft.getMinecraft().thePlayer.sendChatMessage("/class");
+            }
             ModLoader.openGUI(mc.thePlayer, parentScreen);
         }
     }

@@ -21,6 +21,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import undercast.client.UndercastData.MatchState;
+import undercast.client.UndercastData.ServerType;
 
 public class UndercastCustomMethods {
     private static Minecraft mc = Minecraft.getMinecraft();
@@ -99,6 +100,19 @@ public class UndercastCustomMethods {
         UndercastData.matchTimeHours = 0;
         UndercastData.matchTimeMin = 0;
         UndercastData.matchTimeSec = 0;
+        
+        // in order to prevent spam /class is not executed if
+        // the display is disabled.
+        if(mod_Undercast.CONFIG.showGSClass) {
+            //get the server type for the new server (does not need to wait for an update)
+            for(int c = 0; c < UndercastData.serverInformation.length; c++) {
+                if(UndercastData.server.equals(UndercastData.serverInformation[c].name)) {
+                    if(UndercastData.serverInformation[c].type == ServerType.GhostSquadron) {
+                        Minecraft.getMinecraft().thePlayer.sendChatMessage("/class");
+                    }
+                }
+            }
+        }
     }
 
     /**
