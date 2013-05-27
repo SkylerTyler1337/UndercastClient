@@ -117,7 +117,7 @@ public class UndercastData {
                     }
                     serverInformation[c].currentMap = mapData[c][2];
                     serverInformation[c].nextMap = mapData[c][3];
-                    if(serverInformation[c].matchState == null) {
+                    if(serverInformation[c].matchState == null || !isOC) {
                         serverInformation[c].matchState = MatchState.Unknown;
                     }
                     try {
@@ -160,8 +160,8 @@ public class UndercastData {
         }
         
         if(isOC && getMatchState) {
-            ServersCommandParser.castedByMod = true;
-            Minecraft.getMinecraft().thePlayer.sendChatMessage("/servers");
+            ServersCommandParser.castByMod();
+            Minecraft.getMinecraft().thePlayer.sendChatMessage("/servers 1");
         }
         mapLoaderFinished = false;
     }
