@@ -100,12 +100,12 @@ public class ServersCommandParser {
             } catch (Exception e) {
                 pages = 3;
             }
-            // get the other pages
-            for(int i = 2; i <= pages; i++) {
-                                Minecraft.getMinecraft().thePlayer.sendChatMessage("/servers " + i);
-            }
 
             if(castedByMod) {
+                // get the other pages
+                for(int i = 2; i <= pages; i++) {
+                                    Minecraft.getMinecraft().thePlayer.sendChatMessage("/servers " + i);
+                }
                 try {
                     List chatLines;
                     // get the lines
@@ -125,7 +125,7 @@ public class ServersCommandParser {
                 isListening = true;
             }
         }
-}
+    }
 
     public static void castByMod() {
         if(!isListening) {
