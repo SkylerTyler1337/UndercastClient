@@ -22,6 +22,7 @@ import java.util.Comparator;
 
 import undercast.client.UndercastData.MatchState;
 import undercast.client.UndercastData.ServerType;
+import undercast.client.server.UndercastServer;
 
 public class UndercastCustomMethods {
     private static Minecraft mc = Minecraft.getMinecraft();
@@ -185,7 +186,7 @@ public class UndercastCustomMethods {
     /**
      * Sorts UndercastData.sortedServerInformation using the UndercastData.sortindex
      */
-    public static void sortServers() {
+    public static void sortAndFilterServers() {
         // if the index is moving to web then use the downloaded server list
       if(UndercastData.sortNames[UndercastData.sortIndex].equalsIgnoreCase("web")){
           // just keep the order
@@ -285,6 +286,40 @@ public class UndercastCustomMethods {
                   }
                   
               }
+          }
+      }
+
+      // filter the servers
+      //reset the filtered server count
+      UndercastData.filteredServerCount = UndercastData.serverCount;
+      // show which filter is chosen
+      if (!UndercastData.filterNames[UndercastData.filterIndex].equalsIgnoreCase("all")) {
+          ServerType shownType = ServerType.Unknown;
+          if (UndercastData.filterNames[UndercastData.filterIndex].equalsIgnoreCase("PA")) {
+              shownType = ServerType.ProjectAres;
+          } else if (UndercastData.filterNames[UndercastData.filterIndex].equalsIgnoreCase("Blitz")) {
+              shownType = ServerType.Blitz;
+          } else if (UndercastData.filterNames[UndercastData.filterIndex].equalsIgnoreCase("GS")) {
+              shownType = ServerType.GhostSquadron;
+          }
+
+          // if the shownType detection failed: do nothing
+          if(shownType == ServerType.Unknown) {
+              return;
+          }
+
+          // extract the servers
+          ArrayList<UndercastServer> filteredServers = new ArrayList<UndercastServer>(UndercastData.serverCount);
+          for(int c = 0; c < UndercastData.serverCount; c++) {
+              if(UndercastData.sortedServerInformation[c].type == shownType) {
+                  filteredServers.add(UndercastData.sortedServerInformation[c]);
+              }
+          }
+
+          UndercastData.filteredServerCount = filteredServers.size();
+          // and put them back to the serverList
+          for(int c = 0; c < filteredServers.size(); c++) {
+              UndercastData.sortedServerInformation[c] = filteredServers.get(c);
           }
       }
     }

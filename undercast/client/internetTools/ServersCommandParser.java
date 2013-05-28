@@ -25,7 +25,7 @@ public class ServersCommandParser {
             if (!message.contains("Online: ") && !message.contains("--------- Overcast Network Servers")) {
                 isListening = false;
                 castedByMod = nextCastedByMod;
-                UndercastCustomMethods.sortServers();
+                UndercastCustomMethods.sortAndFilterServers();
                 commandEnded = true;
             }
 

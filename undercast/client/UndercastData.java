@@ -38,6 +38,7 @@ public class UndercastData {
     public static UndercastServer[] serverInformation;
     public static UndercastServer[] sortedServerInformation;
     public static int serverCount;
+    public static int filteredServerCount;
     // if it's true, the /server comand isn't executed after a "Welcome to Project Ares" message
     public static boolean welcomeMessageExpected = false;
     public static boolean redirect = false;
@@ -45,6 +46,7 @@ public class UndercastData {
     public static int playTimeHours;
     public static int playTimeMin;
     public static int sortIndex;
+    public static int filterIndex;
     public static boolean isGameOver = false;
     // saves if a /server command (without argument) was executed, if it's false, the user executed it
     public static boolean serverDetectionCommandExecuted = false;
@@ -68,6 +70,7 @@ public class UndercastData {
     public static enum MatchState {Starting, Started, Finished, Waiting, Lobby, Unknown};
     public static enum ServerType {Lobby, Blitz, ProjectAres, GhostSquadron, Unknown};
     public static String[] sortNames = {"Web","Match","Players","Abc"};
+    public static String[] filterNames = {"All","PA","Blitz","GS"};
 
     public UndercastData() {
         update=true;
@@ -86,6 +89,7 @@ public class UndercastData {
         mapLoaderFinished = false;
         serverInformation = new UndercastServer[30];
         serverCount = 0;
+        filteredServerCount = 0;
         for(int c = 0;c < serverInformation.length; c++) {
             serverInformation[c] = new UndercastServer();
         }
@@ -94,6 +98,7 @@ public class UndercastData {
             sortedServerInformation[c] = new UndercastServer();
         }
         sortIndex = 0;
+        filterIndex = 0;
         try {
             mapLoader = new InformationLoaderThread(new URL("https://oc.tc/play"));
         } catch(Exception e) {
@@ -140,7 +145,8 @@ public class UndercastData {
                     }
                 }
                 
-                UndercastCustomMethods.sortServers();
+                filteredServerCount = serverCount;
+                UndercastCustomMethods.sortAndFilterServers();
             } catch (Exception e) {
                 System.out.println("[UndercastMod]: Failed to parse maps");
                 System.out.println("[UndercastMod]: ERROR: " + e.toString());

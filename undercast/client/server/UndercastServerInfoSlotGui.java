@@ -40,7 +40,7 @@ class UndercastServerInfoSlotGui extends UndercastServerSlotGui {
     }
 
     protected int getSize() {
-        return UndercastData.serverCount;
+        return UndercastData.filteredServerCount;
     }
 
     protected boolean isSelected(int i) {
