@@ -54,10 +54,15 @@ public class ServerStatusHTMLParser {
         pd2.parse(HTMLReader2, p2, false);
         // Make up return values
         // Add the next map to the other data as we use two parsers
-        int i=0;
-        for (String s : p2.mapData) {
-            p.mapData[i][3] = s;
-            i++;
+        int c=0;
+        for (int i = 0; i < p2.mapData.length; i++) {
+            if(p.mapData[i][1] != null && Integer.parseInt(p.mapData[i][1]) != 0) {
+                p.mapData[i][3] = p2.mapData[c];
+            } else {
+                p.mapData[i][3] = "";
+                c--;
+            }
+            c++;
         }
         return p.mapData;
     }
