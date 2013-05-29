@@ -15,16 +15,18 @@ public class ServersCommandParser {
     private static boolean isListening = false;
     //is set to true if the mod casts /servers in order to delete the messages
     public static boolean castedByMod = false;
-    public static boolean nextCastedByMod = true;
+    public static boolean nextCastedByMod = false;
     public static int pages = 0;
     
     public static void handleChatMessage(String message, String unstripedMessage) {
+        System.out.println("L: " + isListening + " M: " + castedByMod + " N: " + nextCastedByMod);
         if(isListening) {
             // check if the message belongs to the command
             boolean commandEnded = false;
-            if (!message.contains("Online: ") && !message.contains("--------- Overcast Network Servers")) {
+            if ((!message.contains("Online: ") && !message.contains("--------- Overcast Network Servers")) || message.contains("--------- Overcast Network Servers (1")) {
                 isListening = false;
                 castedByMod = nextCastedByMod;
+                nextCastedByMod = false;
                 UndercastCustomMethods.sortAndFilterServers();
                 commandEnded = true;
             }
@@ -93,7 +95,7 @@ public class ServersCommandParser {
             }
         }
 
-        if(!isListening && message.contains("--------- Overcast Network Servers (1 of ")) {
+        if(!isListening && message.contains("--------- Overcast Network Servers (1 of ") && castedByMod) {
             // get the page count
             try {
                 pages = Integer.parseInt(message.substring(message.indexOf("of ") + 3, message.indexOf("of ") + 4));
