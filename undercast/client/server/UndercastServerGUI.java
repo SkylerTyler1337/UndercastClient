@@ -10,6 +10,8 @@ import undercast.client.*;
 
 import java.awt.*;
 import java.net.URI;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class UndercastServerGUI extends GuiScreen {
     private UndercastServerInfoSlotGui guiServerInfoSlot;
@@ -61,6 +63,17 @@ public class UndercastServerGUI extends GuiScreen {
         //refresh button
         if (guibutton.id == 1) {
             UndercastData.reload(true);
+            GuiButtonTooltip refreshButton = (GuiButtonTooltip)buttonList.get(1);
+            refreshButton.enabled = false;
+            Timer timer = new Timer();
+            timer.schedule(new TimerTask() {
+                
+                @Override
+                public void run() {
+                    GuiButtonTooltip refreshButton = (GuiButtonTooltip)buttonList.get(1);
+                    refreshButton.enabled = true;
+                }
+            }, 3000);
         }
         //cancel/back to main menu
         if (guibutton.id == 2) {
