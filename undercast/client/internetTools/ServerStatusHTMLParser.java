@@ -1,17 +1,16 @@
 package undercast.client.internetTools;
 
-import java.io.InputStreamReader;
+import java.io.PrintStream;
 import java.io.Reader;
 import java.io.StringReader;
-import java.net.URL;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import javax.swing.text.Element;
-import javax.swing.text.ElementIterator;
 import javax.swing.text.MutableAttributeSet;
 import javax.swing.text.html.HTML;
-import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.text.html.parser.ParserDelegator;
+
 
 /**
  * @author molenzwiebel
@@ -26,7 +25,7 @@ import javax.swing.text.html.parser.ParserDelegator;
 public class ServerStatusHTMLParser {
     // Function to remove the last character is it is a space
     public static String stripLastSpace(String str) {
-        
+
         if (str.length() > 0 && str.charAt(str.length()-1) == ' ') {
             str = str.substring(0, str.length()-1);
             return str;
@@ -36,18 +35,33 @@ public class ServerStatusHTMLParser {
         }
     }
 
-    public static String[][] parse(String string) throws Exception {
-        // Remove all text between "<div class='span4'>" and "<div class='span8'>" (staff online data, not needed)
-        String realSource = string.replace(string.substring(string.indexOf("<div class='span4'>"), string.indexOf("<div class='span8'>")), "");
+    private static String compile(String str) {
+        int occurEnd = (str.length() - str.replaceAll("</div>\n<div class='span8'>", "").length()) / "</div>\n<div class='span8'>".length();
+        int index1, index2;
+        int currentIndex = 0;
+        for (int i = 0; i < occurEnd; i++) {
+            index1 = str.indexOf("<div class='span4'>\n<h3>", currentIndex);
+            index2 = str.indexOf("</div>\n<div class='span8'>", currentIndex);
+            currentIndex = index2+1;
+            str = str.replace(str.substring(index1, index2), "");
+        }
+        return str;
+    }
 
+    public static String[][] parse(String string) throws Exception {
+        String realSource = string;
+        //realSource = realSource.replace(realSource.substring(realSource.indexOf("<div class='span4'>"), realSource.indexOf("<div class='span8'>")), "");
+        realSource = realSource.replace(realSource.substring(realSource.indexOf("<div class='tab-pane active' id='main'>"), realSource.indexOf("<div class='tab-pane' id='project-ares'>")), "");
+        String goodSource = compile(realSource);
         // Create 2 readers
-        Reader HTMLReader = new StringReader(realSource);
-        Reader HTMLReader2 = new StringReader(realSource);
+        Reader HTMLReader = new StringReader(goodSource);
+        Reader HTMLReader2 = new StringReader(goodSource);
         // Create 2 parsers
         ParserDelegator pd = new ParserDelegator();
         ParserDelegator pd2 = new ParserDelegator();
         // Create our own parse handlers
         Parser p = new Parser();
+        p.rawData = goodSource;
         NextParser p2 = new NextParser();
         // Parse
         pd.parse(HTMLReader, p, false);
@@ -77,10 +91,16 @@ class Parser extends HTMLEditorKit.ParserCallback {
     // # of map currently parsing
     private int mapCount = -1;
     // Data
-    public String[][] mapData = new String[30][5];
+    public String[][] mapData = new String[999][5];
     //The current gametype
     public String gametype;
+    
+    public String rawData;
 
+    private boolean hasID(MutableAttributeSet a) {
+        
+        return a.containsAttribute(HTML.Attribute.ID, "project-ares") || a.containsAttribute(HTML.Attribute.ID, "blitz") || a.containsAttribute(HTML.Attribute.ID, "ghost-squadron") || a.containsAttribute(HTML.Attribute.ID, "lobby");
+    }
     // Function called when a tag (<tagName>) is opened
     public void handleStartTag(HTML.Tag t, MutableAttributeSet a, int pos) {
         // If it is a tag we want, make sure to have a look at it
@@ -88,9 +108,11 @@ class Parser extends HTMLEditorKit.ParserCallback {
             inTD = true;
             count = 1;
             mapCount++;
+            return;
         }
-        if(t.equals(HTML.Tag.P)) {
-            inP = true;
+        if(t.equals(HTML.Tag.DIV) && this.hasID(a)) {
+            gametype = (String) a.getAttribute(HTML.Attribute.ID);
+            System.out.println(gametype);
         }
     }
 
@@ -100,8 +122,7 @@ class Parser extends HTMLEditorKit.ParserCallback {
             inTD = false;
             count = 0;
         }
-        if(t.equals(HTML.Tag.P))
-            inP = false;
+
     }
 
     public void handleText(char[] data, int pos) {
@@ -113,8 +134,6 @@ class Parser extends HTMLEditorKit.ParserCallback {
             mapData[mapCount][4] = gametype;
             count++;
         }
-        if (inP)
-            gametype = new String(data);
     }
 }
 class NextParser extends HTMLEditorKit.ParserCallback {
@@ -123,7 +142,7 @@ class NextParser extends HTMLEditorKit.ParserCallback {
     // # of map currently parsing
     private int mapCount = 0;
     // Data
-    public String[] mapData = new String[30];
+    public String[] mapData = new String[999];
 
     // Function called when a tag (<tagName>) is opened
     public void handleStartTag(HTML.Tag t, MutableAttributeSet a, int pos) {

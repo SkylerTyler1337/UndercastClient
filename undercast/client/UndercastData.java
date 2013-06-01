@@ -68,7 +68,7 @@ public class UndercastData {
 
     public static enum Teams {Red, Blue, Purple, Cyan, Lime, Yellow, Green, Orange, Observers, Unknown, Cot, Bot};
     public static enum MatchState {Starting, Started, Finished, Waiting, Lobby, Unknown};
-    public static enum ServerType {Lobby, Blitz, ProjectAres, GhostSquadron, Unknown};
+    public static enum ServerType {lobby, blitz, projectares, ghostsquadron, Unknown};
     public static String[] sortNames = {"Web","Match","Players","Abc"};
     public static String[] filterNames = {"All","PA","Blitz","GS"};
 
@@ -85,15 +85,14 @@ public class UndercastData {
         keybind2 = new KeyBinding("undercast.inGameGui", Keyboard.getKeyIndex("L"));
         keybind3 = new KeyBinding("undercast.fullBright", Keyboard.getKeyIndex("G"));
         keybind4 = new KeyBinding("undercast.settings", Keyboard.getKeyIndex("P"));
-        
         mapLoaderFinished = false;
-        serverInformation = new UndercastServer[30];
+        serverInformation = new UndercastServer[999];
         serverCount = 0;
         filteredServerCount = 0;
         for(int c = 0;c < serverInformation.length; c++) {
             serverInformation[c] = new UndercastServer();
         }
-        sortedServerInformation = new UndercastServer[30];
+        sortedServerInformation = new UndercastServer[999];
         for(int c = 0;c < sortedServerInformation.length; c++) {
             sortedServerInformation[c] = new UndercastServer();
         }
@@ -104,6 +103,7 @@ public class UndercastData {
         } catch(Exception e) {
             System.out.println("[UndercastMod]: Failed to load maps");
             System.out.println("[UndercastMod]: ERROR: " + e.toString());
+            e.printStackTrace();
         }
     }
 
@@ -126,7 +126,7 @@ public class UndercastData {
                         serverInformation[c].matchState = MatchState.Unknown;
                     }
                     try {
-                    serverInformation[c].type = ServerType.valueOf(mapData[c][4].replace(" ", ""));
+                    serverInformation[c].type = ServerType.valueOf(mapData[c][4].replace("-", ""));
                     } catch (Exception e) {
                         serverInformation[c].type = ServerType.Unknown;
                     }
@@ -150,6 +150,7 @@ public class UndercastData {
             } catch (Exception e) {
                 System.out.println("[UndercastMod]: Failed to parse maps");
                 System.out.println("[UndercastMod]: ERROR: " + e.toString());
+                e.printStackTrace();
             }
         }
     }

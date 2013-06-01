@@ -74,7 +74,7 @@ public void drawScreen(int par1, int par2, float par3) {
     @Override
     protected void keyTyped(char par1, int par2) {
         if (par2 == Keyboard.KEY_ESCAPE) {
-            if(mod_Undercast.CONFIG.showGSClass && UndercastData.currentGSClass.equals("Unknown") && UndercastData.currentServerType == ServerType.GhostSquadron) {
+            if(mod_Undercast.CONFIG.showGSClass && UndercastData.currentGSClass.equals("Unknown") && UndercastData.currentServerType == ServerType.ghostsquadron) {
                 Minecraft.getMinecraft().thePlayer.sendChatMessage("/class");
             }
             mc.displayGuiScreen(null);
@@ -97,7 +97,7 @@ public void drawScreen(int par1, int par2, float par3) {
             this.buttonList.clear();
             this.initGui();
         } else {
-            if(mod_Undercast.CONFIG.showGSClass && UndercastData.currentGSClass.equals("Unknown") && UndercastData.currentServerType == ServerType.GhostSquadron) {
+            if(mod_Undercast.CONFIG.showGSClass && UndercastData.currentGSClass.equals("Unknown") && UndercastData.currentServerType == ServerType.ghostsquadron) {
                 Minecraft.getMinecraft().thePlayer.sendChatMessage("/class");
             }
             ModLoader.openGUI(mc.thePlayer, parentScreen);

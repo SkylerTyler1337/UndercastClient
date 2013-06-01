@@ -32,7 +32,7 @@ import undercast.client.settings.UndercastGuiConfigButton;
 import undercast.client.update.UndercastUpdaterThread;
 
 public class mod_Undercast extends BaseMod {
-    public final static String MOD_VERSION = "1.5.6";
+    public final static String MOD_VERSION = "1.5.7";
     public final static String MOD_NAME = "UndercastMod";
     protected String username = "Not_Found";
     protected Minecraft mc = Minecraft.getMinecraft();
@@ -177,7 +177,7 @@ public class mod_Undercast extends BaseMod {
                 height += 8;
             }
          // Class display (Ghost Squadron only)
-            if (CONFIG.showGSClass && UndercastData.currentServerType == ServerType.GhostSquadron) {
+            if (CONFIG.showGSClass && UndercastData.currentServerType == ServerType.ghostsquadron) {
                 mc.fontRenderer.drawStringWithShadow("Class: " + UndercastData.currentGSClass, width, height, 2446535);
                 height += 8;
             }

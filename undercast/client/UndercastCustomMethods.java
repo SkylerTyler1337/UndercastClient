@@ -108,7 +108,7 @@ public class UndercastCustomMethods {
             //get the server type for the new server (does not need to wait for an update)
             for(int c = 0; c < UndercastData.serverInformation.length; c++) {
                 if(UndercastData.server.equals(UndercastData.serverInformation[c].name)) {
-                    if(UndercastData.serverInformation[c].type == ServerType.GhostSquadron) {
+                    if(UndercastData.serverInformation[c].type == ServerType.ghostsquadron) {
                         Minecraft.getMinecraft().thePlayer.sendChatMessage("/class");
                     }
                 }
@@ -296,11 +296,11 @@ public class UndercastCustomMethods {
       if (!UndercastData.filterNames[UndercastData.filterIndex].equalsIgnoreCase("all")) {
           ServerType shownType = ServerType.Unknown;
           if (UndercastData.filterNames[UndercastData.filterIndex].equalsIgnoreCase("PA")) {
-              shownType = ServerType.ProjectAres;
+              shownType = ServerType.projectares;
           } else if (UndercastData.filterNames[UndercastData.filterIndex].equalsIgnoreCase("Blitz")) {
-              shownType = ServerType.Blitz;
+              shownType = ServerType.blitz;
           } else if (UndercastData.filterNames[UndercastData.filterIndex].equalsIgnoreCase("GS")) {
-              shownType = ServerType.GhostSquadron;
+              shownType = ServerType.ghostsquadron;
           }
 
           // if the shownType detection failed: do nothing
