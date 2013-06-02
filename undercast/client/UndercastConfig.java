@@ -15,7 +15,7 @@ public class UndercastConfig {
     private static final String FILE_NAME = "UndercastMod.cfg";
     
     // update this value to change the config version.
-    private static int version = 7;
+    private static int version = 8;
 
     // main variables
     public static boolean showFPS;
@@ -48,6 +48,7 @@ public class UndercastConfig {
     public static boolean showDeathAchievements;
     public static boolean showFirstBloodAchievement;
     public static boolean showLastKillAchievement;
+    public static boolean parseMatchState;
     public static int configVersion;
 
     /**
@@ -89,6 +90,7 @@ public class UndercastConfig {
         defaults.setProperty("showDeathAchievements", "true");
         defaults.setProperty("showFirstBloodAchievement", "true");
         defaults.setProperty("showLastKillAchievement", "true");
+        defaults.setProperty("parseMatchState", "false");
         // if the value is missing, it should force an update. Don't change it.
         defaults.setProperty("configVersion", "0");
     }
@@ -167,6 +169,7 @@ public class UndercastConfig {
             config.setProperty("showDeathAchievements", "true");
             config.setProperty("showFirstBloodAchievement", "true");
             config.setProperty("showLastKillAchievement", "true");
+            config.setProperty("parseMatchState", "false");
             config.setProperty("configVersion", ""+version);
 
             config.store(new FileOutputStream(CONFIG_PATH + FILE_NAME),"This is the Unoffical Project Ares Mod Config" + "\nCustomize it to your taste" + "\nkeyGui = Ingame Stats" +"\nkeyGui2 = Ingame Server Menu" + "\nkeyGui3 = Full Bright\n");
@@ -210,6 +213,7 @@ public class UndercastConfig {
         showDeathAchievements = this.getBoolProperty("showDeathAchievements");
         showFirstBloodAchievement = this.getBoolProperty("showFirstBloodAchievement");
         showLastKillAchievement = this.getBoolProperty("showLastKillAchievement");
+        parseMatchState = this.getBoolProperty("parseMatchState");
         configVersion = this.getIntProperty("configVersion");
         
         checkForConfigUpdate();
@@ -344,6 +348,10 @@ public class UndercastConfig {
                     config.setProperty("showGSClass", "true");
                 }
             case 7:
+                if(parseMatchState == false) {
+                    config.setProperty("parseMatchState", "false");
+                }
+            case 8:
                 // for the next version.
             }
             config.setProperty("configVersion", ""+version);

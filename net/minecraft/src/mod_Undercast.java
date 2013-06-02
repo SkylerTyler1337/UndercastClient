@@ -118,7 +118,9 @@ public class mod_Undercast extends BaseMod {
             // stop global msg and team chat and whispered messages to go through
             if(!message.startsWith("<") && !message.startsWith("[Team]") && !message.startsWith("(From ") && !message.startsWith("(To ")&& UndercastData.isOC) {
                 new UndercastChatHandler(message, username, player);
-                ServersCommandParser.handleChatMessage(message, var1);
+                if(CONFIG.parseMatchState) {
+                    ServersCommandParser.handleChatMessage(message, var1);
+                }
                 if(CONFIG.showAchievements) {
                     achievementHandler.handleMessage(message, username, player);
                 }

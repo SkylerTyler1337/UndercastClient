@@ -6,6 +6,8 @@ package undercast.client;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.KeyBinding;
+import net.minecraft.src.mod_Undercast;
+
 import org.lwjgl.input.Keyboard;
 
 import undercast.client.internetTools.InformationLoaderThread;
@@ -166,7 +168,7 @@ public class UndercastData {
             System.out.println("[UndercastMod]: ERROR: " + e.toString());
         }
         
-        if(isOC && getMatchState) {
+        if(isOC && getMatchState && mod_Undercast.CONFIG.parseMatchState) {
             ServersCommandParser.castByMod();
             Minecraft.getMinecraft().thePlayer.sendChatMessage("/servers 1");
         }
