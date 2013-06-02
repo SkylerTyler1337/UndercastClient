@@ -20,8 +20,8 @@ public class ServersCommandParser {
     private static int pages = 0;
     private static int currentPage = 0;
     
-    private static final String PAGE_TITLE = "--------- Overcast Network Servers";
-    private static final String FIRST_PAGE_TITLE = "--------- Overcast Network Servers (1";
+    private static final String PAGE_TITLE = "-------- Overcast Network Servers";
+    private static final String FIRST_PAGE_TITLE = "-------- Overcast Network Servers (1 ";
     private static final String MESSAGE_CHARACTERISTIC = "Online: "; // string which all non title messges have in comon
     private static final String MAP_SEPARATOR = "Current Map: ";
     private static final String MAP_SEPARATOR_UNSTRIPED = "Current Map§f: ";
@@ -94,9 +94,9 @@ public class ServersCommandParser {
         if (!isListening && message.contains(PAGE_TITLE)) {
             // get the page count
             try {
-                pages = Integer.parseInt(message.substring(message.indexOf("of ") + 3, message.indexOf("of ") + 4));
+                pages = Integer.parseInt(message.substring(message.indexOf("of ") + 3, message.indexOf("of ") + 5).replace(")", ""));
             } catch (Exception e) {
-                pages = 3;
+                pages = 10;
             }
 
             try {
@@ -107,10 +107,10 @@ public class ServersCommandParser {
 
             if (castedByMod) {
                 if(message.contains(FIRST_PAGE_TITLE)) {
-                    // get the other pages
-                    for(int i = 2; i <= pages; i++) {
-                        Minecraft.getMinecraft().thePlayer.sendChatMessage("/servers " + i);
-                    }
+                    // get the pages 2, 3 and the last page
+                    Minecraft.getMinecraft().thePlayer.sendChatMessage("/servers 2");
+                    Minecraft.getMinecraft().thePlayer.sendChatMessage("/servers 3");
+                    Minecraft.getMinecraft().thePlayer.sendChatMessage("/servers " + pages);
                 }
                 isListening = true;
                 removeChatMessage();
