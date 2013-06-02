@@ -90,7 +90,7 @@ public class UndercastConfig {
         defaults.setProperty("showDeathAchievements", "true");
         defaults.setProperty("showFirstBloodAchievement", "true");
         defaults.setProperty("showLastKillAchievement", "true");
-        defaults.setProperty("parseMatchState", "false");
+        defaults.setProperty("parseMatchState", "true");
         // if the value is missing, it should force an update. Don't change it.
         defaults.setProperty("configVersion", "0");
     }
@@ -169,7 +169,7 @@ public class UndercastConfig {
             config.setProperty("showDeathAchievements", "true");
             config.setProperty("showFirstBloodAchievement", "true");
             config.setProperty("showLastKillAchievement", "true");
-            config.setProperty("parseMatchState", "false");
+            config.setProperty("parseMatchState", "true");
             config.setProperty("configVersion", ""+version);
 
             config.store(new FileOutputStream(CONFIG_PATH + FILE_NAME),"This is the Unoffical Project Ares Mod Config" + "\nCustomize it to your taste" + "\nkeyGui = Ingame Stats" +"\nkeyGui2 = Ingame Server Menu" + "\nkeyGui3 = Full Bright\n");
@@ -348,8 +348,8 @@ public class UndercastConfig {
                     config.setProperty("showGSClass", "true");
                 }
             case 7:
-                if(parseMatchState == false) {
-                    config.setProperty("parseMatchState", "false");
+                if(parseMatchState == true) {
+                    config.setProperty("parseMatchState", "true");
                 }
             case 8:
                 // for the next version.
