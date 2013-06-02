@@ -112,7 +112,6 @@ class Parser extends HTMLEditorKit.ParserCallback {
         }
         if(t.equals(HTML.Tag.DIV) && this.hasID(a)) {
             gametype = (String) a.getAttribute(HTML.Attribute.ID);
-            System.out.println(gametype);
         }
     }
 
