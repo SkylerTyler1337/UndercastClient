@@ -180,6 +180,8 @@ public class UndercastChatHandler {
             UndercastData.currentGSClass = message.replace("Current class: ", "");
         } else if(message.startsWith("You have selected")){
             UndercastData.currentGSClass = message.replace("You have selected ", "");
+        } else if(message.startsWith("You have chosen: ")){
+            UndercastData.currentGSClass = message.replace("You have chosen: ", "");
         }
     }
 }
