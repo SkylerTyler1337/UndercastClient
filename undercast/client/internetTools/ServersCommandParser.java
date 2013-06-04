@@ -44,7 +44,7 @@ public class ServersCommandParser {
             if (!commandEnded) {
                 if (message.contains(PAGE_TITLE)) {
                     try {
-                        currentPage = Integer.parseInt(message.substring(message.indexOf(" of ") - 1, message.indexOf(" of ")));
+                        currentPage = Integer.parseInt(message.substring(message.indexOf(" of ") - 2, message.indexOf(" of ")).replace("(", ""));
                     } catch (Exception e) {
                         currentPage = 1;
                     }
@@ -105,7 +105,7 @@ public class ServersCommandParser {
             }
 
             try {
-                currentPage = Integer.parseInt(message.substring(message.indexOf(" of ") - 1, message.indexOf(" of ")));
+                currentPage = Integer.parseInt(message.substring(message.indexOf(" of ") - 2, message.indexOf(" of ")).replace("(", ""));
             } catch (Exception e) {
                 currentPage = 1;
             }
