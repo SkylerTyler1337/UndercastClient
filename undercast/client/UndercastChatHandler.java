@@ -59,6 +59,15 @@ public class UndercastChatHandler {
             UndercastData.addKills(1);
             UndercastData.addKillstreak(1);
         }
+        else if(message.startsWith(username + " scored") && message.toLowerCase().contains(" team")) {
+            int score;
+            try {
+                score = Integer.parseInt(message.substring(message.indexOf(" scored ") + 8, message.indexOf(" points")));
+            } catch(Exception e){
+                score = 0;
+            }
+            UndercastData.addScore(score);
+        }
         //when you join a match
         else if (message.contains("You joined the")) {
             

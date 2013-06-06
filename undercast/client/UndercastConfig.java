@@ -15,7 +15,7 @@ public class UndercastConfig {
     private static final String FILE_NAME = "UndercastMod.cfg";
     
     // update this value to change the config version.
-    private static int version = 8;
+    private static int version = 9;
 
     // main variables
     public static boolean showFPS;
@@ -36,6 +36,7 @@ public class UndercastConfig {
     public static boolean showMatchTime;
     public static boolean showMatchTimeSeconds;
     public static boolean showGSClass;
+    public static boolean showScore;
     public static int x;
     public static int y;
     public static boolean toggleTitleScreenButton;
@@ -78,6 +79,7 @@ public class UndercastConfig {
         defaults.setProperty("showMatchTime", "true");
         defaults.setProperty("showMatchTimeSeconds", "true");
         defaults.setProperty("showGSClass", "true");
+        defaults.setProperty("showScore", "true");
         defaults.setProperty("X", "2");
         defaults.setProperty("Y", "2");
         defaults.setProperty("toggleTitleScreenButton", "true");
@@ -157,6 +159,7 @@ public class UndercastConfig {
             config.setProperty("showMatchTime", "true");
             config.setProperty("showMatchTimeSeconds", "true");
             config.setProperty("showGSClass", "true");
+            config.setProperty("showScore", "true");
             config.setProperty("X", "2");
             config.setProperty("Y", "2");
             config.setProperty("toggleTitleScreenButton", "true");
@@ -201,6 +204,7 @@ public class UndercastConfig {
         showMatchTime = this.getBoolProperty("showMatchTime");
         showMatchTimeSeconds = this.getBoolProperty("showMatchTimeSeconds");
         showGSClass = this.getBoolProperty("showGSClass");
+        showScore = this.getBoolProperty("showScore");
         x = this.getIntProperty("X");
         y = this.getIntProperty("Y");
         toggleTitleScreenButton = this.getBoolProperty("toggleTitleScreenButton");
@@ -352,6 +356,10 @@ public class UndercastConfig {
                     config.setProperty("parseMatchState", "true");
                 }
             case 8:
+                if(showScore == true) {
+                    config.setProperty("showScore", "true");
+                }
+            case 9:
                 // for the next version.
             }
             config.setProperty("configVersion", ""+version);

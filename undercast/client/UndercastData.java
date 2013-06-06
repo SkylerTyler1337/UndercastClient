@@ -28,6 +28,7 @@ public class UndercastData {
     public static double killed;
     public static int killstreak;
     public static int largestKillstreak;
+    public static int score;
     public static HashSet<String> friends = new HashSet<String>();
     public static String server;
     public static Teams team;
@@ -307,5 +308,13 @@ public class UndercastData {
         matchTimeHours = 0;
         matchTimeMin = 0;
         matchTimeSec = 0;
+    }
+
+    public static void addScore(int i) {
+        score += i;
+    }
+
+    public static void resetScore() {
+        score = 0;
     }
 }
