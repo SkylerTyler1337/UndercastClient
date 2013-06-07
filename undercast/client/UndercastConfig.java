@@ -50,6 +50,7 @@ public class UndercastConfig {
     public static boolean showFirstBloodAchievement;
     public static boolean showLastKillAchievement;
     public static boolean parseMatchState;
+    public static int lastUsedFilter;
     public static int configVersion;
 
     /**
@@ -93,6 +94,7 @@ public class UndercastConfig {
         defaults.setProperty("showFirstBloodAchievement", "true");
         defaults.setProperty("showLastKillAchievement", "true");
         defaults.setProperty("parseMatchState", "true");
+        defaults.setProperty("lastUsedFilter", "0");
         // if the value is missing, it should force an update. Don't change it.
         defaults.setProperty("configVersion", "0");
     }
@@ -173,6 +175,7 @@ public class UndercastConfig {
             config.setProperty("showFirstBloodAchievement", "true");
             config.setProperty("showLastKillAchievement", "true");
             config.setProperty("parseMatchState", "true");
+            config.setProperty("lastUsedFilter", "0");
             config.setProperty("configVersion", ""+version);
 
             config.store(new FileOutputStream(CONFIG_PATH + FILE_NAME),"This is the Unoffical Undercast Mod Config" + "\nCustomize it to your taste" + "\nkeyGui = Ingame Stats" +"\nkeyGui2 = Ingame Server Menu" + "\nkeyGui3 = Full Bright\n");
@@ -218,6 +221,7 @@ public class UndercastConfig {
         showFirstBloodAchievement = this.getBoolProperty("showFirstBloodAchievement");
         showLastKillAchievement = this.getBoolProperty("showLastKillAchievement");
         parseMatchState = this.getBoolProperty("parseMatchState");
+        lastUsedFilter = this.getIntProperty("lastUsedFilter");
         configVersion = this.getIntProperty("configVersion");
         
         checkForConfigUpdate();
@@ -358,6 +362,9 @@ public class UndercastConfig {
             case 8:
                 if(showScore == true) {
                     config.setProperty("showScore", "true");
+                }
+                if(lastUsedFilter == 0) {
+                    config.setProperty("lastUsedFilter", "0");
                 }
             case 9:
                 // for the next version.

@@ -121,6 +121,7 @@ public class UndercastServerGUI extends GuiScreen {
                //update the buttons
                this.buttonList.set(6, new GuiButtonTooltip(6, this.width / 2 - 150, height - 52, 48, 20, UndercastData.filterNames[UndercastData.filterIndex], "Filter the servers by the server type"));
                UndercastCustomMethods.sortAndFilterServers();
+               mod_Undercast.CONFIG.setProperty("lastUsedFilter", UndercastData.filterIndex);
            }
         if(guibutton.id == 7) {
             try {

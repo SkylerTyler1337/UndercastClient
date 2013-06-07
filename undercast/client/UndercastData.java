@@ -100,7 +100,7 @@ public class UndercastData {
             sortedServerInformation[c] = new UndercastServer();
         }
         sortIndex = 0;
-        filterIndex = 0;
+        filterIndex = mod_Undercast.CONFIG.lastUsedFilter;
         try {
             mapLoader = new InformationLoaderThread(new URL("https://oc.tc/play"));
         } catch(Exception e) {
