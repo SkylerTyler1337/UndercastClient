@@ -390,6 +390,8 @@ public class mod_Undercast extends BaseMod {
             } else if (keybinding == UndercastData.keybind4) {
                 ModLoader.openGUI(mc.thePlayer, new SettingsGUI(null));
             }
+        } else if (keybinding == UndercastData.keybind2 && this.mc.currentScreen instanceof UndercastServerGUI) {
+            ((UndercastServerGUI)this.mc.currentScreen).closeGui();
         }
     }
 

@@ -77,11 +77,7 @@ public class UndercastServerGUI extends GuiScreen {
         }
         //cancel/back to main menu
         if (guibutton.id == 2) {
-            if (!inGame) {
-                this.mc.displayGuiScreen(new GuiMainMenu());
-            } else {
-                this.mc.setIngameFocus();
-            }
+            closeGui();
         }
         //stats button
         if (guibutton.id == 3) {
@@ -186,5 +182,19 @@ public class UndercastServerGUI extends GuiScreen {
         }
     }
 
-    
+    @Override
+    protected void keyTyped(char par1, int par2) {
+        if (par2 == Minecraft.getMinecraft().gameSettings.keyBindInventory.keyCode) {
+            closeGui();
+        }
+        super.keyTyped(par1, par2);
+    }
+
+    public void closeGui() {
+        if (!inGame) {
+            this.mc.displayGuiScreen(new GuiMainMenu());
+        } else {
+            this.mc.setIngameFocus();
+        }
+    }
 }
