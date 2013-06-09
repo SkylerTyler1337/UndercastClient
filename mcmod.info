@@ -3,7 +3,7 @@
   "modid": "UndercastMod",
   "name": "Undercast Client Mod",
   "description": "A custom made mod that tracks gameplay stats and has custom guis made for the oc.tc servers",
-  "version": "1.5.8",
+  "version": "1.5.9",
   "url": "undercastteam.github.io/UndercastClient",
   "updateUrl": "",
   "authorList": [

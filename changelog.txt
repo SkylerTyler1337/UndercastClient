@@ -1,5 +1,11 @@
 The changelog exists since version 1.4.0
 
+1.5.9
+ - score display (if you run into the scorebox)
+ - save the latest filter
+ - you can now use the inventory key or the gui opening key for closing the gui
+ - some fixes and improvements when using teleportation books
+
 1.5.8
  - setting for toggling match state parsing
  - only parse a few relevant pages
