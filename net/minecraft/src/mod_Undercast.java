@@ -179,7 +179,7 @@ public class mod_Undercast extends BaseMod {
                 height += 8;
             }
          // Class display (Ghost Squadron only)
-            if (CONFIG.showGSClass && UndercastData.currentServerType == ServerType.ghostsquadron) {
+            if (CONFIG.showGSClass && UndercastData.currentServerType == ServerType.ghostsquadron && !UndercastData.isLobby) {
                 mc.fontRenderer.drawStringWithShadow("Class: " + UndercastData.currentGSClass, width, height, 2446535);
                 height += 8;
             }
