@@ -26,6 +26,7 @@ import undercast.client.UndercastMenuButton;
 import undercast.client.achievements.UndercastKillsHandler;
 import undercast.client.controls.UndercastControls;
 import undercast.client.internetTools.ServersCommandParser;
+import undercast.client.internetTools.FriendHandler;
 import undercast.client.server.UndercastServerGUI;
 import undercast.client.settings.SettingsGUI;
 import undercast.client.settings.UndercastGuiConfigButton;
@@ -43,6 +44,7 @@ public class mod_Undercast extends BaseMod {
     private UndercastControls undercastControls;
     private PlayTimeCounterThread playTimeCounter;
     private UndercastKillsHandler achievementHandler;
+    public static FriendHandler friendHandler;
     private int buttonListSize;
     private Integer buttonListSizeOfGuiOptions;
 
@@ -74,6 +76,7 @@ public class mod_Undercast extends BaseMod {
         new UndercastData();
 
         achievementHandler = new UndercastKillsHandler();
+        friendHandler = new FriendHandler();
 
         //check for update
         new UndercastUpdaterThread();
@@ -124,6 +127,9 @@ public class mod_Undercast extends BaseMod {
                 if(CONFIG.showAchievements) {
                     achievementHandler.handleMessage(message, username, player);
                 }
+            }
+            if(UndercastConfig.showFriends){
+                friendHandler.handleMessage(message);
             }
         } catch(Exception e) {
         }
@@ -185,7 +191,7 @@ public class mod_Undercast extends BaseMod {
             }
             // Friend display:
             if (CONFIG.showFriends) {
-                mc.fontRenderer.drawStringWithShadow("Friends Online: \u00A73" + UndercastData.getFriends(), width, height, 16777215);
+                mc.fontRenderer.drawStringWithShadow("Friends Online: \u00A73" + UndercastCustomMethods.getOnlineFriends(), width, height, 16777215);
                 height += 8;
             }
             // Playing Time display:
@@ -245,7 +251,7 @@ public class mod_Undercast extends BaseMod {
                 height += 8;
             }
             // Score display
-            if (UndercastConfig.showScore && !UndercastData.isLobby && UndercastData.score != 0){
+            if (UndercastConfig.showScore && !UndercastData.isLobby && UndercastData.score != 0) {
                 mc.fontRenderer.drawStringWithShadow("Score: \u00A79" + UndercastData.score, width, height, 16777215);
                 height += 8;
             }

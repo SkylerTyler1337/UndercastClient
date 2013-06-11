@@ -16,7 +16,7 @@ import undercast.client.internetTools.ServersCommandParser;
 import undercast.client.server.UndercastServer;
 
 import java.net.URL;
-import java.util.HashSet;
+import java.util.HashMap;
 
 public class UndercastData {
     //Data Varibles
@@ -29,7 +29,10 @@ public class UndercastData {
     public static int killstreak;
     public static int largestKillstreak;
     public static int score;
-    public static HashSet<String> friends = new HashSet<String>();
+    // redudant assignation but kept for being java 6 compatible
+    // first String is the username of the player
+    // second one is the current server (offline if the player is not connected)
+    public static HashMap<String,String> friends = new HashMap<String,String>();
     public static String server;
     public static Teams team;
     public static boolean isOC = false;
@@ -233,26 +236,6 @@ public class UndercastData {
 
     public static double getLargestKillstreak() {
         return largestKillstreak;
-    }
-
-    public static int getFriends() {
-        return friends.size();
-    }
-
-    public static void addFriend(String s) {
-        friends.add(s);
-    }
-
-    public static void removeFriend(String s) {
-        friends.remove(s);
-    }
-
-    public static void clearFriends() {
-        friends.clear();
-    }
-
-    public static boolean isFriend(String s) {
-        return friends.contains(s);
     }
 
     public static boolean isPlayingOvercast() {

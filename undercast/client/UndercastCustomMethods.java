@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 
 import undercast.client.UndercastData.MatchState;
 import undercast.client.UndercastData.ServerType;
@@ -323,5 +324,17 @@ public class UndercastCustomMethods {
               UndercastData.sortedServerInformation[c] = filteredServers.get(c);
           }
       }
+    }
+
+    public static int getOnlineFriends() {
+        int number = 0;
+        for (Iterator<String> ir = UndercastData.friends.keySet().iterator(); ir.hasNext();) {
+            String key = ir.next();
+            String value = UndercastData.friends.get(key);
+            if(value != "offline"){
+                number++;
+            }  
+        }
+        return number;
     }
 }
