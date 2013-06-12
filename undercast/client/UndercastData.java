@@ -10,6 +10,7 @@ import net.minecraft.src.mod_Undercast;
 
 import org.lwjgl.input.Keyboard;
 
+import undercast.client.internetTools.InformationLoaderDelegate;
 import undercast.client.internetTools.InformationLoaderThread;
 import undercast.client.internetTools.ServerStatusHTMLParser;
 import undercast.client.internetTools.ServersCommandParser;
@@ -18,7 +19,7 @@ import undercast.client.server.UndercastServer;
 import java.net.URL;
 import java.util.HashMap;
 
-public class UndercastData {
+public class UndercastData implements InformationLoaderDelegate {
     //Data Varibles
     public static String map;
     public static String nextMap;
@@ -29,6 +30,7 @@ public class UndercastData {
     public static int killstreak;
     public static int largestKillstreak;
     public static int score;
+    public static UndercastData instance;
     // redudant assignation but kept for being java 6 compatible
     // first String is the username of the player
     // second one is the current server (offline if the player is not connected)
@@ -79,6 +81,7 @@ public class UndercastData {
     public static String[] filterNames = {"All","PA","Blitz","GS"};
 
     public UndercastData() {
+        instance = this;
         update=true;
         setMap("Fetching...");
         resetKills();
@@ -105,7 +108,7 @@ public class UndercastData {
         sortIndex = 0;
         filterIndex = mod_Undercast.CONFIG.lastUsedFilter;
         try {
-            mapLoader = new InformationLoaderThread(new URL("https://oc.tc/play"));
+            mapLoader = new InformationLoaderThread(new URL("https://oc.tc/play"), this);
         } catch(Exception e) {
             System.out.println("[UndercastMod]: Failed to load maps");
             System.out.println("[UndercastMod]: ERROR: " + e.toString());
@@ -166,7 +169,7 @@ public class UndercastData {
         nextMap = "Loading...";
 
         try {
-            mapLoader = new InformationLoaderThread(new URL("https://oc.tc/play"));
+            mapLoader = new InformationLoaderThread(new URL("https://oc.tc/play"), instance);
         } catch(Exception e) {
             System.out.println("[UndercastMod]: Failed to load maps");
             System.out.println("[UndercastMod]: ERROR: " + e.toString());
@@ -177,6 +180,12 @@ public class UndercastData {
             Minecraft.getMinecraft().thePlayer.sendChatMessage("/servers 1");
         }
         mapLoaderFinished = false;
+    }
+    
+    /** Part of the InformationLoaderDelegate, called when the loader is done */
+    @Override
+    public void websiteLoaded(String url, String contents) {
+        //TODO: Do something
     }
 
     public static void addKills(double d) {
@@ -300,4 +309,5 @@ public class UndercastData {
     public static void resetScore() {
         score = 0;
     }
+
 }

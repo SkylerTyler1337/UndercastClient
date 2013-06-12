@@ -22,8 +22,10 @@ import java.util.regex.Pattern;
 public class InformationLoaderThread extends Thread {
     private URL urlToLoad;
     private String contents;
-    public InformationLoaderThread(URL url) { // constructor starts the thread.
+    private InformationLoaderDelegate delegate;
+    public InformationLoaderThread(URL url, InformationLoaderDelegate delegate) { // constructor starts the thread.
         urlToLoad = url;
+        this.delegate = delegate;
         try {
             start();
         } catch(Exception e) {
@@ -58,8 +60,7 @@ public class InformationLoaderThread extends Thread {
         } catch (Exception e) {
             // Do something here, such as saying "Could not fetch server status" in a gui
         } finally {
-            // Do something to let a class know that the fetching is done,
-            // in a gui this could be: gui.updateScreen().
+            delegate.websiteLoaded(urlToLoad.toString(), contents);
             if (in != null) {
                 try {
                     in.close();
