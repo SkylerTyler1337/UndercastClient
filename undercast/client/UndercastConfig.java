@@ -13,9 +13,9 @@ public class UndercastConfig {
     private static String CONFIG_PATH;
     private Properties config;
     private static final String FILE_NAME = "UndercastMod.cfg";
-    
+
     // update this value to change the config version.
-    private static int version = 9;
+    private static int version = 10;
 
     // main variables
     public static boolean showFPS;
@@ -50,6 +50,7 @@ public class UndercastConfig {
     public static boolean showFirstBloodAchievement;
     public static boolean showLastKillAchievement;
     public static boolean parseMatchState;
+    public static boolean realtimeStats;
     public static int lastUsedFilter;
     public static int configVersion;
 
@@ -58,7 +59,7 @@ public class UndercastConfig {
      */
     static {
         try {
-        CONFIG_PATH = ModLoader.getMinecraftInstance().getMinecraftDir().getCanonicalPath() + File.separatorChar + "config" + File.separatorChar + "UndercastClient" + File.separatorChar;
+            CONFIG_PATH = ModLoader.getMinecraftInstance().getMinecraftDir().getCanonicalPath() + File.separatorChar + "config" + File.separatorChar + "UndercastClient" + File.separatorChar;
         } catch(Exception e) {
             System.out.println("[UndercastMod]: Failed to get config path.");
         }
@@ -95,6 +96,7 @@ public class UndercastConfig {
         defaults.setProperty("showLastKillAchievement", "true");
         defaults.setProperty("parseMatchState", "true");
         defaults.setProperty("lastUsedFilter", "0");
+        defaults.setProperty("realtimeStats", "false");
         // if the value is missing, it should force an update. Don't change it.
         defaults.setProperty("configVersion", "0");
     }
@@ -176,6 +178,7 @@ public class UndercastConfig {
             config.setProperty("showLastKillAchievement", "true");
             config.setProperty("parseMatchState", "true");
             config.setProperty("lastUsedFilter", "0");
+            config.setProperty("realtimeStats", "false");
             config.setProperty("configVersion", ""+version);
 
             config.store(new FileOutputStream(CONFIG_PATH + FILE_NAME),"This is the Unoffical Undercast Mod Config" + "\nCustomize it to your taste" + "\nkeyGui = Ingame Stats" +"\nkeyGui2 = Ingame Server Menu" + "\nkeyGui3 = Full Bright\n");
@@ -223,7 +226,8 @@ public class UndercastConfig {
         parseMatchState = this.getBoolProperty("parseMatchState");
         lastUsedFilter = this.getIntProperty("lastUsedFilter");
         configVersion = this.getIntProperty("configVersion");
-        
+        realtimeStats = this.getBoolProperty("realtimeStats");
+
         checkForConfigUpdate();
     }
 
@@ -300,7 +304,7 @@ public class UndercastConfig {
     private void displayErrorMessage(String error) {
         System.out.println("[UndercastMod]: ERROR: " + error);
     }
-    
+
     /***
      * Checks if the config version has changed and adds the options which are new.
      */
@@ -366,11 +370,15 @@ public class UndercastConfig {
                 if(lastUsedFilter == 0) {
                     config.setProperty("lastUsedFilter", "0");
                 }
-            case 9:
-                // for the next version.
+            case 10:
+                if(realtimeStats == true) {
+                    config.setProperty("realtimeStats", "true");
+                }
+            case 11:
+                //Next version
             }
             config.setProperty("configVersion", ""+version);
-            saveConfig();	
+            saveConfig();
         }
     }
 }

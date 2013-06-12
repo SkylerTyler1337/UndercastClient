@@ -12,6 +12,7 @@ import org.lwjgl.input.Keyboard;
 
 import undercast.client.internetTools.InformationLoaderDelegate;
 import undercast.client.internetTools.InformationLoaderThread;
+import undercast.client.internetTools.PlayerStatsHTMLParser;
 import undercast.client.internetTools.ServerStatusHTMLParser;
 import undercast.client.internetTools.ServersCommandParser;
 import undercast.client.server.UndercastServer;
@@ -42,7 +43,7 @@ public class UndercastData implements InformationLoaderDelegate {
     public static boolean update;
     public static String updateLink;
     private static InformationLoaderThread mapLoader;
-    private static boolean mapLoaderFinished;
+    private static InformationLoaderThread statsLoader;
     public static UndercastServer[] serverInformation;
     public static UndercastServer[] sortedServerInformation;
     public static int serverCount;
@@ -94,7 +95,6 @@ public class UndercastData implements InformationLoaderDelegate {
         keybind2 = new KeyBinding("undercast.inGameGui", Keyboard.getKeyIndex("L"));
         keybind3 = new KeyBinding("undercast.fullBright", Keyboard.getKeyIndex("G"));
         keybind4 = new KeyBinding("undercast.settings", Keyboard.getKeyIndex("P"));
-        mapLoaderFinished = false;
         serverInformation = new UndercastServer[999];
         serverCount = 0;
         filteredServerCount = 0;
@@ -109,8 +109,9 @@ public class UndercastData implements InformationLoaderDelegate {
         filterIndex = mod_Undercast.CONFIG.lastUsedFilter;
         try {
             mapLoader = new InformationLoaderThread(new URL("https://oc.tc/play"), this);
+            statsLoader = new InformationLoaderThread(new URL("https://oc.tc/"+Minecraft.getMinecraft().session.username), this);
         } catch(Exception e) {
-            System.out.println("[UndercastMod]: Failed to load maps");
+            System.out.println("[UndercastMod]: Failed to start information loaders");
             System.out.println("[UndercastMod]: ERROR: " + e.toString());
             e.printStackTrace();
         }
@@ -122,21 +123,44 @@ public class UndercastData implements InformationLoaderDelegate {
 
         try {
             mapLoader = new InformationLoaderThread(new URL("https://oc.tc/play"), instance);
+            statsLoader = new InformationLoaderThread(new URL("https://oc.tc/"+Minecraft.getMinecraft().session.username), instance);
         } catch(Exception e) {
-            System.out.println("[UndercastMod]: Failed to load maps");
+            System.out.println("[UndercastMod]: Failed to start information loaders");
             System.out.println("[UndercastMod]: ERROR: " + e.toString());
         }
-        
+
         if(isOC && getMatchState && mod_Undercast.CONFIG.parseMatchState) {
             ServersCommandParser.castByMod();
             Minecraft.getMinecraft().thePlayer.sendChatMessage("/servers 1");
         }
-        mapLoaderFinished = false;
     }
-    
+
     /** Part of the InformationLoaderDelegate, called when the loader is done */
     @Override
     public void websiteLoaded(String url, String contents) {
+        if (url.equals("https://oc.tc/play"))
+            updateMap(contents);
+        else 
+            updateStats(contents);
+    }
+
+    private static void updateStats(String cont) {
+        if (mod_Undercast.CONFIG.realtimeStats == false)
+            return;
+        try {
+            String[] data = PlayerStatsHTMLParser.parse(cont);
+            resetKills();
+            addKills(Integer.parseInt(data[0]));
+            resetDeaths();
+            addDeaths(Integer.parseInt(data[1]));
+        } catch (Exception e) {
+            System.out.println("[UndercastMod]: Failed to parse player stats");
+            System.out.println("[UndercastMod]: ERROR: " + e.toString());
+            e.printStackTrace();
+        }
+    }
+
+    private static void updateMap(String cont) {
         try {
             String[][] mapData = ServerStatusHTMLParser.parse(mapLoader.getContents());
             serverCount = mapData.length - 1; //-1 for lobby exclusion 
@@ -153,12 +177,12 @@ public class UndercastData implements InformationLoaderDelegate {
                     serverInformation[c].matchState = MatchState.Unknown;
                 }
                 try {
-                serverInformation[c].type = ServerType.valueOf(mapData[c][4].replace("-", ""));
+                    serverInformation[c].type = ServerType.valueOf(mapData[c][4].replace("-", ""));
                 } catch (Exception e) {
                     serverInformation[c].type = ServerType.Unknown;
                 }
             }
-            
+
             // set the map
             for(int c = 0; c < serverInformation.length; c++) {
                 if(serverInformation[c].getServerName() == null) {
@@ -171,7 +195,7 @@ public class UndercastData implements InformationLoaderDelegate {
                     currentServerType = serverInformation[c].type;
                 }
             }
-            
+
             filteredServerCount = serverCount;
             UndercastCustomMethods.sortAndFilterServers();
         } catch (Exception e) {
