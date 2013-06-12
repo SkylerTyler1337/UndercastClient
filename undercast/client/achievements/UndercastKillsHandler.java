@@ -19,8 +19,6 @@ import net.minecraft.src.mod_Undercast;
  */
 public class UndercastKillsHandler {
 
-    public BufferedImage killerBuffer = null;
-    public BufferedImage steveHeadBuffer = null;
     private String killer;
     private boolean killOrKilled;
 
@@ -68,37 +66,21 @@ public class UndercastKillsHandler {
     }
 
     private void printAchievement() {
-        killerBuffer = steveHeadBuffer;
-        //Thread charged to load the achievment gui
         Runnable r1 = new Runnable() {
-            public void run() {
-                URLConnection spoof = null;
-                try {
-                    spoof = new URL("https://minotar.net/helm/" + killer + "/16.png").openConnection();
-                    spoof.addRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0; H010818)");
-                    killerBuffer = ((BufferedImage) ImageIO.read(spoof.getInputStream()));
-                } catch (Exception ex) {
-                    Logger.getLogger(UndercastKillsHandler.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        };
-        Runnable r2 = new Runnable() {
             public void run() {
                 try {
                     Thread.sleep(1000L);
                     Achievement custom = (new Achievement(27, "custom", 1, 4, Item.ingotIron, (Achievement) null));
                    UndercastGuiAchievement gui = new UndercastGuiAchievement(Minecraft.getMinecraft());
                    Minecraft.getMinecraft().guiAchievement = gui;
-                   gui.addFakeAchievementToMyList(custom, killOrKilled, killer, killerBuffer);
+                   gui.addFakeAchievementToMyList(custom, killOrKilled, killer);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(UndercastKillsHandler.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         };
         Thread t1 = new Thread(r1);
-        Thread t2 = new Thread(r2);
         t1.start();
-        t2.start();
     }
 
     public void printFirstBloodAchievement() {
@@ -108,23 +90,7 @@ public class UndercastKillsHandler {
         } else {
             waitingTime = 0L;
         }
-        killerBuffer = steveHeadBuffer;
-        //Thread charged to load the achievment gui
         Runnable r1 = new Runnable() {
-            public void run() {
-                URLConnection spoof = null;
-                try {
-                    System.out.println("Beginning");
-                    spoof = new URL("https://minotar.net/helm/" + Minecraft.getMinecraft().thePlayer.username + "/16.png").openConnection();
-                    spoof.addRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0; H010818)");
-                    killerBuffer = ((BufferedImage) ImageIO.read(spoof.getInputStream()));
-                    System.out.println("finished");
-                } catch (Exception ex) {
-                    Logger.getLogger(UndercastKillsHandler.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        };
-        Runnable r2 = new Runnable() {
             public void run() {
                 try {
                     Thread.sleep(waitingTime);
@@ -132,48 +98,28 @@ public class UndercastKillsHandler {
                     Minecraft client = Minecraft.getMinecraft();
                     UndercastGuiAchievement gui = new UndercastGuiAchievement(Minecraft.getMinecraft());
                     client.guiAchievement = gui;
-                    gui.addFakeAchievementToMyList(custom, true, client.thePlayer.username, killerBuffer, client.thePlayer.username, "got the first Blood!");
+                    gui.addFakeAchievementToMyList(custom, true, client.thePlayer.username, client.thePlayer.username, "got the first Blood!");
                 } catch (InterruptedException ex) {
                     Logger.getLogger(UndercastKillsHandler.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         };
         Thread t1 = new Thread(r1);
-        Thread t2 = new Thread(r2);
         t1.start();
-        t2.start();
     }
 
     public void printLastKillAchievement() {
-        killerBuffer = steveHeadBuffer;
-        //Thread charged to load the achievment gui
         Runnable r1 = new Runnable() {
-            public void run() {
-                URLConnection spoof = null;
-                try {
-                    System.out.println("Beginning");
-                    spoof = new URL("https://minotar.net/helm/" + Minecraft.getMinecraft().thePlayer.username + "/16.png").openConnection();
-                    spoof.addRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0; H010818)");
-                    killerBuffer = ((BufferedImage) ImageIO.read(spoof.getInputStream()));
-                    System.out.println("finished");
-                } catch (Exception ex) {
-                    Logger.getLogger(UndercastKillsHandler.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        };
-        Runnable r2 = new Runnable() {
             public void run() {
                 Achievement custom = (new Achievement(27, "custom", 1, 4, Item.ingotIron, (Achievement) null));
                 Minecraft client = Minecraft.getMinecraft();
                 UndercastGuiAchievement gui = new UndercastGuiAchievement(Minecraft.getMinecraft());
                 client.guiAchievement = gui;
-                gui.addFakeAchievementToMyList(custom, true, client.thePlayer.username, killerBuffer, client.thePlayer.username, "got the last Kill!");
+                gui.addFakeAchievementToMyList(custom, true, client.thePlayer.username, client.thePlayer.username, "got the last Kill!");
 
             }
         };
         Thread t1 = new Thread(r1);
-        Thread t2 = new Thread(r2);
         t1.start();
-        t2.start();
     }
 }
