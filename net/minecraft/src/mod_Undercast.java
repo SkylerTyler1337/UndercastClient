@@ -23,6 +23,7 @@ import undercast.client.UndercastData;
 import undercast.client.UndercastData.ServerType;
 import undercast.client.UndercastData.Teams;
 import undercast.client.UndercastMenuButton;
+import undercast.client.achievements.UndercastGuiAchievement;
 import undercast.client.achievements.UndercastKillsHandler;
 import undercast.client.controls.UndercastControls;
 import undercast.client.internetTools.ServersCommandParser;
@@ -76,6 +77,8 @@ public class mod_Undercast extends BaseMod {
         new UndercastData();
 
         achievementHandler = new UndercastKillsHandler();
+        UndercastGuiAchievement gui = new UndercastGuiAchievement(Minecraft.getMinecraft());
+        Minecraft.getMinecraft().guiAchievement = gui;
         friendHandler = new FriendHandler();
 
         //check for update
@@ -89,7 +92,6 @@ public class mod_Undercast extends BaseMod {
         ModLoader.registerKey(this, UndercastData.keybind2, false);
         ModLoader.registerKey(this, UndercastData.keybind3, false);
         ModLoader.registerKey(this, UndercastData.keybind4, false);
-        
     }
 
     /**

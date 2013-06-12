@@ -67,8 +67,7 @@ public class UndercastKillsHandler {
 
     private void printAchievement() {
         Achievement custom = (new Achievement(27, "custom", 1, 4, Item.ingotIron, (Achievement) null));
-        UndercastGuiAchievement gui = new UndercastGuiAchievement(Minecraft.getMinecraft());
-        Minecraft.getMinecraft().guiAchievement = gui;
+        UndercastGuiAchievement gui = (UndercastGuiAchievement)Minecraft.getMinecraft().guiAchievement;
         gui.addFakeAchievementToMyList(custom, killOrKilled, killer);
     }
 
