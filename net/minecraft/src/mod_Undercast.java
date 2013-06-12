@@ -125,8 +125,6 @@ public class mod_Undercast extends BaseMod {
      * Draws the gui ingame based on the config file
      */
     public boolean onTickInGame(float time, Minecraft mc) {
-        UndercastData.update();
-        
         //if the game over screen is active then you have died
         //if it is the first time it is active count a death
         //if it is not don't do anything
@@ -270,7 +268,6 @@ public class mod_Undercast extends BaseMod {
     
     public boolean onTickInGUI(float tick, Minecraft mc, GuiScreen screen){
         undercastControls.onTickInGUI(tick, mc, screen);
-        UndercastData.update();
         this.addOvercastButton();
         // Listen for disconnect, as it isn't properly called
         if(UndercastData.isOC && screen instanceof GuiMainMenu) {

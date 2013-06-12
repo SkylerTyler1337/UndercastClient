@@ -116,54 +116,6 @@ public class UndercastData implements InformationLoaderDelegate {
         }
     }
 
-    public static void update() {
-        if(!mapLoaderFinished && mapLoader.getContents() != null) {
-            mapLoaderFinished = true;
-            try {
-                String[][] mapData = ServerStatusHTMLParser.parse(mapLoader.getContents());
-                serverCount = mapData.length - 1; //-1 for lobby exclusion 
-                for(int c = 0; c < mapData.length; c++) {
-                    serverInformation[c].name = mapData[c][0];
-                    try {
-                        serverInformation[c].playerCount = Integer.parseInt(mapData[c][1]);
-                    } catch(Exception e) {
-                        serverInformation[c].playerCount = -1;
-                    }
-                    serverInformation[c].currentMap = mapData[c][2];
-                    serverInformation[c].nextMap = mapData[c][3];
-                    if(serverInformation[c].matchState == null || !isOC) {
-                        serverInformation[c].matchState = MatchState.Unknown;
-                    }
-                    try {
-                    serverInformation[c].type = ServerType.valueOf(mapData[c][4].replace("-", ""));
-                    } catch (Exception e) {
-                        serverInformation[c].type = ServerType.Unknown;
-                    }
-                }
-                
-                // set the map
-                for(int c = 0; c < serverInformation.length; c++) {
-                    if(serverInformation[c].getServerName() == null) {
-                        serverCount = c - 1;
-                        break;
-                    }
-                    if(serverInformation[c].name.replace(" ", "").equalsIgnoreCase(server)) { // that space in the server name has taken me a lot of time
-                        map = serverInformation[c].currentMap;
-                        nextMap = serverInformation[c].nextMap;
-                        currentServerType = serverInformation[c].type;
-                    }
-                }
-                
-                filteredServerCount = serverCount;
-                UndercastCustomMethods.sortAndFilterServers();
-            } catch (Exception e) {
-                System.out.println("[UndercastMod]: Failed to parse maps");
-                System.out.println("[UndercastMod]: ERROR: " + e.toString());
-                e.printStackTrace();
-            }
-        }
-    }
-
     public static void reload(boolean getMatchState) {
         map = "Loading...";
         nextMap = "Loading...";
@@ -185,7 +137,48 @@ public class UndercastData implements InformationLoaderDelegate {
     /** Part of the InformationLoaderDelegate, called when the loader is done */
     @Override
     public void websiteLoaded(String url, String contents) {
-        //TODO: Do something
+        try {
+            String[][] mapData = ServerStatusHTMLParser.parse(mapLoader.getContents());
+            serverCount = mapData.length - 1; //-1 for lobby exclusion 
+            for(int c = 0; c < mapData.length; c++) {
+                serverInformation[c].name = mapData[c][0];
+                try {
+                    serverInformation[c].playerCount = Integer.parseInt(mapData[c][1]);
+                } catch(Exception e) {
+                    serverInformation[c].playerCount = -1;
+                }
+                serverInformation[c].currentMap = mapData[c][2];
+                serverInformation[c].nextMap = mapData[c][3];
+                if(serverInformation[c].matchState == null || !isOC) {
+                    serverInformation[c].matchState = MatchState.Unknown;
+                }
+                try {
+                serverInformation[c].type = ServerType.valueOf(mapData[c][4].replace("-", ""));
+                } catch (Exception e) {
+                    serverInformation[c].type = ServerType.Unknown;
+                }
+            }
+            
+            // set the map
+            for(int c = 0; c < serverInformation.length; c++) {
+                if(serverInformation[c].getServerName() == null) {
+                    serverCount = c - 1;
+                    break;
+                }
+                if(serverInformation[c].name.replace(" ", "").equalsIgnoreCase(server)) { // that space in the server name has taken me a lot of time
+                    map = serverInformation[c].currentMap;
+                    nextMap = serverInformation[c].nextMap;
+                    currentServerType = serverInformation[c].type;
+                }
+            }
+            
+            filteredServerCount = serverCount;
+            UndercastCustomMethods.sortAndFilterServers();
+        } catch (Exception e) {
+            System.out.println("[UndercastMod]: Failed to parse maps");
+            System.out.println("[UndercastMod]: ERROR: " + e.toString());
+            e.printStackTrace();
+        }
     }
 
     public static void addKills(double d) {
@@ -309,5 +302,4 @@ public class UndercastData implements InformationLoaderDelegate {
     public static void resetScore() {
         score = 0;
     }
-
 }
