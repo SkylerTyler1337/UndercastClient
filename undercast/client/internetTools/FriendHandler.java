@@ -30,10 +30,10 @@ public class FriendHandler {
      * @return true to display the chat message
      */
     public boolean handleMessage(String message) {
+        if(message.contains("joined the game") || message.contains("left the game")){
+            return true;
+        }
         if (isListening) {
-            if(!message.contains("Your Friends") && !(message.contains(" is online on ") || (message.contains(" seen ") && message.contains(" on ")))){
-                isListening = false;
-            }
             //Getting the number of pages if it is not already known
             if (pages == -1 && message.contains("------------  Your Friends")) {
                 int lengthOfNumber = message.substring(message.lastIndexOf(" of ") + 4, message.lastIndexOf(")")).length();
@@ -95,7 +95,8 @@ public class FriendHandler {
         if(isListening) {
             removeChatMessage();
         }
-        return !isListening;
+        boolean flag = message.contains("------------  Your Friends") || (message.contains(" is online on ") || (message.contains(" seen ") && message.contains(" on ")));
+        return !(isListening && flag);
     }
     private static void removeChatMessage(){
         try {
