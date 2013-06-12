@@ -105,7 +105,7 @@ public class mod_Undercast extends BaseMod {
             String message = StringUtils.stripControlCodes(var1);
             // stop global msg and team chat and whispered messages to go through
             if(!message.startsWith("<") && !message.startsWith("[Team]") && !message.startsWith("(From ") && !message.startsWith("(To ")&& UndercastData.isOC) {
-                new UndercastChatHandler(message, username, player);
+                new UndercastChatHandler(message, username, player, var1);
                 if(CONFIG.parseMatchState) {
                     ServersCommandParser.handleChatMessage(message, var1);
                 }

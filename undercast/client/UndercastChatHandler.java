@@ -11,7 +11,7 @@ import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.mod_Undercast;
 
 public class UndercastChatHandler {
-    public UndercastChatHandler(String message, String username, EntityPlayer player) {
+    public UndercastChatHandler(String message, String username, EntityPlayer player, String unstripedMessage) {
         //Friend tracking Joining.
         if (message.contains(" joined the game")) {
             String name;
@@ -58,6 +58,9 @@ public class UndercastChatHandler {
         else if (message.startsWith(username) && !message.toLowerCase().endsWith(" team")) {
             // if you die form someone
             if((message.contains(" by ") || message.contains(" took ") || message.contains(" fury of"))) {
+                if(message.contains(" by ") && UndercastCustomMethods.isTeamkill(unstripedMessage, username, message.substring(message.indexOf("by") + 3, message.lastIndexOf("'s") == -1 ? message.length() : message.lastIndexOf("'s")))) {
+                    return;
+                }
                 UndercastData.addKilled(1);
             }
                 UndercastData.addDeaths(1);
@@ -65,8 +68,10 @@ public class UndercastChatHandler {
         }
         //if you kill a person
         else if ((message.contains("by " + username) && !message.toLowerCase().contains(" destroyed by ")) || message.contains("took " + username) || message.contains("fury of " + username)) {
-            UndercastData.addKills(1);
-            UndercastData.addKillstreak(1);
+            if(!UndercastCustomMethods.isTeamkill(unstripedMessage, username, message.substring(0, message.indexOf(" ")))) {
+                UndercastData.addKills(1);
+                UndercastData.addKillstreak(1);
+            }
         }
         else if(message.startsWith(username + " scored") && message.toLowerCase().contains(" team")) {
             int score;
