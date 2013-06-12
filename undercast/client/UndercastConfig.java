@@ -370,11 +370,11 @@ public class UndercastConfig {
                 if(lastUsedFilter == 0) {
                     config.setProperty("lastUsedFilter", "0");
                 }
-            case 10:
+            case 9:
                 if(realtimeStats == true) {
                     config.setProperty("realtimeStats", "true");
                 }
-            case 11:
+            case 10:
                 //Next version
             }
             config.setProperty("configVersion", ""+version);
