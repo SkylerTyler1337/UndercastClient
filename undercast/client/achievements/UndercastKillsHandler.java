@@ -66,21 +66,10 @@ public class UndercastKillsHandler {
     }
 
     private void printAchievement() {
-        Runnable r1 = new Runnable() {
-            public void run() {
-                try {
-                    Thread.sleep(1000L);
-                    Achievement custom = (new Achievement(27, "custom", 1, 4, Item.ingotIron, (Achievement) null));
-                   UndercastGuiAchievement gui = new UndercastGuiAchievement(Minecraft.getMinecraft());
-                   Minecraft.getMinecraft().guiAchievement = gui;
-                   gui.addFakeAchievementToMyList(custom, killOrKilled, killer);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(UndercastKillsHandler.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        };
-        Thread t1 = new Thread(r1);
-        t1.start();
+        Achievement custom = (new Achievement(27, "custom", 1, 4, Item.ingotIron, (Achievement) null));
+        UndercastGuiAchievement gui = new UndercastGuiAchievement(Minecraft.getMinecraft());
+        Minecraft.getMinecraft().guiAchievement = gui;
+        gui.addFakeAchievementToMyList(custom, killOrKilled, killer);
     }
 
     public void printFirstBloodAchievement() {
@@ -109,17 +98,10 @@ public class UndercastKillsHandler {
     }
 
     public void printLastKillAchievement() {
-        Runnable r1 = new Runnable() {
-            public void run() {
                 Achievement custom = (new Achievement(27, "custom", 1, 4, Item.ingotIron, (Achievement) null));
                 Minecraft client = Minecraft.getMinecraft();
                 UndercastGuiAchievement gui = new UndercastGuiAchievement(Minecraft.getMinecraft());
                 client.guiAchievement = gui;
                 gui.addFakeAchievementToMyList(custom, true, client.thePlayer.username, client.thePlayer.username, "got the last Kill!");
-
-            }
-        };
-        Thread t1 = new Thread(r1);
-        t1.start();
     }
 }
