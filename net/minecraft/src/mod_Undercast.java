@@ -260,7 +260,7 @@ public class mod_Undercast extends BaseMod {
             if(brightActive && CONFIG.fullBright && (UndercastData.team == Teams.Observers || UndercastData.isGameOver)){
                 mc.fontRenderer.drawStringWithShadow("Full Bright: \u00A72ON", width, height, 16777215);
                  height += 8;
-            }else if(!brightActive && CONFIG.fullBright && UndercastData.team == Teams.Observers || UndercastData.isGameOver){
+            }else if(!brightActive && CONFIG.fullBright && (UndercastData.team == Teams.Observers || UndercastData.isGameOver)){
                 mc.fontRenderer.drawStringWithShadow("Full Bright: \u00A7cOFF", width, height, 16777215);
                  height += 8;
             }
