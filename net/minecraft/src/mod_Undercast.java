@@ -112,7 +112,7 @@ public class mod_Undercast extends BaseMod {
                     ServersCommandParser.handleChatMessage(message, var1);
                 }
                 if(CONFIG.showAchievements) {
-                    achievementHandler.handleMessage(message, username, player);
+                    achievementHandler.handleMessage(message, username, player, var1);
                 }
             }
             if(UndercastConfig.showFriends){
