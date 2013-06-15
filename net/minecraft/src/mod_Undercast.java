@@ -139,6 +139,8 @@ public class mod_Undercast extends BaseMod {
                 mc.currentScreen.buttonList.set(1, titleScreen);
                 mc.currentScreen.updateScreen();
             }
+            GuiGameOver gameOverScreen = (GuiGameOver) mc.currentScreen;
+            gameOverScreen.drawCenteredString(gameOverScreen.fontRenderer, "Killstreak" + ": " + EnumChatFormatting.YELLOW + (int)UndercastData.getPreviousKillstreak(), gameOverScreen.width / 2, 110, 16777215);
         }
 
         //get debug info for the fps

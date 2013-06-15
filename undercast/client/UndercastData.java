@@ -30,6 +30,7 @@ public class UndercastData implements InformationLoaderDelegate {
     public static double killed;
     public static int killstreak;
     public static int largestKillstreak;
+    public static int previousKillstreak;
     public static int score;
     public static UndercastData instance;
     // redudant assignation but kept for being java 6 compatible
@@ -279,6 +280,18 @@ public class UndercastData implements InformationLoaderDelegate {
         return killstreak;
     }
 
+    public static double getPreviousKillstreak() {
+        return previousKillstreak;
+    }
+    
+    public static void resetPreviousKillstreak() {
+        previousKillstreak = 0;
+    }
+    
+    public static void setPreviousKillstreak(int i) {
+        previousKillstreak = i;
+    }
+    
     public static void resetLargestKillstreak() {
         largestKillstreak = 0;
     }

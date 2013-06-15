@@ -65,6 +65,7 @@ public class UndercastChatHandler {
                 UndercastData.addKilled(1);
             }
                 UndercastData.addDeaths(1);
+                UndercastData.setPreviousKillstreak((int) UndercastData.getKillstreak());
                 UndercastData.resetKillstreak();
         }
         //if you kill a person
