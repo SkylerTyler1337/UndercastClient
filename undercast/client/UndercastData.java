@@ -68,6 +68,7 @@ public class UndercastData implements InformationLoaderDelegate {
     public static boolean incrementMatchTime;
     public static MatchTimer matchTimer;
     public static String currentGSClass = "Unknown";
+    public static PlayerStats stats;
 
     public static boolean guiShowing;
     public static KeyBinding keybind;
@@ -141,18 +142,35 @@ public class UndercastData implements InformationLoaderDelegate {
         if (url.equals("https://oc.tc/play"))
             updateMap(contents);
         else 
-            updateStats(contents);
+            updateStats(contents, url);
     }
 
-    private static void updateStats(String cont) {
+    private static void updateStats(String cont, String url) {
         if (mod_Undercast.CONFIG.realtimeStats == false)
             return;
         try {
             String[] data = PlayerStatsHTMLParser.parse(cont);
-            resetKills();
-            addKills(Integer.parseInt(data[0]));
-            resetDeaths();
-            addDeaths(Integer.parseInt(data[1]));
+            PlayerStats stats = new PlayerStats();
+            stats.kills = Integer.parseInt(data[0]);
+            stats.deaths = Integer.parseInt(data[1]);
+            stats.friendCount = Integer.parseInt(data[2]);
+            stats.kd = Double.parseDouble(data[3]);
+            stats.kk = Double.parseDouble(data[4]);
+            stats.serverJoins = Integer.parseInt(data[5]);
+            stats.forumPosts = Integer.parseInt(data[6]);
+            stats.startedTopics = Integer.parseInt(data[7]);
+            stats.wools = Integer.parseInt(data[8]);
+            stats.cores = Integer.parseInt(data[9]);
+            stats.monuments = Integer.parseInt(data[10]);
+            stats.name = url.replace("https://oc.tc/", "");
+            // only if no data relates on the current stats
+            if(UndercastData.kills == 0 && UndercastData.deaths == 0) {
+                UndercastData.stats = stats;
+            }
+//            resetKills();
+//            addKills(Integer.parseInt(data[0]));
+//            resetDeaths();
+//            addDeaths(Integer.parseInt(data[1]));
         } catch (Exception e) {
             System.out.println("[UndercastMod]: Failed to parse player stats");
             System.out.println("[UndercastMod]: ERROR: " + e.toString());

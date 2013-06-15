@@ -97,10 +97,10 @@ public class UndercastChatHandler {
             player.addChatMessage("\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-");
             player.addChatMessage("Final Stats:");
             player.addChatMessage("\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-");
-            player.addChatMessage("Kills: " + UndercastData.getKills());
-            player.addChatMessage("Deaths: " + UndercastData.getDeaths());
+            player.addChatMessage("Kills: " + (int)UndercastData.getKills() + " Total: " + (int)(UndercastData.kills + UndercastData.stats.kills));
+            player.addChatMessage("Deaths: " + (int)UndercastData.getDeaths() + " Total: " + (int)(UndercastData.deaths + UndercastData.stats.deaths));
             player.addChatMessage("K/D: " + UndercastCustomMethods.getKD());
-            player.addChatMessage("Kill Streak: " + UndercastData.getLargestKillstreak());
+            player.addChatMessage("Kill Streak: " + (int)UndercastData.getLargestKillstreak());
             UndercastData.resetKills();
             UndercastData.resetKilled();
             UndercastData.resetDeaths();
