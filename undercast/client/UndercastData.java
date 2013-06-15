@@ -90,6 +90,7 @@ public class UndercastData implements InformationLoaderDelegate {
         resetDeaths();
         resetKilled();
         resetLargestKillstreak();
+        stats = new PlayerStats();
         setTeam(Teams.Observers);
         guiShowing = true;
         keybind = new KeyBinding("undercast.gui", Keyboard.getKeyIndex("F6"));
@@ -118,7 +119,7 @@ public class UndercastData implements InformationLoaderDelegate {
         }
     }
 
-    public static void reload(boolean getMatchState) {
+    public static void reloadServerInformations(boolean getMatchState) {
         map = "Loading...";
         nextMap = "Loading...";
 
@@ -133,6 +134,15 @@ public class UndercastData implements InformationLoaderDelegate {
         if(isOC && getMatchState && mod_Undercast.CONFIG.parseMatchState) {
             ServersCommandParser.castByMod();
             Minecraft.getMinecraft().thePlayer.sendChatMessage("/servers 1");
+        }
+    }
+
+    public static void reloadStats() {
+        try {
+            statsLoader = new InformationLoaderThread(new URL("https://oc.tc/"+Minecraft.getMinecraft().session.username), instance);
+        } catch(Exception e) {
+            System.out.println("[UndercastMod]: Failed to start information loaders");
+            System.out.println("[UndercastMod]: ERROR: " + e.toString());
         }
     }
 
@@ -167,10 +177,6 @@ public class UndercastData implements InformationLoaderDelegate {
             if(UndercastData.kills == 0 && UndercastData.deaths == 0) {
                 UndercastData.stats = stats;
             }
-//            resetKills();
-//            addKills(Integer.parseInt(data[0]));
-//            resetDeaths();
-//            addDeaths(Integer.parseInt(data[1]));
         } catch (Exception e) {
             System.out.println("[UndercastMod]: Failed to parse player stats");
             System.out.println("[UndercastMod]: ERROR: " + e.toString());
@@ -308,7 +314,7 @@ public class UndercastData implements InformationLoaderDelegate {
 
     public static void setServer(String servers) {
         server = servers;
-        reload(false);
+        reloadServerInformations(false);
     }
 
     public static String getServer() {

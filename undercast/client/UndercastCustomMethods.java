@@ -94,6 +94,8 @@ public class UndercastCustomMethods {
         UndercastData.resetScore();
         UndercastData.isGameOver = false;
 
+        UndercastData.reloadStats();
+
         // stop the timer and reset it
         try {
             UndercastData.matchTimer.stop();

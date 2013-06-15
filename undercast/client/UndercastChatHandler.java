@@ -51,7 +51,8 @@ public class UndercastChatHandler {
             message = message.replace("Now playing ", "");
             UndercastData.setMap((message.split(" by ")[0]));
             if(UndercastData.getKills() == 0 && UndercastData.getDeaths() == 0) { // new match or observer or noob
-                UndercastData.reload(false);
+                UndercastData.reloadServerInformations(false);
+                UndercastData.reloadStats();
             }
         }
         //if you die
@@ -84,7 +85,7 @@ public class UndercastChatHandler {
         }
         //when you join a match
         else if (message.contains("You joined the")) {
-            
+            UndercastData.reloadStats();
             try {
                 UndercastData.setTeam(UndercastData.Teams.valueOf(message.replace("You joined the ", "").replace(" Team", "").replace(" team", "")));
             } catch(Exception e) {
@@ -165,6 +166,7 @@ public class UndercastChatHandler {
         } else if(message.toLowerCase().contains("the match has started")) {
             UndercastData.isGameOver = false;
             UndercastData.isNextKillFirstBlood = true;
+            UndercastData.reloadStats();
             
             // stop the timer
             try {
