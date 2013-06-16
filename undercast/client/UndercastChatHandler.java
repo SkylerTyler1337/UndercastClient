@@ -28,7 +28,7 @@ public class UndercastChatHandler {
                 UndercastData.friends.put(name, server);
             }
         }
-        //friend traking. Leaving
+        //friend tracking. Leaving
         else if (message.contains("left the game")) {
             String name;
             String server;
@@ -44,6 +44,17 @@ public class UndercastChatHandler {
                 if (UndercastData.friends.get(name).equals(server)) {
                     UndercastData.friends.put(name, "offline");
                 }
+            }
+        }
+        // friend tracking - switching
+        else if(message.contains(" changed servers")) {
+            String  name;
+            String server;
+            message = message.replace(" changed servers", "");
+            name = message.substring(message.indexOf("]") + 2);
+            server = message.substring(message.indexOf("» ") + 2, message.indexOf("]"));
+            if(UndercastData.friends.containsKey(name)) {
+                UndercastData.friends.put(name, server);
             }
         }
         //update what map you are playing on
