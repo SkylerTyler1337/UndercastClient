@@ -134,19 +134,20 @@ public class UndercastChatHandler {
                 UndercastData.setServer("Lobby");
                 UndercastCustomMethods.handleServerSwap();
             }
-            Thread t1 = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        Thread.sleep(2000);
-                        mod_Undercast.friendHandler.isListening = true;
-                        Minecraft.getMinecraft().thePlayer.sendChatMessage("/fr");
-                    } catch (InterruptedException ex) {
+            if(mod_Undercast.CONFIG.showFriends) {
+                Thread t1 = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.sleep(2000);
+                            mod_Undercast.friendHandler.isListening = true;
+                            Minecraft.getMinecraft().thePlayer.sendChatMessage("/fr");
+                        } catch (InterruptedException ex) {
+                        }
                     }
-
-                }
-            });
-            t1.start();
+                });
+                t1.start();
+            }
         }
         //server detection
         else if(message.contains("Teleporting you to ")) {
