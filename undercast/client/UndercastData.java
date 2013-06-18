@@ -70,6 +70,7 @@ public class UndercastData implements InformationLoaderDelegate {
     public static MatchTimer matchTimer;
     public static String currentGSClass = "Unknown";
     public static PlayerStats stats;
+    public static Integer[] parsedPages;
 
     public static boolean guiShowing;
     public static KeyBinding keybind;
@@ -101,6 +102,11 @@ public class UndercastData implements InformationLoaderDelegate {
         serverInformation = new UndercastServer[999];
         serverCount = 0;
         filteredServerCount = 0;
+        parsedPages = new Integer[4];
+        parsedPages[0] = 1;
+        parsedPages[1] = 2;
+        parsedPages[2] = 3;
+        parsedPages[3] = -1;
         for(int c = 0;c < serverInformation.length; c++) {
             serverInformation[c] = new UndercastServer();
         }

@@ -30,24 +30,38 @@ public class UndercastUpdaterThread extends Thread{
     public void run() {
         String readline = "";
         String readline2 = "Could not get update information.";
+        String readline3 = "1:2:3:-1";
         errorOccured = false;
         try {
             //download link
-            URL data = new URL("https://raw.github.com/UndercastTeam/UndercastClient/master/version.txt"); // forge version should use forge instead of master
+            URL data = new URL("https://raw.github.com/UndercastTeam/UndercastClient/master/version.txt");
             final BufferedReader in = new BufferedReader(new InputStreamReader(data.openStream()));
             readline = in.readLine();
             readline2 = in.readLine();
+            readline3 = in.readLine();
             UndercastData.latestVersion = readline;
         } catch (Exception e) {
             UndercastData.setUpdate(false);
             UndercastData.setUpdateLink("Could not get update information.");
         }
-        if(!mod_Undercast.MOD_VERSION.contains("dev") && compareVersions(readline)){
+        if (!mod_Undercast.MOD_VERSION.contains("dev") && compareVersions(readline)){
             UndercastData.setUpdate(false);
             if(!errorOccured) {
                 UndercastData.setUpdateLink(readline2);
             } else {
                 UndercastData.setUpdateLink("An unknown error occured while getting the update information.");
+            }
+        }
+        if (readline3 != null) {
+            try {
+                Integer[] pagesInt;
+                String[] pagesStr = readline3.split("[:]{1}");
+                pagesInt = new Integer[pagesStr.length];
+                for (int c = 0; c < pagesInt.length; c++) {
+                    pagesInt[c] = Integer.parseInt(pagesStr[c]);
+                }
+                UndercastData.parsedPages = pagesInt;
+            } catch (Exception e) {
             }
         }
         finished = true;
