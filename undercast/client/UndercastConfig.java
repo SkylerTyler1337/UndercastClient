@@ -37,6 +37,7 @@ public class UndercastConfig {
     public static boolean showMatchTimeSeconds;
     public static boolean showGSClass;
     public static boolean showScore;
+    public static boolean showTotalKills;
     public static int x;
     public static int y;
     public static boolean toggleTitleScreenButton;
@@ -82,6 +83,7 @@ public class UndercastConfig {
         defaults.setProperty("showMatchTimeSeconds", "true");
         defaults.setProperty("showGSClass", "true");
         defaults.setProperty("showScore", "true");
+        defaults.setProperty("showTotalKills", "true");
         defaults.setProperty("X", "2");
         defaults.setProperty("Y", "2");
         defaults.setProperty("toggleTitleScreenButton", "true");
@@ -96,7 +98,7 @@ public class UndercastConfig {
         defaults.setProperty("showLastKillAchievement", "true");
         defaults.setProperty("parseMatchState", "true");
         defaults.setProperty("lastUsedFilter", "0");
-        defaults.setProperty("realtimeStats", "false");
+        defaults.setProperty("realtimeStats", "true");
         // if the value is missing, it should force an update. Don't change it.
         defaults.setProperty("configVersion", "0");
     }
@@ -164,6 +166,7 @@ public class UndercastConfig {
             config.setProperty("showMatchTimeSeconds", "true");
             config.setProperty("showGSClass", "true");
             config.setProperty("showScore", "true");
+            config.setProperty("showTotalKills", "true");
             config.setProperty("X", "2");
             config.setProperty("Y", "2");
             config.setProperty("toggleTitleScreenButton", "true");
@@ -178,7 +181,7 @@ public class UndercastConfig {
             config.setProperty("showLastKillAchievement", "true");
             config.setProperty("parseMatchState", "true");
             config.setProperty("lastUsedFilter", "0");
-            config.setProperty("realtimeStats", "false");
+            config.setProperty("realtimeStats", "true");
             config.setProperty("configVersion", ""+version);
 
             config.store(new FileOutputStream(CONFIG_PATH + FILE_NAME),"This is the Unoffical Undercast Mod Config" + "\nCustomize it to your taste" + "\nkeyGui = Ingame Stats" +"\nkeyGui2 = Ingame Server Menu" + "\nkeyGui3 = Full Bright\n");
@@ -211,6 +214,7 @@ public class UndercastConfig {
         showMatchTimeSeconds = this.getBoolProperty("showMatchTimeSeconds");
         showGSClass = this.getBoolProperty("showGSClass");
         showScore = this.getBoolProperty("showScore");
+        showTotalKills = this.getBoolProperty("showTotalKills");
         x = this.getIntProperty("X");
         y = this.getIntProperty("Y");
         toggleTitleScreenButton = this.getBoolProperty("toggleTitleScreenButton");
@@ -373,6 +377,7 @@ public class UndercastConfig {
             case 9:
                 if(realtimeStats == true) {
                     config.setProperty("realtimeStats", "true");
+                    config.setProperty("showTotalKills", "true");
                 }
             case 10:
                 //Next version
