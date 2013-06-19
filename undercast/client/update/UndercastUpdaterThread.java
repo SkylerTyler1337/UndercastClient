@@ -31,6 +31,7 @@ public class UndercastUpdaterThread extends Thread{
         String readline = "";
         String readline2 = "Could not get update information.";
         String readline3 = "1:2:3:-1";
+        boolean emergencyParser = false; //If we should use the emergency parser
         errorOccured = false;
         try {
             //download link
@@ -39,6 +40,8 @@ public class UndercastUpdaterThread extends Thread{
             readline = in.readLine();
             readline2 = in.readLine();
             readline3 = in.readLine();
+            emergencyParser = Boolean.parseBoolean(in.readLine());
+            UndercastData.emergencyParser = emergencyParser;
             UndercastData.latestVersion = readline;
         } catch (Exception e) {
             UndercastData.setUpdate(false);

@@ -43,6 +43,7 @@ public class UndercastData implements InformationLoaderDelegate {
     public static boolean isLobby;
     public static boolean update;
     public static String updateLink;
+    public static boolean emergencyParser;
     private static InformationLoaderThread mapLoader;
     private static InformationLoaderThread statsLoader;
     public static UndercastServer[] serverInformation;
@@ -117,7 +118,10 @@ public class UndercastData implements InformationLoaderDelegate {
         sortIndex = 0;
         filterIndex = mod_Undercast.CONFIG.lastUsedFilter;
         try {
-            mapLoader = new InformationLoaderThread(new URL("https://oc.tc/play"), this);
+            if (!emergencyParser)
+                mapLoader = new InformationLoaderThread(new URL("https://oc.tc/play"), this);
+            else
+                mapLoader = new InformationLoaderThread(new URL("http://undercast-team.netau.net"), this);
             statsLoader = new InformationLoaderThread(new URL("https://oc.tc/"+Minecraft.getMinecraft().session.username), this);
         } catch(Exception e) {
             System.out.println("[UndercastMod]: Failed to start information loaders");
@@ -131,7 +135,10 @@ public class UndercastData implements InformationLoaderDelegate {
         nextMap = "Loading...";
 
         try {
-            mapLoader = new InformationLoaderThread(new URL("https://oc.tc/play"), instance);
+            if (!emergencyParser)
+                mapLoader = new InformationLoaderThread(new URL("https://oc.tc/play"), instance);
+            else
+                mapLoader = new InformationLoaderThread(new URL("http://undercast-team.netau.net"), instance);
         } catch(Exception e) {
             System.out.println("[UndercastMod]: Failed to start information loaders");
             System.out.println("[UndercastMod]: ERROR: " + e.toString());
@@ -155,7 +162,7 @@ public class UndercastData implements InformationLoaderDelegate {
     /** Part of the InformationLoaderDelegate, called when the loader is done */
     @Override
     public void websiteLoaded(String url, String contents) {
-        if (url.equals("https://oc.tc/play"))
+        if (url.equals("https://oc.tc/play") || url.contains("undercast-team.netau.net"))
             updateMap(contents);
         else 
             updateStats(contents, url);
