@@ -354,7 +354,7 @@ public class UndercastCustomMethods {
 
     public static String getKillDisplayString() {
         String str;
-        if(UndercastData.team == Teams.Observers && UndercastData.kills == 0 && UndercastData.deaths == 0) {
+        if(UndercastData.team == Teams.Observers && UndercastData.kills == 0 && UndercastData.deaths == 0 && mod_Undercast.CONFIG.realtimeStats) {
             if (mod_Undercast.CONFIG.showTotalKills) {
                 str = "Total Kills: \u00A7a" + (int)(UndercastData.getKills() + UndercastData.stats.kills);
             } else {
@@ -362,7 +362,7 @@ public class UndercastCustomMethods {
             }
         } else {
             str = "Kills: \u00A7a" + (int)UndercastData.getKills();
-            if(mod_Undercast.CONFIG.showTotalKills) {
+            if(mod_Undercast.CONFIG.showTotalKills && mod_Undercast.CONFIG.realtimeStats) {
                 str += "\u00A7f/\u00A7a" + (int)(UndercastData.getKills() + UndercastData.stats.kills);
             }
         }
@@ -371,7 +371,7 @@ public class UndercastCustomMethods {
 
     public static String getDeathDisplayString() {
         String str;
-        if(UndercastData.team == Teams.Observers && UndercastData.kills == 0 && UndercastData.deaths == 0) {
+        if(UndercastData.team == Teams.Observers && UndercastData.kills == 0 && UndercastData.deaths == 0 && mod_Undercast.CONFIG.realtimeStats) {
             if(mod_Undercast.CONFIG.showTotalKills) {
                 str = "Total Deaths: \u00A74" + (int)(UndercastData.getDeaths() + UndercastData.stats.deaths);
             } else {
@@ -379,7 +379,7 @@ public class UndercastCustomMethods {
             }
         } else {
             str = "Deaths: \u00A74" + (int)UndercastData.getDeaths();
-            if(mod_Undercast.CONFIG.showTotalKills) {
+            if(mod_Undercast.CONFIG.showTotalKills && mod_Undercast.CONFIG.realtimeStats) {
                 str += "\u00A7f/\u00A74" + (int)(UndercastData.getDeaths() + UndercastData.stats.deaths);
             }
         }
