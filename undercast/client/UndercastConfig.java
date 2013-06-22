@@ -50,6 +50,7 @@ public class UndercastConfig {
     public static boolean showDeathAchievements;
     public static boolean showFirstBloodAchievement;
     public static boolean showLastKillAchievement;
+    public static boolean displaySpecialKillMessages;
     public static boolean parseMatchState;
     public static boolean realtimeStats;
     public static int lastUsedFilter;
@@ -96,6 +97,7 @@ public class UndercastConfig {
         defaults.setProperty("showDeathAchievements", "true");
         defaults.setProperty("showFirstBloodAchievement", "true");
         defaults.setProperty("showLastKillAchievement", "true");
+        defaults.setProperty("displaySpecialKillMessages", "true");
         defaults.setProperty("parseMatchState", "true");
         defaults.setProperty("lastUsedFilter", "0");
         defaults.setProperty("realtimeStats", "true");
@@ -179,6 +181,7 @@ public class UndercastConfig {
             config.setProperty("showDeathAchievements", "true");
             config.setProperty("showFirstBloodAchievement", "true");
             config.setProperty("showLastKillAchievement", "true");
+            config.setProperty("displaySpecialKillMessages", "true");
             config.setProperty("parseMatchState", "true");
             config.setProperty("lastUsedFilter", "0");
             config.setProperty("realtimeStats", "true");
@@ -227,6 +230,7 @@ public class UndercastConfig {
         showDeathAchievements = this.getBoolProperty("showDeathAchievements");
         showFirstBloodAchievement = this.getBoolProperty("showFirstBloodAchievement");
         showLastKillAchievement = this.getBoolProperty("showLastKillAchievement");
+        displaySpecialKillMessages = this.getBoolProperty("displaySpecialKillMessages");
         parseMatchState = this.getBoolProperty("parseMatchState");
         lastUsedFilter = this.getIntProperty("lastUsedFilter");
         configVersion = this.getIntProperty("configVersion");
@@ -377,7 +381,12 @@ public class UndercastConfig {
             case 9:
                 if(realtimeStats == true) {
                     config.setProperty("realtimeStats", "true");
+                }
+                if(showAchievements == true) {
                     config.setProperty("showTotalKills", "true");
+                }
+                if(displaySpecialKillMessages == true) {
+                    config.setProperty("displaySpecialKillMessages", "true");
                 }
             case 10:
                 //Next version
