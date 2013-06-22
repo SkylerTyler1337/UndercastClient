@@ -58,6 +58,11 @@ public class FriendHandler {
                         UndercastData.friends.put(friend, "offline");
                     }
                 }
+            } else if(message.contains(" is online")) {
+                String friend = message.split(" ")[0].replace("*", "");
+                if (!UndercastData.friends.containsKey(friend)) {
+                    UndercastData.friends.put(friend, UndercastData.server);
+                }
             }
             if (UndercastData.friends.size() % 8 == 0 && currentPage < pages && !UndercastData.friends.isEmpty() && !message.contains("Your Friends")) {
                 Thread t1 = new Thread(new Runnable() {
@@ -106,7 +111,7 @@ public class FriendHandler {
             // remove the message (20 most recent chat messages are enough)
             for(int c = 0; c < 20; c++) {
                 ChatLine line = (ChatLine)chatLines.get(c);
-                if(StringUtils.stripControlCodes(line.getChatLineString()).contains("Your Friends") || StringUtils.stripControlCodes(line.getChatLineString()).contains(" is online on ") || (StringUtils.stripControlCodes(line.getChatLineString()).contains(" seen ") && (StringUtils.stripControlCodes(line.getChatLineString()).contains(" on ")))) {
+                if(StringUtils.stripControlCodes(line.getChatLineString()).contains("Your Friends") || StringUtils.stripControlCodes(line.getChatLineString()).contains(" is online") || (StringUtils.stripControlCodes(line.getChatLineString()).contains(" seen ") && (StringUtils.stripControlCodes(line.getChatLineString()).contains(" on ")))) {
                     chatLines.remove(c);
                     break;
                 }

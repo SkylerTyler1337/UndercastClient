@@ -93,6 +93,7 @@ public class UndercastData implements InformationLoaderDelegate {
         resetDeaths();
         resetKilled();
         resetLargestKillstreak();
+        resetScore();
         stats = new PlayerStats();
         setTeam(Teams.Observers);
         guiShowing = true;
