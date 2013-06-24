@@ -66,7 +66,7 @@ public class UndercastKillsHandler {
                 }
                 if (isSpecialKill(kills)) {
                     if(mod_Undercast.CONFIG.displaySpecialKillMessages) {
-                        Minecraft.getMinecraft().thePlayer.addChatMessage("[UndercastMod] \u00A7lSPECIAL KILL(" + kills + "): \u00A7" + killer);
+                        Minecraft.getMinecraft().thePlayer.addChatMessage("[UndercastMod] \u00A7lSPECIAL KILL(" + kills + "): \u00A7c" + killer);
                     }
                     SpecialKillLogger.logSpecialKill(kills, killer, UndercastData.server, UndercastData.map);
                 }
