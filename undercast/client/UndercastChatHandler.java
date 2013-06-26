@@ -119,6 +119,7 @@ public class UndercastChatHandler {
             UndercastData.resetDeaths();
             UndercastData.resetKillstreak();
             UndercastData.resetLargestKillstreak();
+            UndercastData.resetScore();
             UndercastData.setTeam(UndercastData.Teams.Observers);
         }
         //filters [Tip] messages

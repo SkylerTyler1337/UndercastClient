@@ -347,6 +347,7 @@ public class mod_Undercast extends BaseMod {
         UndercastData.resetDeaths();
         UndercastData.resetKillstreak();
         UndercastData.resetLargestKillstreak();
+        UndercastData.resetScore();
         UndercastData.setMap("Attempting to fetch map...");
         if(mc.gameSettings.gammaSetting>=brightLevel){
             brightActive=false;
