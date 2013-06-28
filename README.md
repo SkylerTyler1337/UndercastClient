@@ -34,7 +34,7 @@ __Installing__
     * Open your minecraft.jar
     * Delete Meta-inf file that contain the word, "mojang."
     * Drag all Minecraft forge files into the jar.
-    * Drag all files from the Undercast Mod ZIP into the mods folder.
+    * Drag the Undercast Mod ZIP into the mods folder.
     * Start Minecraft!
 * Installing with Modloader:
     * Download Modloader.
