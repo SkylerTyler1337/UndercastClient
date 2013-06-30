@@ -139,8 +139,10 @@ public class mod_Undercast extends BaseMod {
                 mc.currentScreen.buttonList.set(1, titleScreen);
                 mc.currentScreen.updateScreen();
             }
-            GuiGameOver gameOverScreen = (GuiGameOver) mc.currentScreen;
-            gameOverScreen.drawCenteredString(gameOverScreen.fontRenderer, "Killstreak" + ": " + EnumChatFormatting.YELLOW + (int)UndercastData.getPreviousKillstreak(), gameOverScreen.width / 2, 110, 16777215);
+            if(UndercastData.isOC) {
+                GuiGameOver gameOverScreen = (GuiGameOver) mc.currentScreen;
+                gameOverScreen.drawCenteredString(gameOverScreen.fontRenderer, "Killstreak" + ": " + EnumChatFormatting.YELLOW + (int)UndercastData.getPreviousKillstreak(), gameOverScreen.width / 2, 110, 16777215);
+            }
         }
 
         //get debug info for the fps
@@ -298,7 +300,7 @@ public class mod_Undercast extends BaseMod {
     public void clientConnect(NetClientHandler var1) {
         UndercastData.setTeam(UndercastData.Teams.Observers); 
         //if logging onto a overcast network server, then enable the main mod
-        if (var1.getNetManager().getSocketAddress().toString().contains(".oc.tc")) {
+        if (var1.getNetManager().getSocketAddress().toString().contains(".oc.tc") && !var1.getNetManager().getSocketAddress().toString().contains("mc.oc.tc")) {
             // What happens if logs into project ares
             UndercastData.isOC = true;
             UndercastData.isLobby = true;
@@ -346,6 +348,7 @@ public class mod_Undercast extends BaseMod {
         UndercastData.resetKilled();
         UndercastData.resetDeaths();
         UndercastData.resetKillstreak();
+        UndercastData.resetPreviousKillstreak();
         UndercastData.resetLargestKillstreak();
         UndercastData.resetScore();
         UndercastData.setMap("Attempting to fetch map...");
