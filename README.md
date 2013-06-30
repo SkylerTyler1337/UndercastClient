@@ -29,18 +29,18 @@ __Installing__
     * Forge: http://files.minecraftforge.net/
     * Modloader: http://www.minecraftforum.net/topic/75440-v152-risugamis-mods-updated/
 * Installing with forge:
-    * Download recommended universal package.
+    * Download the recommended universal package.
     * Open the downloaded file.
     * Open your minecraft.jar
-    * Delete Meta-inf file that contain the word, "mojang."
+    * Delete the meta-inf file that contains the word "mojang."
     * Drag all Minecraft forge files into the jar.
-    * Drag the Undercast Mod ZIP into the mods folder.
-    * Start Minecraft!
+    * Start Minecraft.
+    * In your .minecraft, a mods folder was created, drag the Undercast Mod ZIP into that folder.
 * Installing with Modloader:
     * Download Modloader.
-    * Open downloaded ZIP.
+    * Open the downloaded ZIP.
     * Open your minecraft.jar.
-    * Delete all Meta-inf files.
+    * Delete all meta-inf files.
     * Drag all Modloader files into the jar.
     * Start Minecraft.
     * In your .minecraft, a mods folder was created, drag the Undercast Mod ZIP into that folder.
