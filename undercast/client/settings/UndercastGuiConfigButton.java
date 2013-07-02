@@ -4,7 +4,7 @@
  */
 package undercast.client.settings;
 
-import net.minecraft.client.Minecraft;
+import net.minecraft.src.Minecraft;
 import net.minecraft.src.GuiButton;
 import net.minecraft.src.GuiScreen;
 import undercast.client.settings.SettingsGUI;

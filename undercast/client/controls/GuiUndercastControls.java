@@ -4,6 +4,7 @@ import net.minecraft.src.GameSettings;
 import net.minecraft.src.GuiButton;
 import net.minecraft.src.GuiScreen;
 import net.minecraft.src.StringTranslate;
+import net.minecraft.src.mod_Undercast;
 
 public class GuiUndercastControls extends GuiScreen {
     /**
@@ -33,9 +34,9 @@ public class GuiUndercastControls extends GuiScreen {
      */
     public void initGui() {
         this.scrollPane = new GuiControlsScrollPanel(this, this.options, this.mc);
-        StringTranslate stringtranslate = StringTranslate.getInstance();
+        StringTranslate stringtranslate = mod_Undercast.getStringTranslate();
         this.buttonList.add(new GuiButton(200, this.width / 2 - 100, this.height - 24, stringtranslate.translateKey("gui.done")));
-        this.scrollPane.registerScrollButtons(this.buttonList, 7, 8);
+        scrollPane.func_110509_d(7, 8);
         this.screenTitle = stringtranslate.translateKey("controls.title");
     }
 

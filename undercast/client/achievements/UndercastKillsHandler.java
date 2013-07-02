@@ -6,7 +6,7 @@ import java.net.URLConnection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import net.minecraft.client.Minecraft;
+import net.minecraft.src.Minecraft;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.Item;
 import net.minecraft.src.Achievement;
@@ -116,7 +116,7 @@ public class UndercastKillsHandler {
                     Achievement custom = (new Achievement(27, "custom", 1, 4, Item.ingotIron, (Achievement) null));
                     Minecraft client = Minecraft.getMinecraft();
                     UndercastGuiAchievement gui = (UndercastGuiAchievement)Minecraft.getMinecraft().guiAchievement;
-                    gui.addFakeAchievementToMyList(custom, true, client.thePlayer.username, client.thePlayer.username, "got the first Blood!");
+                    gui.addFakeAchievementToMyList(custom, true, mod_Undercast.getUsername(), mod_Undercast.getUsername(), "got the first Blood!");
                 } catch (InterruptedException ex) {
                     Logger.getLogger(UndercastKillsHandler.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -130,7 +130,7 @@ public class UndercastKillsHandler {
         Achievement custom = (new Achievement(27, "custom", 1, 4, Item.ingotIron, (Achievement) null));
         Minecraft client = Minecraft.getMinecraft();
         UndercastGuiAchievement gui = (UndercastGuiAchievement)Minecraft.getMinecraft().guiAchievement;
-        gui.addFakeAchievementToMyList(custom, true, client.thePlayer.username, client.thePlayer.username, "got the last Kill!");
+        gui.addFakeAchievementToMyList(custom, true, mod_Undercast.getUsername(), mod_Undercast.getUsername(), "got the last Kill!");
     }
 
     private void printTeamKillAchievement() {

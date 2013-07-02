@@ -2,7 +2,7 @@ package undercast.client.controls;
 
 import org.lwjgl.input.Keyboard;
 
-import net.minecraft.client.Minecraft;
+import net.minecraft.src.Minecraft;
 import net.minecraft.src.*;
 
 public class UndercastControls {

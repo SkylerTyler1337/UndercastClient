@@ -8,10 +8,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import javax.imageio.ImageIO;
-import net.minecraft.client.Minecraft;
+import net.minecraft.src.Minecraft;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
+
+import net.minecraft.src.AbstractClientPlayer;
 import net.minecraft.src.Gui;
+import net.minecraft.src.ResourceLocation;
 import net.minecraft.src.ScaledResolution;
 import net.minecraft.src.GuiAchievement;
 import net.minecraft.src.RenderHelper;
@@ -173,7 +176,7 @@ public class UndercastGuiAchievement extends GuiAchievement {
                 int j = 0 - (int) (d1 * 36.0D);
                 GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
                 GL11.glEnable(GL11.GL_TEXTURE_2D);
-                this.theGame.renderEngine.bindTexture("/achievement/bg.png");
+                Minecraft.getMinecraft().func_110434_K().func_110577_a(new ResourceLocation("textures/gui/achievement/achievement_background.png"));
                 GL11.glDisable(GL11.GL_LIGHTING);
                 this.drawTexturedModalRect(i, j, 96, 202, 160, 32);
 
@@ -193,13 +196,11 @@ public class UndercastGuiAchievement extends GuiAchievement {
                 GL11.glEnable(GL11.GL_COLOR_MATERIAL);
                 GL11.glEnable(GL11.GL_LIGHTING);
                 if (!this.isFakeAchievement) {
-                    this.itemRender.renderItemAndEffectIntoGUI(this.theGame.fontRenderer, this.theGame.renderEngine, this.theAchievement.theItemStack, i + 8, j + 8);
+                    this.itemRender.func_110797_b(this.theGame.fontRenderer, this.theGame.func_110434_K(), this.theAchievement.theItemStack, i + 8, j + 8);
                 } else {
                     String str = "https://minotar.net/helm/" + this.killerName + "/16.png";
-                    if (!Minecraft.getMinecraft().renderEngine.hasImageData(str)) {
-                        Minecraft.getMinecraft().renderEngine.obtainImageData(str, new ImageBufferDownload());
-                    }
-                    GL11.glBindTexture(GL11.GL_TEXTURE_2D, Minecraft.getMinecraft().renderEngine.getTextureForDownloadableImage(str, ""));
+                    ResourceLocation resourcelocation = AbstractClientPlayer.func_110311_f(str);
+                    AbstractClientPlayer.func_110304_a(resourcelocation, str); 
                     GL11.glPushMatrix(); // New GL11 matrix to not affect other part of the gui
                     GL11.glColor4f(1, 1, 1, 1); // White light on the image
                     GL11.glScalef(1F / 4F, 1F / 8F, 1F);// Resizing the image (height/4 and width/8)

@@ -1,8 +1,9 @@
 package undercast.client.server;
 
-import net.minecraft.client.Minecraft;
+import net.minecraft.src.Minecraft;
 import net.minecraft.src.GuiButton;
 import net.minecraft.src.ModLoader;
+import net.minecraft.src.ResourceLocation;
 import net.minecraft.src.Tessellator;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.input.Mouse;
@@ -318,7 +319,7 @@ public abstract class UndercastServerSlotGui {
         GL11.glDisable(GL11.GL_FOG);
         Tessellator var18 = Tessellator.instance;
         if (!this.parent.inGame) {
-            ModLoader.getMinecraftInstance().renderEngine.bindTexture("/gui/background.png");
+            Minecraft.getMinecraft().func_110434_K().func_110577_a(new ResourceLocation("textures/gui/options_background.png"));
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         }
         if (this.parent.inGame) {
@@ -467,7 +468,7 @@ public abstract class UndercastServerSlotGui {
      */
     private void overlayBackground(int par1, int par2, int par3, int par4) {
         Tessellator var5 = Tessellator.instance;
-        ModLoader.getMinecraftInstance().renderEngine.bindTexture("/gui/background.png");
+        Minecraft.getMinecraft().func_110434_K().func_110577_a(new ResourceLocation("textures/gui/options_background.png"));
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         float var6 = 32.0F;
         var5.startDrawingQuads();

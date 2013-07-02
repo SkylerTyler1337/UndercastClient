@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 
-import net.minecraft.client.Minecraft;
+import net.minecraft.src.Minecraft;
 import undercast.client.PlayTimeCounterThread;
 import undercast.client.UndercastChatHandler;
 import undercast.client.UndercastConfig;
@@ -446,5 +446,12 @@ public class mod_Undercast extends BaseMod {
                 buttonListSize = mc.currentScreen.buttonList.size();
             }
         }
+    }
+    
+    public static String getUsername() {
+        return Minecraft.getMinecraft().func_110432_I().func_111285_a();
+    }
+    public static StringTranslate getStringTranslate() {
+        return StringTranslate.getInstance();
     }
 }

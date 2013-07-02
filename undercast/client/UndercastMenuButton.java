@@ -1,6 +1,6 @@
 package undercast.client;
 
-import net.minecraft.client.Minecraft;
+import net.minecraft.src.Minecraft;
 import net.minecraft.src.GuiButton;
 import net.minecraft.src.ModLoader;
 import undercast.client.server.UndercastServerGUI;

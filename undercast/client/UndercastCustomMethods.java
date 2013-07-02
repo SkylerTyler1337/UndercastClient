@@ -4,7 +4,7 @@ package undercast.client;
 //You may not claim this to be your own
 //You may not remove these comments
 
-import net.minecraft.client.Minecraft;
+import net.minecraft.src.Minecraft;
 import net.minecraft.src.ChatAllowedCharacters;
 import net.minecraft.src.MathHelper;
 import net.minecraft.src.Packet;

@@ -1,6 +1,6 @@
 package undercast.client.controls;
 
-import net.minecraft.client.Minecraft;
+import net.minecraft.src.Minecraft;
 import net.minecraft.src.*;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
@@ -43,9 +43,9 @@ public class GuiControlsScrollPanel extends GuiSlot {
         return false;
     }
 
-    @Override
-    protected void drawBackground() {
-    }
+//    @Override
+//    protected void drawBackground() {
+//    }
 
     @Override
     public void drawScreen(int mX, int mY, float f) {
@@ -70,7 +70,7 @@ public class GuiControlsScrollPanel extends GuiSlot {
         xPosition -= 20;
         boolean flag = this._mouseX >= xPosition && this._mouseY >= yPosition && this._mouseX < xPosition + width && this._mouseY < yPosition + height;
         int k = (flag ? 2 : 1);
-        this.mc.renderEngine.bindTexture("/gui/gui.png");
+        Minecraft.getMinecraft().func_110434_K().func_110577_a(new ResourceLocation("textures/gui/widgets.png"));;
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.controls.drawTexturedModalRect(xPosition, yPosition, 0, 46 + k * 20, width / 2, height);
         this.controls.drawTexturedModalRect(xPosition + width / 2, yPosition, 200 - width / 2, 46 + k * 20, width / 2, height);
@@ -98,5 +98,10 @@ public class GuiControlsScrollPanel extends GuiSlot {
         }
 
         return true;
+    }
+
+    @Override
+    // maybe the same as draw background
+    protected void func_130003_c() {
     }
 }

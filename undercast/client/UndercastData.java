@@ -4,7 +4,7 @@ package undercast.client;
 //You may not claim this to be your own
 //You may not remove these comments
 
-import net.minecraft.client.Minecraft;
+import net.minecraft.src.Minecraft;
 import net.minecraft.src.KeyBinding;
 import net.minecraft.src.mod_Undercast;
 
@@ -123,7 +123,7 @@ public class UndercastData implements InformationLoaderDelegate {
                 mapLoader = new InformationLoaderThread(new URL("https://oc.tc/play"), this);
             else
                 mapLoader = new InformationLoaderThread(new URL("http://undercast-team.netau.net"), this);
-            statsLoader = new InformationLoaderThread(new URL("https://oc.tc/"+Minecraft.getMinecraft().session.username), this);
+            statsLoader = new InformationLoaderThread(new URL("https://oc.tc/"+mod_Undercast.getUsername()), this);
         } catch(Exception e) {
             System.out.println("[UndercastMod]: Failed to start information loaders");
             System.out.println("[UndercastMod]: ERROR: " + e.toString());
@@ -153,7 +153,7 @@ public class UndercastData implements InformationLoaderDelegate {
 
     public static void reloadStats() {
         try {
-            statsLoader = new InformationLoaderThread(new URL("https://oc.tc/"+Minecraft.getMinecraft().session.username), instance);
+            statsLoader = new InformationLoaderThread(new URL("https://oc.tc/"+mod_Undercast.getUsername()), instance);
         } catch(Exception e) {
             System.out.println("[UndercastMod]: Failed to start information loaders");
             System.out.println("[UndercastMod]: ERROR: " + e.toString());

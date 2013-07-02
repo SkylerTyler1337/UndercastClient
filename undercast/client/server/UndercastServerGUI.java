@@ -4,7 +4,6 @@ package undercast.client.server;
 //You may not claim this to be your own
 //You may not remove these comments
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.src.*;
 import undercast.client.*;
 
@@ -36,7 +35,7 @@ public class UndercastServerGUI extends GuiScreen {
      * have buttons/control elements in here.
      */
     public void initGui() {
-        StringTranslate stringtranslate = StringTranslate.getInstance();
+        StringTranslate stringtranslate = mod_Undercast.getStringTranslate();
 
         this.buttonList.add(new GuiButtonTooltip(0, this.width / 2 - 100, height - 52, 98, 20, stringtranslate.translateKey("selectServer.select"),"Join / Swap to the selected server"));
         this.buttonList.add(guibuttonrefresh = new GuiButtonTooltip(1, this.width / 2 + 2, height - 52, 98, 20, stringtranslate.translateKey("selectServer.refresh"), "Refresh the server list"));
@@ -81,7 +80,7 @@ public class UndercastServerGUI extends GuiScreen {
         }
         //stats button
         if (guibutton.id == 3) {
-            String username = this.mc.session.username;
+            String username = mod_Undercast.getUsername();
             try {
                 Desktop.getDesktop().browse(new URI("http://oc.tc/" + username));
             } catch (Exception ignored) {

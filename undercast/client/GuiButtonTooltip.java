@@ -4,10 +4,11 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-import net.minecraft.client.Minecraft;
+import net.minecraft.src.Minecraft;
 import net.minecraft.src.FontRenderer;
 import net.minecraft.src.GuiButton;
 import net.minecraft.src.RenderHelper;
+import net.minecraft.src.ResourceLocation;
 import net.minecraft.src.mod_Undercast;
 
 import org.lwjgl.opengl.GL11;
@@ -28,7 +29,7 @@ public class GuiButtonTooltip extends GuiButton {
         if (this.drawButton)
         {
             FontRenderer fontrenderer = par1Minecraft.fontRenderer;
-            par1Minecraft.renderEngine.bindTexture("/gui/gui.png");
+            Minecraft.getMinecraft().func_110434_K().func_110577_a(new ResourceLocation("textures/gui/widgets.png"));
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
             this.field_82253_i = par2 >= this.xPosition && par3 >= this.yPosition && par2 < this.xPosition + this.width && par3 < this.yPosition + this.height;
             int k = this.getHoverState(this.field_82253_i);

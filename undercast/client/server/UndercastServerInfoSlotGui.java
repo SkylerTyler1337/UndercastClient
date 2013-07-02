@@ -1,6 +1,6 @@
 package undercast.client.server;
 
-import net.minecraft.client.Minecraft;
+import net.minecraft.src.Minecraft;
 import net.minecraft.src.Tessellator;
 import undercast.client.UndercastData;
 

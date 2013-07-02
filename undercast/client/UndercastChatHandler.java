@@ -5,7 +5,7 @@ package undercast.client;
 //You may not remove these comments
 
 import undercast.client.achievements.UndercastKillsHandler;
-import net.minecraft.client.Minecraft;
+import net.minecraft.src.Minecraft;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.mod_Undercast;

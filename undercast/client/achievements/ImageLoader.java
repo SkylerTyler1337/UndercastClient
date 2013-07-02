@@ -3,20 +3,20 @@ package undercast.client.achievements;
 import java.awt.image.BufferedImage;
 import java.nio.ByteBuffer;
 import net.minecraft.src.GLAllocation;
-import net.minecraft.src.RenderEngine;
+import net.minecraft.src.ResourceManager;
+import net.minecraft.src.TextureManager;
 import net.minecraft.src.GameSettings;
-import net.minecraft.src.TexturePackList;
+import net.minecraft.src.ResourcePackRepository;
 import org.lwjgl.opengl.GL11;
 
-public class ImageLoader extends RenderEngine {
+public class ImageLoader extends TextureManager {
 
     private ByteBuffer imageData = GLAllocation.createDirectByteBuffer(16777216);
     private BufferedImage prevImage;
 
-    public ImageLoader(TexturePackList par1TexturePackList, GameSettings par2GameSettings) {
-        super(par1TexturePackList, par2GameSettings);
+    public ImageLoader(ResourceManager par1ResourceManager) {
+        super(par1ResourceManager);
     }
-
     public void setupTexture(BufferedImage par1BufferedImage, int par2, int x, int y) {
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, par2);
         GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_NEAREST);
@@ -35,14 +35,14 @@ public class ImageLoader extends RenderEngine {
             for (int var7 = 0; var7 < var5.length; ++var7)
             {
                 int var8 = var5[var7] >> 24 & 255;
-                int var9 = var5[var7] >> 16 & 255;
-                int var10 = var5[var7] >> 8 & 255;
-                int var11 = var5[var7] & 255;
+            int var9 = var5[var7] >> 16 & 255;
+            int var10 = var5[var7] >> 8 & 255;
+            int var11 = var5[var7] & 255;
 
-                var6[var7 * 4 + 0] = (byte) var9;
-                var6[var7 * 4 + 1] = (byte) var10;
-                var6[var7 * 4 + 2] = (byte) var11;
-                var6[var7 * 4 + 3] = (byte) var8;
+            var6[var7 * 4 + 0] = (byte) var9;
+            var6[var7 * 4 + 1] = (byte) var10;
+            var6[var7 * 4 + 2] = (byte) var11;
+            var6[var7 * 4 + 3] = (byte) var8;
             }
 
             this.imageData.clear();

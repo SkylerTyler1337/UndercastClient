@@ -61,7 +61,7 @@ public class UndercastConfig {
      */
     static {
         try {
-            CONFIG_PATH = ModLoader.getMinecraftInstance().getMinecraftDir().getCanonicalPath() + File.separatorChar + "config" + File.separatorChar + "UndercastClient" + File.separatorChar;
+            CONFIG_PATH = ModLoader.getMinecraftInstance().mcDataDir.getCanonicalPath() + File.separatorChar + "config" + File.separatorChar + "UndercastClient" + File.separatorChar;
         } catch(Exception e) {
             System.out.println("[UndercastMod]: Failed to get config path.");
         }
