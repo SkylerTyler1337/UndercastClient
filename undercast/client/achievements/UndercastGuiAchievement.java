@@ -13,6 +13,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
 import net.minecraft.src.AbstractClientPlayer;
+import net.minecraft.src.EntityRendererProxy;
 import net.minecraft.src.Gui;
 import net.minecraft.src.ResourceLocation;
 import net.minecraft.src.ScaledResolution;
@@ -22,6 +23,7 @@ import net.minecraft.src.RenderItem;
 import net.minecraft.src.Achievement;
 import net.minecraft.src.StatCollector;
 import net.minecraft.src.ImageBufferDownload;
+import net.minecraft.src.mod_Undercast;
 
 public class UndercastGuiAchievement extends GuiAchievement {
 
@@ -148,6 +150,10 @@ public class UndercastGuiAchievement extends GuiAchievement {
      * achievement if is needed.
      */
     public void updateAchievementWindow() {
+        if(mod_Undercast.enableML && Minecraft.getMinecraft().entityRenderer != null) {
+            mod_Undercast.enableML = false;
+            Minecraft.getMinecraft().entityRenderer = new EntityRendererProxy(Minecraft.getMinecraft());
+        }
         if (this.theAchievement != null && this.achievementTime != 0L) {
             double d0 = (double) (Minecraft.getSystemTime() - this.achievementTime) / 3000.0D;
 

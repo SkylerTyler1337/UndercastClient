@@ -48,6 +48,7 @@ public class mod_Undercast extends BaseMod {
     public static FriendHandler friendHandler;
     private int buttonListSize;
     private Integer buttonListSizeOfGuiOptions;
+    public static boolean enableML = true;
 
     @Override
     public String getVersion() {
@@ -79,6 +80,7 @@ public class mod_Undercast extends BaseMod {
         achievementHandler = new UndercastKillsHandler();
         UndercastGuiAchievement gui = new UndercastGuiAchievement(Minecraft.getMinecraft());
         Minecraft.getMinecraft().guiAchievement = gui;
+        gui.addFakeAchievementToMyList((new Achievement(27, "custom", 1, 4, Item.ingotIron, (Achievement) null)), true, "Herobrine", "ModLoader enabled!", "Using the hacky way.");
         friendHandler = new FriendHandler();
 
         //check for update
