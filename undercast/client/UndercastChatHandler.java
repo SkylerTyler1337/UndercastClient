@@ -194,7 +194,7 @@ public class UndercastChatHandler {
             UndercastData.matchTimeSec = 0;
             UndercastData.matchTimer = new MatchTimer();
             
-        } else if(message.equals("                    ")) {
+        } else if(unstripedMessage.equals("§c§c§e§e§c§c")) {
             if(!UndercastData.welcomeMessageExpected) {
                 UndercastData.serverDetectionCommandExecuted = true;
                 Minecraft.getMinecraft().thePlayer.sendChatMessage("/server");
