@@ -23,6 +23,7 @@ import net.minecraft.src.RenderItem;
 import net.minecraft.src.Achievement;
 import net.minecraft.src.StatCollector;
 import net.minecraft.src.ImageBufferDownload;
+import net.minecraft.src.TextureManager;
 import net.minecraft.src.mod_Undercast;
 
 public class UndercastGuiAchievement extends GuiAchievement {
@@ -204,14 +205,19 @@ public class UndercastGuiAchievement extends GuiAchievement {
                 if (!this.isFakeAchievement) {
                     this.itemRender.func_110797_b(this.theGame.fontRenderer, this.theGame.func_110434_K(), this.theAchievement.theItemStack, i + 8, j + 8);
                 } else {
-                    String str = "https://minotar.net/helm/" + this.killerName + "/16.png";
+                    String str = this.killerName;
                     ResourceLocation resourcelocation = AbstractClientPlayer.func_110311_f(str);
-                    AbstractClientPlayer.func_110304_a(resourcelocation, str); 
+                    AbstractClientPlayer.func_110304_a(resourcelocation, str);
                     GL11.glPushMatrix(); // New GL11 matrix to not affect other part of the gui
+                    TextureManager texturemanager = Minecraft.getMinecraft().func_110434_K();
+                    if (texturemanager != null)
+                    {
+                            texturemanager.func_110577_a(resourcelocation);
+                    }
                     GL11.glColor4f(1, 1, 1, 1); // White light on the image
-                    GL11.glScalef(1F / 4F, 1F / 8F, 1F);// Resizing the image (height/4 and width/8)
-                    GL11.glTranslatef((i+8) * 4F, (j+8) * 8F, 0);// Translating the image in the gui
-                    this.drawTexturedModalRect(0, 0, 0, 0, 64, 128); // Drawing the image
+                    GL11.glScalef(1F / 2F, 1F / 4F, 1F);// Resizing the image (height/4 and width/8)
+                    GL11.glTranslatef((i+8) * 2F, (j+8) * 4F, 0);// Translating the image in the gui
+                    this.drawTexturedModalRect(0, 0, 32, 64, 32, 64); // Drawing the image
                     GL11.glPopMatrix();
                 }
                 GL11.glDisable(GL11.GL_LIGHTING);
