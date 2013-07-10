@@ -36,7 +36,7 @@ public class GuiUndercastControls extends GuiScreen {
         this.scrollPane = new GuiControlsScrollPanel(this, this.options, this.mc);
         StringTranslate stringtranslate = mod_Undercast.getStringTranslate();
         this.buttonList.add(new GuiButton(200, this.width / 2 - 100, this.height - 24, stringtranslate.translateKey("gui.done")));
-        scrollPane.func_110509_d(7, 8);
+        scrollPane.registerScrollButtons(7, 8);
         this.screenTitle = stringtranslate.translateKey("controls.title");
     }
 

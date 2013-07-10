@@ -43,9 +43,9 @@ public class GuiControlsScrollPanel extends GuiSlot {
         return false;
     }
 
-//    @Override
-//    protected void drawBackground() {
-//    }
+    @Override
+    protected void drawBackground() {
+    }
 
     @Override
     public void drawScreen(int mX, int mY, float f) {
@@ -98,10 +98,5 @@ public class GuiControlsScrollPanel extends GuiSlot {
         }
 
         return true;
-    }
-
-    @Override
-    // maybe the same as draw background
-    protected void func_130003_c() {
     }
 }

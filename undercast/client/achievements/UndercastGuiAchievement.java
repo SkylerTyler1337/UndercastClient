@@ -203,7 +203,7 @@ public class UndercastGuiAchievement extends GuiAchievement {
                 GL11.glEnable(GL11.GL_COLOR_MATERIAL);
                 GL11.glEnable(GL11.GL_LIGHTING);
                 if (!this.isFakeAchievement) {
-                    this.itemRender.func_110797_b(this.theGame.fontRenderer, this.theGame.func_110434_K(), this.theAchievement.theItemStack, i + 8, j + 8);
+                    this.itemRender.renderItemAndEffectIntoGUI(this.theGame.fontRenderer, this.theGame.func_110434_K(), this.theAchievement.theItemStack, i + 8, j + 8);
                 } else {
                     String str = this.killerName;
                     ResourceLocation resourcelocation = AbstractClientPlayer.func_110311_f(str);
