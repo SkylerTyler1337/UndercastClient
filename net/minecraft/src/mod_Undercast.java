@@ -108,8 +108,6 @@ public class mod_Undercast extends BaseMod {
             username = mc.thePlayer.username;
             String messageWithOutJson = ChatMessageComponent.func_111078_c(var1).func_111068_a(true);
             String message = StringUtils.stripControlCodes(messageWithOutJson);
-//            System.out.println("MessageWithoutJson: " +  messageWithOutJson);
-//            System.out.println("Message: " +  message);
             // stop global msg and team chat and whispered messages to go through
             if(!message.startsWith("<") && !message.startsWith("[Team]") && !message.startsWith("(From ") && !message.startsWith("(To ")&& UndercastData.isOC) {
                 new UndercastChatHandler(message, username, player, messageWithOutJson);

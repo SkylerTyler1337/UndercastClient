@@ -70,14 +70,20 @@ public class UndercastChatHandler {
         else if (message.startsWith(username) && !message.toLowerCase().endsWith(" team")) {
             // if you die form someone
             if((message.contains(" by ") || message.contains(" took ") || message.contains(" fury of"))) {
-                if(message.contains(" by ") && UndercastCustomMethods.isTeamkill(unstripedMessage, username, message.substring(message.indexOf("by") + 3, message.lastIndexOf("'s") == -1 ? message.length() : message.lastIndexOf("'s")))) {
+                String killer = message.substring(message.indexOf("by") + 3, message.lastIndexOf("'s") == -1 ? message.length() : message.lastIndexOf("'s"));
+                // cut the distance message
+                if(killer.contains(" ")) {
+                    killer = killer.substring(0, killer.indexOf(' '));
+                }
+                
+                if(message.contains(" by ") && UndercastCustomMethods.isTeamkill(unstripedMessage, username, killer)) {
                     return;
                 }
                 UndercastData.addKilled(1);
             }
-                UndercastData.addDeaths(1);
-                UndercastData.setPreviousKillstreak((int) UndercastData.getKillstreak());
-                UndercastData.resetKillstreak();
+            UndercastData.addDeaths(1);
+            UndercastData.setPreviousKillstreak((int) UndercastData.getKillstreak());
+            UndercastData.resetKillstreak();
         }
         //if you kill a person
         else if ((message.contains("by " + username) && !message.toLowerCase().contains(" destroyed by ")) || message.contains("took " + username) || message.contains("fury of " + username)) {
