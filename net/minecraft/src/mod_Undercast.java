@@ -34,7 +34,7 @@ import undercast.client.settings.UndercastGuiConfigButton;
 import undercast.client.update.UndercastUpdaterThread;
 
 public class mod_Undercast extends BaseMod {
-    public final static String MOD_VERSION = "1.6.1dev";
+    public final static String MOD_VERSION = "1.6.2";
     public final static String MOD_NAME = "UndercastMod";
     protected String username = "Not_Found";
     protected Minecraft mc = Minecraft.getMinecraft();
