@@ -219,12 +219,12 @@ public class mod_Undercast extends BaseMod {
             }
             //Show KD Ratio
             if (CONFIG.showKD && !UndercastData.isLobby) {
-                mc.fontRenderer.drawStringWithShadow("K/D: \u00A73" + UndercastCustomMethods.getKD(), width, height, 16777215);
+                mc.fontRenderer.drawStringWithShadow(UndercastCustomMethods.getKDDisplayString(), width, height, 16777215);
                 height += 8;
             }
             //show KK Ratio
             if (CONFIG.showKK && !UndercastData.isLobby) {
-                mc.fontRenderer.drawStringWithShadow("K/K: \u00A73" + UndercastCustomMethods.getKK(), width, height, 16777215);
+                mc.fontRenderer.drawStringWithShadow(UndercastCustomMethods.getKKDisplayString(), width, height, 16777215);
                 height += 8;
             }
             //show amount of kills

@@ -386,4 +386,41 @@ public class UndercastCustomMethods {
         }
         return str;
     }
+    
+    public static String getKDDisplayString() {
+        String str;
+        if(UndercastData.team == Teams.Observers && UndercastData.kills == 0 && UndercastData.deaths == 0 && mod_Undercast.CONFIG.realtimeStats) {
+            if (mod_Undercast.CONFIG.showTotalKills) {
+                str = "Total K/D: \u00A73" + (UndercastData.stats.kd);
+            } else {
+                str = "K/D: \u00A73" + (getKD());
+            }
+        } else {
+            str = "K/D: \u00A73" + getKD();
+            if(mod_Undercast.CONFIG.showTotalKills && mod_Undercast.CONFIG.realtimeStats) {
+                str += "\u00A7f/\u00A73" + ((UndercastData.kills + UndercastData.stats.kills)/(UndercastData.deaths + UndercastData.stats.deaths));
+                str = str.substring(0, str.lastIndexOf('.') +  4);
+            }
+        }
+        return str;
+    }
+    
+    public static String getKKDisplayString() {
+        String str;
+        if(UndercastData.team == Teams.Observers && UndercastData.kills == 0 && UndercastData.deaths == 0 && mod_Undercast.CONFIG.realtimeStats) {
+            if (mod_Undercast.CONFIG.showTotalKills) {
+                str = "Total K/K: \u00A73" + (UndercastData.stats.kk);
+            } else {
+                str = "K/K: \u00A73" + (getKK());
+            }
+        } else {
+            str = "K/K: \u00A73" + getKK();
+            if(mod_Undercast.CONFIG.showTotalKills && mod_Undercast.CONFIG.realtimeStats) {
+                str += "\u00A7f/\u00A73" + 
+            (((UndercastData.kills + UndercastData.stats.kills)/(UndercastData.killed + UndercastData.stats.getKilled())));
+                str = str.substring(0, str.lastIndexOf('.') +  4);
+            }
+        }
+        return str;
+    }
 }
