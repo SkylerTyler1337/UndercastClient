@@ -15,7 +15,7 @@ public class UndercastConfig {
     private static final String FILE_NAME = "UndercastMod.cfg";
 
     // update this value to change the config version.
-    private static int version = 10;
+    private static int version = 11;
 
     // main variables
     public static boolean showFPS;
@@ -51,6 +51,7 @@ public class UndercastConfig {
     public static boolean showFirstBloodAchievement;
     public static boolean showLastKillAchievement;
     public static boolean displaySpecialKillMessages;
+    public static boolean displaySpecialObjectives;
     public static boolean parseMatchState;
     public static boolean realtimeStats;
     public static int lastUsedFilter;
@@ -98,6 +99,7 @@ public class UndercastConfig {
         defaults.setProperty("showFirstBloodAchievement", "true");
         defaults.setProperty("showLastKillAchievement", "true");
         defaults.setProperty("displaySpecialKillMessages", "true");
+        defaults.setProperty("displaySpecialObjectives", "true");
         defaults.setProperty("parseMatchState", "true");
         defaults.setProperty("lastUsedFilter", "0");
         defaults.setProperty("realtimeStats", "true");
@@ -182,6 +184,7 @@ public class UndercastConfig {
             config.setProperty("showFirstBloodAchievement", "true");
             config.setProperty("showLastKillAchievement", "true");
             config.setProperty("displaySpecialKillMessages", "true");
+            config.setProperty("displaySpecialObjectives", "true");
             config.setProperty("parseMatchState", "true");
             config.setProperty("lastUsedFilter", "0");
             config.setProperty("realtimeStats", "true");
@@ -231,6 +234,7 @@ public class UndercastConfig {
         showFirstBloodAchievement = this.getBoolProperty("showFirstBloodAchievement");
         showLastKillAchievement = this.getBoolProperty("showLastKillAchievement");
         displaySpecialKillMessages = this.getBoolProperty("displaySpecialKillMessages");
+        displaySpecialObjectives = this.getBoolProperty("displaySpecialObjectives");
         parseMatchState = this.getBoolProperty("parseMatchState");
         lastUsedFilter = this.getIntProperty("lastUsedFilter");
         configVersion = this.getIntProperty("configVersion");
@@ -389,6 +393,10 @@ public class UndercastConfig {
                     config.setProperty("displaySpecialKillMessages", "true");
                 }
             case 10:
+                if(displaySpecialObjectives == true) {
+                    config.setProperty("displaySpecialObjectives", "true");
+                }
+            case 11:
                 //Next version
             }
             config.setProperty("configVersion", ""+version);

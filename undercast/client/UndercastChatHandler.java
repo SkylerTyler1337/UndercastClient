@@ -120,6 +120,15 @@ public class UndercastChatHandler {
             player.addChatMessage("Deaths: " + (int)UndercastData.getDeaths() + ((mod_Undercast.CONFIG.realtimeStats) ? (" Total: " + (int)(UndercastData.deaths + UndercastData.stats.deaths)) : ""));
             player.addChatMessage("K/D: " + UndercastCustomMethods.getKD());
             player.addChatMessage("Kill Streak: " + (int)UndercastData.getLargestKillstreak());
+            if(UndercastData.woolsDifference > 0) {
+                player.addChatMessage("Wools: +" + UndercastData.woolsDifference + ((mod_Undercast.CONFIG.realtimeStats) ? (" Total: " + (int)(UndercastData.stats.wools + UndercastData.woolsDifference)) : ""));
+            }
+            if(UndercastData.coresDifference > 0) {
+                player.addChatMessage("Cores: +" + UndercastData.coresDifference + ((mod_Undercast.CONFIG.realtimeStats) ? (" Total: " + (int)(UndercastData.stats.cores + UndercastData.coresDifference)) : ""));
+            }
+            if(UndercastData.monumentDifference > 0) {
+                player.addChatMessage("Monuments: +" + UndercastData.monumentDifference + ((mod_Undercast.CONFIG.realtimeStats) ? (" Total: " + (int)(UndercastData.stats.monuments + UndercastData.monumentDifference)) : ""));
+            }
             UndercastData.resetKills();
             UndercastData.resetKilled();
             UndercastData.resetDeaths();
@@ -127,6 +136,9 @@ public class UndercastChatHandler {
             UndercastData.resetLargestKillstreak();
             UndercastData.resetScore();
             UndercastData.setTeam(UndercastData.Teams.Observers);
+            UndercastData.woolsDifference = 0;
+            UndercastData.coresDifference = 0;
+            UndercastData.monumentDifference = 0;
         }
         //filters [Tip] messages
         else if (message.startsWith("[Tip]") && mod_Undercast.CONFIG.filterTips) {
@@ -178,6 +190,8 @@ public class UndercastChatHandler {
         } else if(message.toLowerCase().contains("game over")) {
             UndercastData.isGameOver = true;
             UndercastData.isNextKillFirstBlood = false;
+            UndercastData.isObjectiveReload = true;
+            UndercastData.reloadStats();
             try {
                 // stop the timer
                 UndercastData.matchTimer.stop();

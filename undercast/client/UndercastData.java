@@ -4,12 +4,15 @@ package undercast.client;
 //You may not claim this to be your own
 //You may not remove these comments
 
+import net.minecraft.src.EntityClientPlayerMP;
 import net.minecraft.src.Minecraft;
 import net.minecraft.src.KeyBinding;
 import net.minecraft.src.mod_Undercast;
 
 import org.lwjgl.input.Keyboard;
 
+import undercast.client.achievements.SpecialKillLogger;
+import undercast.client.achievements.SpecialObjectiveLogger;
 import undercast.client.internetTools.InformationLoaderDelegate;
 import undercast.client.internetTools.InformationLoaderThread;
 import undercast.client.internetTools.PlayerStatsHTMLParser;
@@ -72,6 +75,10 @@ public class UndercastData implements InformationLoaderDelegate {
     public static String currentGSClass = "Unknown";
     public static PlayerStats stats;
     public static Integer[] parsedPages;
+    public static boolean isObjectiveReload = false;
+    public static int coresDifference;
+    public static int woolsDifference;
+    public static int monumentDifference;
 
     public static boolean guiShowing;
     public static KeyBinding keybind;
@@ -174,22 +181,72 @@ public class UndercastData implements InformationLoaderDelegate {
             return;
         try {
             String[] data = PlayerStatsHTMLParser.parse(cont);
-            PlayerStats stats = new PlayerStats();
-            stats.kills = Integer.parseInt(data[0]);
-            stats.deaths = Integer.parseInt(data[1]);
-            stats.friendCount = Integer.parseInt(data[2]);
-            stats.kd = Double.parseDouble(data[3]);
-            stats.kk = Double.parseDouble(data[4]);
-            stats.serverJoins = Integer.parseInt(data[5]);
-            stats.forumPosts = Integer.parseInt(data[6]);
-            stats.startedTopics = Integer.parseInt(data[7]);
-            stats.wools = Integer.parseInt(data[8]);
-            stats.cores = Integer.parseInt(data[9]);
-            stats.monuments = Integer.parseInt(data[10]);
-            stats.name = url.replace("https://oc.tc/", "");
-            // only if no data relates on the current stats
-            if(UndercastData.kills == 0 && UndercastData.deaths == 0) {
-                UndercastData.stats = stats;
+            if(UndercastData.isObjectiveReload) {
+                UndercastData.isObjectiveReload = false;
+                UndercastData.woolsDifference = Integer.parseInt(data[8]) - stats.wools;
+                UndercastData.coresDifference = Integer.parseInt(data[9]) - stats.cores;
+                UndercastData.monumentDifference = Integer.parseInt(data[10]) - stats.monuments;
+                int i = 1;
+                EntityClientPlayerMP player = Minecraft.getMinecraft().thePlayer;
+                while(UndercastData.woolsDifference >= i) {
+                    if(UndercastCustomMethods.isSpecialObjective(UndercastData.woolsDifference + i)) {
+                        SpecialObjectiveLogger.logSpecialObjective(UndercastData.stats.wools + i, "Wool", UndercastData.server , UndercastData.map);
+                        if(UndercastConfig.displaySpecialObjectives) {
+                            player.addChatMessage("[UndercastMod] \u00A7lSPECIAL WOOL: \u00A7c" + UndercastData.stats.wools + i);
+                        }
+                    }
+                    i++;
+                }
+                i = 1;
+                while(UndercastData.coresDifference >= i) {
+                    if(UndercastCustomMethods.isSpecialObjective(UndercastData.coresDifference + i)) {
+                        SpecialObjectiveLogger.logSpecialObjective(UndercastData.stats.cores + i, "Core", UndercastData.server , UndercastData.map);
+                        if(UndercastConfig.displaySpecialObjectives) {
+                            player.addChatMessage("[UndercastMod] \u00A7lSPECIAL CORE: \u00A7c" + UndercastData.stats.cores + i);
+                        }
+                    }
+                    i++;
+                }
+                i = 1;
+                while(UndercastData.monumentDifference >= i) {
+                    if(UndercastCustomMethods.isSpecialObjective(UndercastData.monumentDifference + i)) {
+                        SpecialObjectiveLogger.logSpecialObjective(UndercastData.stats.monuments + i, "Monument", UndercastData.server , UndercastData.map);
+                        if(UndercastConfig.displaySpecialObjectives) {
+                            player.addChatMessage("[UndercastMod] \u00A7lSPECIAL MONUMENT: \u00A7c" + UndercastData.stats.monuments + i);
+                        }
+                    }
+                    i++;
+                }
+                
+                if(UndercastConfig.displaySpecialObjectives) {
+                    if(UndercastData.woolsDifference > 0) {
+                        if(UndercastCustomMethods.isSpecialObjective(UndercastData.stats.wools + UndercastData.woolsDifference + 5)) {
+                            player.addChatMessage("[UndercastMod] Your are \u00A7c5\u00A7f wools away from a \u00A7ospecial wool\u00A7r (" + (UndercastData.stats.wools + UndercastData.woolsDifference + 5) + ")");
+                        } else if(UndercastCustomMethods.isSpecialObjective(UndercastData.stats.wools + UndercastData.woolsDifference + 2)) {
+                            player.addChatMessage("[UndercastMod] Your are \u00A7c2\u00A7f wools away from a \u00A7ospecial wool\u00A7r (" + (UndercastData.stats.wools + UndercastData.woolsDifference + 2) + ")");
+                        } else if(UndercastCustomMethods.isSpecialObjective(UndercastData.stats.wools + UndercastData.woolsDifference + 1)) {
+                            player.addChatMessage("[UndercastMod] Your are \u00A7c1\u00A7f wools away from a \u00A7ospecial wool\u00A7r (" + (UndercastData.stats.wools + UndercastData.woolsDifference + 1) + ")");
+                        }
+                    }
+                }
+            } else {
+                PlayerStats stats = new PlayerStats();
+                stats.kills = Integer.parseInt(data[0]);
+                stats.deaths = Integer.parseInt(data[1]);
+                stats.friendCount = Integer.parseInt(data[2]);
+                stats.kd = Double.parseDouble(data[3]);
+                stats.kk = Double.parseDouble(data[4]);
+                stats.serverJoins = Integer.parseInt(data[5]);
+                stats.forumPosts = Integer.parseInt(data[6]);
+                stats.startedTopics = Integer.parseInt(data[7]);
+                stats.wools = Integer.parseInt(data[8]);
+                stats.cores = Integer.parseInt(data[9]);
+                stats.monuments = Integer.parseInt(data[10]);
+                stats.name = url.replace("https://oc.tc/", "");
+                // only if no data relates on the current stats
+                if(UndercastData.kills == 0 && UndercastData.deaths == 0) {
+                    UndercastData.stats = stats;
+                }
             }
         } catch (Exception e) {
             System.out.println("[UndercastMod]: Failed to parse player stats");
