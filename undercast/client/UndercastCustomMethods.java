@@ -4,6 +4,7 @@ package undercast.client;
 //You may not claim this to be your own
 //You may not remove these comments
 
+import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.Minecraft;
 import net.minecraft.src.ChatAllowedCharacters;
 import net.minecraft.src.MathHelper;
@@ -84,6 +85,9 @@ public class UndercastCustomMethods {
             UndercastData.isLobby = true;
         } else {
             UndercastData.isLobby = false;
+        }
+        if(!UndercastData.previousServer.equalsIgnoreCase("lobby")) {
+            UndercastData.finalStats = new FinalStats();
         }
         UndercastData.setTeam(UndercastData.Teams.Observers);
         UndercastData.resetDeaths();
@@ -417,7 +421,7 @@ public class UndercastCustomMethods {
             str = "K/K: \u00A73" + getKK();
             if(mod_Undercast.CONFIG.showTotalKills && mod_Undercast.CONFIG.realtimeStats) {
                 str += "\u00A7f/\u00A73" + 
-            (((UndercastData.kills + UndercastData.stats.kills)/(UndercastData.killed + UndercastData.stats.getKilled())));
+                        (((UndercastData.kills + UndercastData.stats.kills)/(UndercastData.killed + UndercastData.stats.getKilled())));
                 str = str.substring(0, str.lastIndexOf('.') +  4);
             }
         }

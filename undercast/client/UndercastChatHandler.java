@@ -113,22 +113,6 @@ public class UndercastChatHandler {
         }
         //when a map is done. Display all the stats
         else if (!message.startsWith("<") && message.toLowerCase().contains("cycling to") && message.contains("1 second")) {
-            player.addChatMessage("\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-");
-            player.addChatMessage("Final Stats:");
-            player.addChatMessage("\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-");
-            player.addChatMessage("Kills: " + (int)UndercastData.getKills() + ((mod_Undercast.CONFIG.realtimeStats) ? (" Total: " + (int)(UndercastData.kills + UndercastData.stats.kills)) : ""));
-            player.addChatMessage("Deaths: " + (int)UndercastData.getDeaths() + ((mod_Undercast.CONFIG.realtimeStats) ? (" Total: " + (int)(UndercastData.deaths + UndercastData.stats.deaths)) : ""));
-            player.addChatMessage("K/D: " + UndercastCustomMethods.getKD());
-            player.addChatMessage("Kill Streak: " + (int)UndercastData.getLargestKillstreak());
-            if(UndercastData.woolsDifference > 0) {
-                player.addChatMessage("Wools: +" + UndercastData.woolsDifference + ((mod_Undercast.CONFIG.realtimeStats) ? (" Total: " + (int)(UndercastData.stats.wools + UndercastData.woolsDifference)) : ""));
-            }
-            if(UndercastData.coresDifference > 0) {
-                player.addChatMessage("Cores: +" + UndercastData.coresDifference + ((mod_Undercast.CONFIG.realtimeStats) ? (" Total: " + (int)(UndercastData.stats.cores + UndercastData.coresDifference)) : ""));
-            }
-            if(UndercastData.monumentDifference > 0) {
-                player.addChatMessage("Monuments: +" + UndercastData.monumentDifference + ((mod_Undercast.CONFIG.realtimeStats) ? (" Total: " + (int)(UndercastData.stats.monuments + UndercastData.monumentDifference)) : ""));
-            }
             UndercastData.resetKills();
             UndercastData.resetKilled();
             UndercastData.resetDeaths();
@@ -199,8 +183,7 @@ public class UndercastChatHandler {
         } else if(message.toLowerCase().contains("game over")) {
             UndercastData.isGameOver = true;
             UndercastData.isNextKillFirstBlood = false;
-            UndercastData.isObjectiveReload = true;
-            UndercastData.reloadStats();
+            UndercastData.finalStats = new FinalStats();
             try {
                 // stop the timer
                 UndercastData.matchTimer.stop();
