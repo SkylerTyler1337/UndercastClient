@@ -175,7 +175,7 @@ public class UndercastChatHandler {
             if(UndercastData.serverDetectionCommandExecuted) {
                 UndercastData.serverDetectionCommandExecuted = false;
                 String server = message.replace("You are currently on ", "");
-                if(server.equals(UndercastData.server)) {
+                if(!server.equals(UndercastData.server)) {
                     UndercastData.setServer(server);
                     UndercastCustomMethods.handleServerSwap();
                 }
