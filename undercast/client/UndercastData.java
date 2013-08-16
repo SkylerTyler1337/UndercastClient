@@ -84,10 +84,10 @@ public class UndercastData implements InformationLoaderDelegate {
     
 
     public static boolean guiShowing;
-    public static KeyBinding keybind;
-    public static KeyBinding keybind2;
-    public static KeyBinding keybind3;
-    public static KeyBinding keybind4;
+    public static UndercastKeybinding keybind;
+    public static UndercastKeybinding keybind2;
+    public static UndercastKeybinding keybind3;
+    public static UndercastKeybinding keybind4;
 
     public static enum Teams {Red, Blue, Purple, Cyan, Lime, Yellow, Green, Orange, Observers, Unknown, Cot, Bot};
     public static enum MatchState {Starting, Started, Finished, Waiting, Lobby, Unknown};
@@ -107,10 +107,10 @@ public class UndercastData implements InformationLoaderDelegate {
         stats = new PlayerStats();
         setTeam(Teams.Observers);
         guiShowing = true;
-        keybind = new KeyBinding("undercast.gui", Keyboard.getKeyIndex("F6"));
-        keybind2 = new KeyBinding("undercast.inGameGui", Keyboard.getKeyIndex("L"));
-        keybind3 = new KeyBinding("undercast.fullBright", Keyboard.getKeyIndex("G"));
-        keybind4 = new KeyBinding("undercast.settings", Keyboard.getKeyIndex("P"));
+        keybind = new UndercastKeybinding(Keyboard.getKeyIndex("F6"),"undercast.gui","HUD Display");
+        keybind2 = new UndercastKeybinding(Keyboard.getKeyIndex("L"), "undercast.serverList", "Server List");
+        keybind3 = new UndercastKeybinding(Keyboard.getKeyIndex("G"), "undercast.fullBright", "Full Bright");
+        keybind4 = new UndercastKeybinding(Keyboard.getKeyIndex("P"), "undercast.settings", "Settings");
         serverInformation = new UndercastServer[999];
         serverCount = 0;
         filteredServerCount = 0;

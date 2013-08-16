@@ -20,6 +20,7 @@ import undercast.client.UndercastChatHandler;
 import undercast.client.UndercastConfig;
 import undercast.client.UndercastCustomMethods;
 import undercast.client.UndercastData;
+import undercast.client.UndercastKeybinding;
 import undercast.client.UndercastData.ServerType;
 import undercast.client.UndercastData.Teams;
 import undercast.client.UndercastMenuButton;
@@ -69,11 +70,6 @@ public class mod_Undercast extends BaseMod {
         ModLoader.setInGUIHook(this, true, false);
         ModLoader.setInGameHook(this, true, false);
 
-        ModLoader.addLocalization("undercast.gui", "Toggle Overcast Network mod gui");
-        ModLoader.addLocalization("undercast.inGameGui", "Switch to an Overcast Network server");
-        ModLoader.addLocalization("undercast.fullBright", "Toggle fullbright");
-        ModLoader.addLocalization("undercast.settings", "Show Undercast mod settings");
-
         //load variables defaults
         new UndercastData();
 
@@ -88,12 +84,9 @@ public class mod_Undercast extends BaseMod {
 
         //load the new controls menu
         undercastControls = new UndercastControls();
-
-        //hook keybinds
-        ModLoader.registerKey(this, UndercastData.keybind, false);
-        ModLoader.registerKey(this, UndercastData.keybind2, false);
-        ModLoader.registerKey(this, UndercastData.keybind3, false);
-        ModLoader.registerKey(this, UndercastData.keybind4, false);
+        
+        //get key updates
+        UndercastKeybinding.modInstance = this;
     }
 
     /**
@@ -147,6 +140,8 @@ public class mod_Undercast extends BaseMod {
                 gameOverScreen.drawCenteredString(gameOverScreen.fontRenderer, "Killstreak" + ": " + EnumChatFormatting.YELLOW + (int)UndercastData.getPreviousKillstreak(), gameOverScreen.width / 2, 110, 16777215);
             }
         }
+        //update the keys
+        UndercastKeybinding.onTick();
 
         //get debug info for the fps
         String fps = mc.debug.split(",")[0];
@@ -276,6 +271,8 @@ public class mod_Undercast extends BaseMod {
     }
     
     public boolean onTickInGUI(float tick, Minecraft mc, GuiScreen screen){
+        // update the keys
+        UndercastKeybinding.onTick();
         undercastControls.onTickInGUI(tick, mc, screen);
         this.addOvercastButton();
         // Listen for disconnect, as it isn't properly called
@@ -369,7 +366,7 @@ public class mod_Undercast extends BaseMod {
      * Called when a key is pressed.
      * Used to activate the gui ect.
      */
-    public void keyboardEvent(KeyBinding keybinding) {
+    public void keyboardEvent(UndercastKeybinding keybinding) {
         if (mc.inGameHasFocus) {
             if (keybinding == UndercastData.keybind) {
                 UndercastData.guiShowing = !UndercastData.guiShowing;
