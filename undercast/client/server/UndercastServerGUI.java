@@ -36,7 +36,8 @@ public class UndercastServerGUI extends GuiScreen {
      */
     public void initGui() {
         StringTranslate stringtranslate = mod_Undercast.getStringTranslate();
-
+        GuiButtonTooltip UsEuButton;
+        
         this.buttonList.add(new GuiButtonTooltip(0, this.width / 2 - 100, height - 52, 98, 20, stringtranslate.translateKey("selectServer.select"),"Join / Swap to the selected server"));
         this.buttonList.add(guibuttonrefresh = new GuiButtonTooltip(1, this.width / 2 + 2, height - 52, 98, 20, stringtranslate.translateKey("selectServer.refresh"), "Refresh the server list"));
         this.buttonList.add(new GuiButtonTooltip(2, this.width / 2 + 2, height - 28, 98, 20, stringtranslate.translateKey("gui.cancel"), "Close the server list"));
@@ -44,8 +45,10 @@ public class UndercastServerGUI extends GuiScreen {
         this.buttonList.add(new GuiButtonTooltip(4, this.width / 2 - 150, height - 28, 48, 20, UndercastData.sortNames[UndercastData.sortIndex], "Sort the servers"));
         this.buttonList.add(new GuiButtonTooltip(5, this.width / 2 + 102, height - 28, 48, 20, "Lobby", "Join / Swap to the lobby"));
         this.buttonList.add(new GuiButtonTooltip(6, this.width / 2 - 150, height - 52, 48, 20, UndercastData.filterNames[UndercastData.filterIndex], "Filter the servers by the server type"));
+        this.buttonList.add(UsEuButton = new GuiButtonTooltip(7, this.width / 2 + 102, height - 52, 48, 20, UndercastData.locationNames[UndercastData.isEU ? 1 : 0], "Toggle between US and EU servers."));
+        UsEuButton.enabled = false;
         if(!UndercastData.isUpdate()) {
-            this.buttonList.add(new GuiButtonTooltip(7, this.width - 54, 21, 48, 20, "Update", "Opens the download website for the latest version."));
+            this.buttonList.add(new GuiButtonTooltip(8, this.width - 54, 21, 48, 20, "Update", "Opens the download website for the latest version."));
         }
         guiServerInfoSlot = new UndercastServerInfoSlotGui(this);
     }

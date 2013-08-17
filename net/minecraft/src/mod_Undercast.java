@@ -300,7 +300,7 @@ public class mod_Undercast extends BaseMod {
     public void clientConnect(NetClientHandler var1) {
         UndercastData.setTeam(UndercastData.Teams.Observers); 
         //if logging onto a overcast network server, then enable the main mod
-        if (var1.getNetManager().getSocketAddress().toString().contains(".oc.tc") && !var1.getNetManager().getSocketAddress().toString().contains("mc.oc.tc")) {
+        if (var1.getNetManager().getSocketAddress().toString().toLowerCase().contains(".oc.tc") && !var1.getNetManager().getSocketAddress().toString().toLowerCase().contains("mc.oc.tc")) {
             // What happens if logs into project ares
             UndercastData.isOC = true;
             UndercastData.isLobby = true;
@@ -309,6 +309,11 @@ public class mod_Undercast extends BaseMod {
             UndercastData.setTeam(UndercastData.Teams.Observers);
             UndercastData.setServer("Lobby");
             playTimeCounter = new PlayTimeCounterThread();
+            if(var1.getNetManager().getSocketAddress().toString().toLowerCase().contains("eu.oc.tc")) {
+                UndercastData.isEU = true;
+            } else {
+                UndercastData.isEU = false;
+            }
         } else{
             UndercastData.isOC=false;
         }

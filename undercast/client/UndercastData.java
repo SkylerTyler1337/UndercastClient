@@ -81,6 +81,7 @@ public class UndercastData implements InformationLoaderDelegate {
     public static int woolsDifference;
     public static int monumentDifference;
     public static FinalStats finalStats;
+    public static boolean isEU;
     
 
     public static boolean guiShowing;
@@ -94,6 +95,7 @@ public class UndercastData implements InformationLoaderDelegate {
     public static enum ServerType {lobby, blitz, projectares, ghostsquadron, Unknown};
     public static String[] sortNames = {"Web","Match","Players","Abc"};
     public static String[] filterNames = {"All","PA","Blitz","GS"};
+    public static String[] locationNames = {"US", "EU"};
 
     public UndercastData() {
         instance = this;
