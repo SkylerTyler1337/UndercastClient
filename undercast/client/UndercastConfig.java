@@ -15,7 +15,7 @@ public class UndercastConfig {
     private static final String FILE_NAME = "UndercastMod.cfg";
 
     // update this value to change the config version.
-    private static int version = 11;
+    private static int version = 12;
 
     // main variables
     public static boolean showFPS;
@@ -55,6 +55,10 @@ public class UndercastConfig {
     public static boolean parseMatchState;
     public static boolean realtimeStats;
     public static int lastUsedFilter;
+    public static String keyGui;
+    public static String keyServerList;
+    public static String keyFullBright;
+    public static String keySettings;
     public static int configVersion;
 
     /**
@@ -103,6 +107,10 @@ public class UndercastConfig {
         defaults.setProperty("parseMatchState", "true");
         defaults.setProperty("lastUsedFilter", "0");
         defaults.setProperty("realtimeStats", "true");
+        defaults.setProperty("keyGui", "F6");
+        defaults.setProperty("keyServerList", "L");
+        defaults.setProperty("keyFullBright", "G");
+        defaults.setProperty("keySettings", "P");
         // if the value is missing, it should force an update. Don't change it.
         defaults.setProperty("configVersion", "0");
     }
@@ -188,6 +196,10 @@ public class UndercastConfig {
             config.setProperty("parseMatchState", "true");
             config.setProperty("lastUsedFilter", "0");
             config.setProperty("realtimeStats", "true");
+            config.setProperty("keyGui", "F6");
+            config.setProperty("keyServerList", "L");
+            config.setProperty("keyFullBright", "G");
+            config.setProperty("keySettings", "P");
             config.setProperty("configVersion", ""+version);
 
             config.store(new FileOutputStream(CONFIG_PATH + FILE_NAME),"This is the Unoffical Undercast Mod Config" + "\nCustomize it to your taste" + "\nkeyGui = Ingame Stats" +"\nkeyGui2 = Ingame Server Menu" + "\nkeyGui3 = Full Bright\n");
@@ -237,8 +249,12 @@ public class UndercastConfig {
         displaySpecialObjectives = this.getBoolProperty("displaySpecialObjectives");
         parseMatchState = this.getBoolProperty("parseMatchState");
         lastUsedFilter = this.getIntProperty("lastUsedFilter");
-        configVersion = this.getIntProperty("configVersion");
         realtimeStats = this.getBoolProperty("realtimeStats");
+        keyGui = this.getStringProperty("keyGui");
+        keyServerList = this.getStringProperty("keyServerList");
+        keyFullBright = this.getStringProperty("keyFullBright");
+        keySettings = this.getStringProperty("keySettings");
+        configVersion = this.getIntProperty("configVersion");
 
         checkForConfigUpdate();
     }
@@ -397,6 +413,19 @@ public class UndercastConfig {
                     config.setProperty("displaySpecialObjectives", "true");
                 }
             case 11:
+                if(keyGui.equalsIgnoreCase("F6")) {
+                    config.setProperty("keyGui", "F6");
+                }
+                if(keyServerList.equalsIgnoreCase("L")) {
+                    config.setProperty("keyServerList", "L");
+                }
+                if(keyFullBright.equalsIgnoreCase("G")) {
+                    config.setProperty("keyFullBright", "G");
+                }
+                if(keySettings.equalsIgnoreCase("P")) {
+                    config.setProperty("keySettings", "P");
+                }
+            case 12:
                 //Next version
             }
             config.setProperty("configVersion", ""+version);

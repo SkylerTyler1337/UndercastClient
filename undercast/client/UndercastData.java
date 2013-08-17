@@ -107,10 +107,26 @@ public class UndercastData implements InformationLoaderDelegate {
         stats = new PlayerStats();
         setTeam(Teams.Observers);
         guiShowing = true;
-        keybind = new UndercastKeybinding(Keyboard.getKeyIndex("F6"),"undercast.gui","HUD Display");
-        keybind2 = new UndercastKeybinding(Keyboard.getKeyIndex("L"), "undercast.serverList", "Server List");
-        keybind3 = new UndercastKeybinding(Keyboard.getKeyIndex("G"), "undercast.fullBright", "Full Bright");
-        keybind4 = new UndercastKeybinding(Keyboard.getKeyIndex("P"), "undercast.settings", "Settings");
+        if(Keyboard.getKeyIndex(UndercastConfig.keyGui) != Keyboard.CHAR_NONE) {
+            keybind = new UndercastKeybinding(Keyboard.getKeyIndex(UndercastConfig.keyGui),"keyGui","HUD Display");
+        } else {
+            keybind = new UndercastKeybinding(Keyboard.getKeyIndex("F6"),"keyGui","HUD Display");
+        }
+        if(Keyboard.getKeyIndex(UndercastConfig.keyServerList) != Keyboard.CHAR_NONE) {
+            keybind2 = new UndercastKeybinding(Keyboard.getKeyIndex(UndercastConfig.keyServerList), "keyServerList", "Server List");
+        } else {
+            keybind2 = new UndercastKeybinding(Keyboard.getKeyIndex("L"), "keyServerList", "Server List");
+        }
+        if(Keyboard.getKeyIndex(UndercastConfig.keyFullBright) != Keyboard.CHAR_NONE) {
+            keybind3 = new UndercastKeybinding(Keyboard.getKeyIndex(UndercastConfig.keyFullBright), "keyFullBright", "Full Bright");
+        } else {
+            keybind3 = new UndercastKeybinding(Keyboard.getKeyIndex("G"), "keyFullBright", "Full Bright");
+        }
+        if(Keyboard.getKeyIndex(UndercastConfig.keyFullBright) != Keyboard.CHAR_NONE) {
+            keybind4 = new UndercastKeybinding(Keyboard.getKeyIndex(UndercastConfig.keySettings), "keySettings", "Settings");
+        } else {
+            keybind4 = new UndercastKeybinding(Keyboard.getKeyIndex("P"), "keySettings", "Settings");
+        }
         serverInformation = new UndercastServer[999];
         serverCount = 0;
         filteredServerCount = 0;
