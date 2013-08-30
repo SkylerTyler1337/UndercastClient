@@ -121,7 +121,7 @@ public class UndercastServerGUI extends GuiScreen {
                UndercastCustomMethods.sortAndFilterServers();
                mod_Undercast.CONFIG.setProperty("lastUsedFilter", UndercastData.filterIndex);
            }
-        if(guibutton.id == 7) {
+        if(guibutton.id == 8) {
             try {
                 Desktop.getDesktop().browse(new URI(UndercastData.updateLink));
             } catch (Exception ignored) {
