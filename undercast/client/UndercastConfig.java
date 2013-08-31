@@ -15,7 +15,7 @@ public class UndercastConfig {
     private static final String FILE_NAME = "UndercastMod.cfg";
 
     // update this value to change the config version.
-    private static int version = 12;
+    private static int version = 13;
 
     // main variables
     public static boolean showFPS;
@@ -55,6 +55,7 @@ public class UndercastConfig {
     public static boolean parseMatchState;
     public static boolean realtimeStats;
     public static int lastUsedFilter;
+    public static int lastUsedLocation;
     public static String keyGui;
     public static String keyServerList;
     public static String keyFullBright;
@@ -107,6 +108,7 @@ public class UndercastConfig {
         defaults.setProperty("displaySpecialObjectives", "true");
         defaults.setProperty("parseMatchState", "true");
         defaults.setProperty("lastUsedFilter", "0");
+        defaults.setProperty("lastUsedLocation", "0");
         defaults.setProperty("realtimeStats", "true");
         defaults.setProperty("keyGui", "F6");
         defaults.setProperty("keyServerList", "L");
@@ -197,6 +199,7 @@ public class UndercastConfig {
             config.setProperty("displaySpecialObjectives", "true");
             config.setProperty("parseMatchState", "true");
             config.setProperty("lastUsedFilter", "0");
+            config.setProperty("lastUsedLocation", "0");
             config.setProperty("realtimeStats", "true");
             config.setProperty("keyGui", "F6");
             config.setProperty("keyServerList", "L");
@@ -252,6 +255,7 @@ public class UndercastConfig {
         displaySpecialObjectives = this.getBoolProperty("displaySpecialObjectives");
         parseMatchState = this.getBoolProperty("parseMatchState");
         lastUsedFilter = this.getIntProperty("lastUsedFilter");
+        lastUsedLocation = this.getIntProperty("lastUsedLocation");
         realtimeStats = this.getBoolProperty("realtimeStats");
         keyGui = this.getStringProperty("keyGui");
         keyServerList = this.getStringProperty("keyServerList");
@@ -433,6 +437,10 @@ public class UndercastConfig {
                     config.setProperty("lessObstructive", "false");
                 }
             case 12:
+                if(lastUsedLocation == 0) {
+                    config.setProperty("lastUsedLocation", "0");
+                }
+            case 13:
                 //Next version
             }
             config.setProperty("configVersion", ""+version);

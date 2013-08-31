@@ -62,6 +62,7 @@ public class UndercastData implements InformationLoaderDelegate {
     public static int playTimeMin;
     public static int sortIndex;
     public static int filterIndex;
+    public static int locationIndex;
     public static boolean isGameOver = false;
     // saves if a /server command (without argument) was executed, if it's false, the user executed it
     public static boolean serverDetectionCommandExecuted = false;
@@ -145,7 +146,8 @@ public class UndercastData implements InformationLoaderDelegate {
             sortedServerInformation[c] = new UndercastServer();
         }
         sortIndex = 0;
-        filterIndex = mod_Undercast.CONFIG.lastUsedFilter;
+        filterIndex = UndercastConfig.lastUsedFilter < filterNames.length ? mod_Undercast.CONFIG.lastUsedFilter : 0;
+        locationIndex = UndercastConfig.lastUsedLocation < locationNames.length ? UndercastConfig.lastUsedLocation : 0;
         try {
             if (!emergencyParser)
                 mapLoader = new InformationLoaderThread(new URL("https://oc.tc/play"), this);

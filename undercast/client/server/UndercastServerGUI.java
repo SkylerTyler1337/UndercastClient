@@ -36,7 +36,6 @@ public class UndercastServerGUI extends GuiScreen {
      */
     public void initGui() {
         StringTranslate stringtranslate = mod_Undercast.getStringTranslate();
-        GuiButtonTooltip UsEuButton;
         
         this.buttonList.add(new GuiButtonTooltip(0, this.width / 2 - 100, height - 52, 98, 20, stringtranslate.translateKey("selectServer.select"),"Join / Swap to the selected server"));
         this.buttonList.add(guibuttonrefresh = new GuiButtonTooltip(1, this.width / 2 + 2, height - 52, 98, 20, stringtranslate.translateKey("selectServer.refresh"), "Refresh the server list"));
@@ -45,8 +44,7 @@ public class UndercastServerGUI extends GuiScreen {
         this.buttonList.add(new GuiButtonTooltip(4, this.width / 2 - 150, height - 28, 48, 20, UndercastData.sortNames[UndercastData.sortIndex], "Sort the servers"));
         this.buttonList.add(new GuiButtonTooltip(5, this.width / 2 + 102, height - 28, 48, 20, "Lobby", "Join / Swap to the lobby"));
         this.buttonList.add(new GuiButtonTooltip(6, this.width / 2 - 150, height - 52, 48, 20, UndercastData.filterNames[UndercastData.filterIndex], "Filter the servers by the server type"));
-        this.buttonList.add(UsEuButton = new GuiButtonTooltip(7, this.width / 2 + 102, height - 52, 48, 20, UndercastData.locationNames[UndercastData.isEU ? 1 : 0], "Toggle between US and EU servers."));
-        UsEuButton.enabled = false;
+        this.buttonList.add(new GuiButtonTooltip(7, this.width / 2 + 102, height - 52, 48, 20, UndercastData.locationNames[UndercastData.locationIndex], "Toggle between US and EU servers."));
         if(!UndercastData.isUpdate()) {
             this.buttonList.add(new GuiButtonTooltip(8, this.width - 54, 21, 48, 20, "Update", "Opens the download website for the latest version."));
         }
@@ -102,10 +100,15 @@ public class UndercastServerGUI extends GuiScreen {
             UndercastCustomMethods.sortAndFilterServers();
         }
         if(guibutton.id == 5) {
-            if(inGame && UndercastData.isPlayingOvercast()) {
+            if(inGame && UndercastData.isPlayingOvercast() && this.isRightLocation()) {
                 Minecraft.getMinecraft().thePlayer.sendChatMessage("/server lobby");
             } else {
-                ServerData joinServer = new ServerData("us.oc.tc", "us.oc.tc:25565");
+                ServerData joinServer;
+                if(UndercastData.locationIndex == 1) {
+                    joinServer = new ServerData("eu.oc.tc", "eu.oc.tc:25565");
+                } else {
+                    joinServer = new ServerData("us.oc.tc", "us.oc.tc:25565");
+                }
                 mc.displayGuiScreen(new GuiConnecting(this, this.mc, joinServer));
             }
         }
@@ -121,6 +124,15 @@ public class UndercastServerGUI extends GuiScreen {
                UndercastCustomMethods.sortAndFilterServers();
                mod_Undercast.CONFIG.setProperty("lastUsedFilter", UndercastData.filterIndex);
            }
+        if(guibutton.id == 7) {
+            if(UndercastData.locationIndex < UndercastData.locationNames.length - 1) {
+                UndercastData.locationIndex++;
+            } else {
+                UndercastData.locationIndex = 0;
+            }
+            this.buttonList.set(7,  new GuiButtonTooltip(7, this.width / 2 + 102, height - 52, 48, 20, UndercastData.locationNames[UndercastData.locationIndex], "Toggle between US and EU servers."));
+            mod_Undercast.CONFIG.setProperty("lastUsedLocation", UndercastData.locationIndex);
+        }
         if(guibutton.id == 8) {
             try {
                 Desktop.getDesktop().browse(new URI(UndercastData.updateLink));
@@ -173,12 +185,17 @@ public class UndercastServerGUI extends GuiScreen {
      */
     public void joinSelectedServer() {
         if(selected != -1) {
-            if(inGame && UndercastData.isPlayingOvercast()) {
+            if(inGame && UndercastData.isPlayingOvercast() && this.isRightLocation()) {
                 Minecraft.getMinecraft().thePlayer.sendChatMessage("/server " + UndercastData.sortedServerInformation[selected].name);
             } else {
                 UndercastData.redirect = true;
                 UndercastData.directionServer = UndercastData.sortedServerInformation[selected].name;
-                ServerData joinServer = new ServerData("us.oc.tc", "us.oc.tc:25565");
+                ServerData joinServer;
+                if(UndercastData.locationIndex == 1) {
+                    joinServer = new ServerData("eu.oc.tc", "eu.oc.tc:25565");
+                } else {
+                    joinServer = new ServerData("us.oc.tc", "us.oc.tc:25565");
+                }
                 mc.displayGuiScreen(new GuiConnecting(this, this.mc, joinServer));
             }
         }
@@ -197,6 +214,16 @@ public class UndercastServerGUI extends GuiScreen {
             this.mc.displayGuiScreen(new GuiMainMenu());
         } else {
             this.mc.setIngameFocus();
+        }
+    }
+    
+    public boolean isRightLocation() {
+        if(UndercastData.isEU && UndercastData.locationIndex == 1) {
+            return true;
+        } else if(!UndercastData.isEU && UndercastData.locationIndex == 0) {
+            return true;
+        } else {
+            return false;
         }
     }
 }
