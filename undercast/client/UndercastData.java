@@ -21,6 +21,7 @@ import undercast.client.internetTools.ServersCommandParser;
 import undercast.client.server.UndercastServer;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class UndercastData implements InformationLoaderDelegate {
@@ -83,6 +84,9 @@ public class UndercastData implements InformationLoaderDelegate {
     public static int monumentDifference;
     public static FinalStats finalStats;
     public static boolean isEU;
+    // used for the revenge system
+    public static ArrayList<String> victimList = new ArrayList<String>();
+    public static ArrayList<String> killerList = new ArrayList<String>();
     
 
     public static boolean guiShowing;

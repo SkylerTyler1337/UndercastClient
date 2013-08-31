@@ -199,6 +199,8 @@ public class UndercastChatHandler {
             UndercastData.isGameOver = false;
             UndercastData.isNextKillFirstBlood = true;
             UndercastData.reloadStats();
+            UndercastData.victimList.clear();
+            UndercastData.killerList.clear();
             
             // stop the timer
             try {

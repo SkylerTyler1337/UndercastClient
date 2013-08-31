@@ -98,6 +98,8 @@ public class UndercastCustomMethods {
         UndercastData.resetLargestKillstreak();
         UndercastData.resetScore();
         UndercastData.isGameOver = false;
+        UndercastData.victimList.clear();
+        UndercastData.killerList.clear();
 
         UndercastData.reloadStats();
 

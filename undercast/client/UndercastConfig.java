@@ -52,6 +52,7 @@ public class UndercastConfig {
     public static boolean showLastKillAchievement;
     public static boolean displaySpecialKillMessages;
     public static boolean displaySpecialObjectives;
+    public static boolean showRevengeAchievement;
     public static boolean parseMatchState;
     public static boolean realtimeStats;
     public static int lastUsedFilter;
@@ -106,6 +107,7 @@ public class UndercastConfig {
         defaults.setProperty("showLastKillAchievement", "true");
         defaults.setProperty("displaySpecialKillMessages", "true");
         defaults.setProperty("displaySpecialObjectives", "true");
+        defaults.setProperty("showRevengeAchievement", "true");
         defaults.setProperty("parseMatchState", "true");
         defaults.setProperty("lastUsedFilter", "0");
         defaults.setProperty("lastUsedLocation", "0");
@@ -197,6 +199,7 @@ public class UndercastConfig {
             config.setProperty("showLastKillAchievement", "true");
             config.setProperty("displaySpecialKillMessages", "true");
             config.setProperty("displaySpecialObjectives", "true");
+            config.setProperty("showRevengeAchievement", "true");
             config.setProperty("parseMatchState", "true");
             config.setProperty("lastUsedFilter", "0");
             config.setProperty("lastUsedLocation", "0");
@@ -253,6 +256,7 @@ public class UndercastConfig {
         showLastKillAchievement = this.getBoolProperty("showLastKillAchievement");
         displaySpecialKillMessages = this.getBoolProperty("displaySpecialKillMessages");
         displaySpecialObjectives = this.getBoolProperty("displaySpecialObjectives");
+        showRevengeAchievement = this.getBoolProperty("showRevengeAchievement");
         parseMatchState = this.getBoolProperty("parseMatchState");
         lastUsedFilter = this.getIntProperty("lastUsedFilter");
         lastUsedLocation = this.getIntProperty("lastUsedLocation");
@@ -439,6 +443,9 @@ public class UndercastConfig {
             case 12:
                 if(lastUsedLocation == 0) {
                     config.setProperty("lastUsedLocation", "0");
+                }
+                if(showRevengeAchievement == true) {
+                    config.setProperty("showRevengeAchievement", "true");
                 }
             case 13:
                 //Next version

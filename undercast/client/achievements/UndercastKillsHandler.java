@@ -46,6 +46,18 @@ public class UndercastKillsHandler {
             if(UndercastCustomMethods.isTeamkill(unstripedMessage, killer, username)) {
                 this.printTeamKillAchievement();
             } else {
+                if (UndercastConfig.showRevengeAchievement) {
+                    // add your killer to the list so it can be detected if you take revenge
+                    UndercastData.killerList.add(killer);
+                    for(int c = 0; c < UndercastData.victimList.size(); c++) {
+                        // test if the killer took revenge
+                        if(UndercastData.victimList.get(c).equals(killer)) {
+                            this.printRevengeAchievemt();
+                            UndercastData.victimList.remove(c);
+                            break;
+                        }
+                    }
+                }
                 this.printAchievement();
             }
         } //if you kill a person
@@ -73,6 +85,18 @@ public class UndercastKillsHandler {
                         Minecraft.getMinecraft().thePlayer.addChatMessage("[UndercastMod] \u00A7lSPECIAL KILL(" + kills + "): \u00A7c" + killer);
                     }
                     SpecialKillLogger.logSpecialKill(kills, killer, UndercastData.server, UndercastData.map);
+                }
+                if(UndercastConfig.showRevengeAchievement) {
+                    // add the victim to the revenge list in case it takes revenge
+                    UndercastData.victimList.add(killer);
+                    for(int c = 0; c < UndercastData.killerList.size(); c++) {
+                        // test if the player took revenge
+                        if(UndercastData.killerList.get(c).equals(killer)) {
+                            this.printRevengeAchievemt();
+                            UndercastData.killerList.remove(c);
+                            break;
+                        }
+                    }
                 }
                 this.printAchievement();
             }
@@ -142,6 +166,13 @@ public class UndercastKillsHandler {
         Minecraft client = Minecraft.getMinecraft();
         UndercastGuiAchievement gui = (UndercastGuiAchievement)Minecraft.getMinecraft().guiAchievement;
         gui.addFakeAchievementToMyList(custom, !killOrKilled, killer, killer, "Teamkill!");
+    }
+
+    private void printRevengeAchievemt() {
+        Achievement custom = (new Achievement(27, "custom", 1, 4, Item.ingotIron, (Achievement) null));
+        Minecraft client = Minecraft.getMinecraft();
+        UndercastGuiAchievement gui = (UndercastGuiAchievement)Minecraft.getMinecraft().guiAchievement;
+        gui.addFakeAchievementToMyList(custom, killOrKilled, killer, killer, killOrKilled ? "Revengekill!" : "took Revenge!");
     }
 
     public static boolean isSpecialKill(int kill) {
