@@ -62,6 +62,7 @@ public class UndercastConfig {
     public static String keyFullBright;
     public static String keySettings;
     public static boolean lessObstructive;
+    public static String ignoreVersionUpdateMessage;
     public static int configVersion;
 
     /**
@@ -117,6 +118,7 @@ public class UndercastConfig {
         defaults.setProperty("keyFullBright", "G");
         defaults.setProperty("keySettings", "P");
         defaults.setProperty("lessObstructive", "false");
+        defaults.setProperty("ignoreVersionUpdateMessage", "0.0.0");
         // if the value is missing, it should force an update. Don't change it.
         defaults.setProperty("configVersion", "0");
     }
@@ -209,6 +211,7 @@ public class UndercastConfig {
             config.setProperty("keyFullBright", "G");
             config.setProperty("keySettings", "P");
             config.setProperty("lessObstructive", "false");
+            config.setProperty("ignoreVersionUpdateMessage", "0.0.0");
             config.setProperty("configVersion", ""+version);
 
             config.store(new FileOutputStream(CONFIG_PATH + FILE_NAME),"This is the Unoffical Undercast Mod Config" + "\nCustomize it to your taste" + "\nkeyGui = Ingame Stats" +"\nkeyGui2 = Ingame Server Menu" + "\nkeyGui3 = Full Bright\n");
@@ -266,6 +269,7 @@ public class UndercastConfig {
         keyFullBright = this.getStringProperty("keyFullBright");
         keySettings = this.getStringProperty("keySettings");
         lessObstructive = this.getBoolProperty("lessObstructive");
+        ignoreVersionUpdateMessage = this.getStringProperty("ignoreVersionUpdateMessage");
         configVersion = this.getIntProperty("configVersion");
 
         checkForConfigUpdate();
@@ -446,6 +450,9 @@ public class UndercastConfig {
                 }
                 if(showRevengeAchievement == true) {
                     config.setProperty("showRevengeAchievement", "true");
+                }
+                if(ignoreVersionUpdateMessage.equals("0.0.0")) {
+                    config.setProperty("ignoreVersionUpdateMessage", "0.0.0");
                 }
             case 13:
                 //Next version

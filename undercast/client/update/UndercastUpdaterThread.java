@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 
+import undercast.client.UndercastConfig;
 import undercast.client.UndercastData;
 
 import net.minecraft.src.mod_Undercast;
@@ -47,13 +48,25 @@ public class UndercastUpdaterThread extends Thread{
             UndercastData.setUpdate(false);
             UndercastData.setUpdateLink("Could not get update information.");
         }
-        if (!mod_Undercast.MOD_VERSION.contains("dev") && compareVersions(readline)){
-            UndercastData.setUpdate(false);
-            if(!errorOccured) {
-                UndercastData.setUpdateLink(readline2);
-            } else {
-                UndercastData.setUpdateLink("An unknown error occured while getting the update information.");
+        // If the user enters the latest version in the config he won't
+        // notifications for this version
+        if(!UndercastConfig.ignoreVersionUpdateMessage.equals(readline)) {
+            // prevent the user from skipping the next version in advance
+            // = reset the setting if it doesn't match
+            if(!UndercastConfig.ignoreVersionUpdateMessage.equals("0.0.0")) {
+                mod_Undercast.CONFIG.setProperty("ignoreVersionUpdateMessage", "0.0.0");
+                System.out.println("[UndercastMod]: The setting ignoreVersionUpdateMessage was reset.\nYou may only enter the latest version number.");
             }
+            if (!mod_Undercast.MOD_VERSION.contains("dev") && compareVersions(readline)){
+                UndercastData.setUpdate(false);
+                if(!errorOccured) {
+                    UndercastData.setUpdateLink(readline2);
+                } else {
+                    UndercastData.setUpdateLink("An unknown error occured while getting the update information.");
+                }
+            }
+        } else {
+            System.out.println("[UndercastMod]: The update check was skipped");
         }
         if (readline3 != null) {
             try {
