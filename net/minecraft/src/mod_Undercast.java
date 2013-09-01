@@ -24,6 +24,8 @@ import undercast.client.UndercastKeybinding;
 import undercast.client.UndercastData.ServerType;
 import undercast.client.UndercastData.Teams;
 import undercast.client.UndercastMenuButton;
+import undercast.client.achievements2.UndercastAchievement;
+import undercast.client.achievements2.UndercastGuiAchievement2;
 import undercast.client.achievements.UndercastGuiAchievement;
 import undercast.client.achievements.UndercastKillsHandler;
 import undercast.client.controls.UndercastControls;
@@ -46,6 +48,7 @@ public class mod_Undercast extends BaseMod {
     private UndercastControls undercastControls;
     private PlayTimeCounterThread playTimeCounter;
     private UndercastKillsHandler achievementHandler;
+    public static UndercastGuiAchievement2 guiAchievement;
     public static FriendHandler friendHandler;
     private int buttonListSize;
     private Integer buttonListSizeOfGuiOptions;
@@ -74,9 +77,12 @@ public class mod_Undercast extends BaseMod {
         new UndercastData();
 
         achievementHandler = new UndercastKillsHandler();
+        guiAchievement = new UndercastGuiAchievement2(mc);
         UndercastGuiAchievement gui = new UndercastGuiAchievement(Minecraft.getMinecraft());
-        Minecraft.getMinecraft().guiAchievement = gui;
         gui.addFakeAchievementToMyList((new Achievement(27, "custom", 1, 4, Item.ingotIron, (Achievement) null)), true, "Herobrine", "ModLoader enabled!", "Using the hacky way.");
+        Minecraft.getMinecraft().guiAchievement = gui;
+        
+        
         friendHandler = new FriendHandler();
 
         //check for update
@@ -267,6 +273,7 @@ public class mod_Undercast extends BaseMod {
                  height += 8;
             }
         }
+        guiAchievement.updateScreen();
         return true;
     }
     
@@ -290,6 +297,7 @@ public class mod_Undercast extends BaseMod {
             }
             screen.buttonList = customButtonList;
         }
+        guiAchievement.updateScreen();
         return true;
     }
 

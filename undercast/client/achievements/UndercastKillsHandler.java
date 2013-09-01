@@ -13,6 +13,7 @@ import net.minecraft.src.Achievement;
 import undercast.client.UndercastConfig;
 import undercast.client.UndercastCustomMethods;
 import undercast.client.UndercastData;
+import undercast.client.achievements2.UndercastAchievement;
 import net.minecraft.src.mod_Undercast;
 
 /**
@@ -104,7 +105,7 @@ public class UndercastKillsHandler {
             UndercastData.isLastKillFromPlayer = true;
             if (UndercastData.isNextKillFirstBlood) {
                 if (UndercastConfig.showFirstBloodAchievement) {
-                    printFirstBloodAchievement();
+                    printFirstBloodAchievement(username);
                 }
                 UndercastData.isNextKillFirstBlood = false;
             }
@@ -115,7 +116,7 @@ public class UndercastKillsHandler {
             this.printAchievement();
         } else if (message.toLowerCase().contains("game over")) {
             if (UndercastData.isLastKillFromPlayer && mod_Undercast.CONFIG.showLastKillAchievement) {
-                printLastKillAchievement();
+                printLastKillAchievement(username);
             }
         } //When someone die
         else if ((message.contains("by ") || message.contains("took ") || message.contains("fury of ")) && !message.toLowerCase().endsWith(" team")) {
@@ -125,54 +126,29 @@ public class UndercastKillsHandler {
     }
 
     private void printAchievement() {
-        Achievement custom = (new Achievement(27, "custom", 1, 4, Item.ingotIron, (Achievement) null));
-        UndercastGuiAchievement gui = (UndercastGuiAchievement)Minecraft.getMinecraft().guiAchievement;
-        gui.addFakeAchievementToMyList(custom, killOrKilled, killer);
+        UndercastAchievement ac = new UndercastAchievement(killer,killOrKilled);
+        mod_Undercast.guiAchievement.queueTakenAchievement(ac);
     }
 
-    public void printFirstBloodAchievement() {
-        final long waitingTime;
-        if (UndercastConfig.showAchievements && UndercastConfig.showKillAchievements) {
-            waitingTime = 4000L;
-        } else {
-            waitingTime = 0L;
-        }
-        Runnable r1 = new Runnable() {
-            public void run() {
-                try {
-                    Thread.sleep(waitingTime);
-                    Achievement custom = (new Achievement(27, "custom", 1, 4, Item.ingotIron, (Achievement) null));
-                    Minecraft client = Minecraft.getMinecraft();
-                    UndercastGuiAchievement gui = (UndercastGuiAchievement)Minecraft.getMinecraft().guiAchievement;
-                    gui.addFakeAchievementToMyList(custom, true, mod_Undercast.getUsername(), mod_Undercast.getUsername(), "got the first Blood!");
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(UndercastKillsHandler.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        };
-        Thread t1 = new Thread(r1);
-        t1.start();
+    public void printFirstBloodAchievement(String username) {
+        UndercastAchievement ac = new UndercastAchievement(username, "\u00A7a" + username,"\u00A7agot the first Blood!");
+        mod_Undercast.guiAchievement.queueTakenAchievement(ac);
     }
 
-    public void printLastKillAchievement() {
-        Achievement custom = (new Achievement(27, "custom", 1, 4, Item.ingotIron, (Achievement) null));
-        Minecraft client = Minecraft.getMinecraft();
-        UndercastGuiAchievement gui = (UndercastGuiAchievement)Minecraft.getMinecraft().guiAchievement;
-        gui.addFakeAchievementToMyList(custom, true, mod_Undercast.getUsername(), mod_Undercast.getUsername(), "got the last Kill!");
+    public void printLastKillAchievement(String username) {
+        UndercastAchievement ac = new UndercastAchievement(username, "\u00A7a" + username,"\u00A7agot the last Kill!");
+        mod_Undercast.guiAchievement.queueTakenAchievement(ac);
     }
 
     private void printTeamKillAchievement() {
-        Achievement custom = (new Achievement(27, "custom", 1, 4, Item.ingotIron, (Achievement) null));
-        Minecraft client = Minecraft.getMinecraft();
-        UndercastGuiAchievement gui = (UndercastGuiAchievement)Minecraft.getMinecraft().guiAchievement;
-        gui.addFakeAchievementToMyList(custom, !killOrKilled, killer, killer, "Teamkill!");
+        UndercastAchievement ac = new UndercastAchievement(killer,killOrKilled ? "\u00A7a" + killer : "\u00A74" + killer,killOrKilled ? "\u00A7aTeam Kill" : "\u00A74Team Kill");
+        mod_Undercast.guiAchievement.queueTakenAchievement(ac);
+        
     }
 
     private void printRevengeAchievemt() {
-        Achievement custom = (new Achievement(27, "custom", 1, 4, Item.ingotIron, (Achievement) null));
-        Minecraft client = Minecraft.getMinecraft();
-        UndercastGuiAchievement gui = (UndercastGuiAchievement)Minecraft.getMinecraft().guiAchievement;
-        gui.addFakeAchievementToMyList(custom, killOrKilled, killer, killer, killOrKilled ? "Revengekill!" : "took Revenge!");
+        UndercastAchievement ac = new UndercastAchievement(killer, killer, killOrKilled ? "\u00A7aRevengekill!" : "\u00A74 took Revenge!");
+        mod_Undercast.guiAchievement.queueTakenAchievement(ac);
     }
 
     public static boolean isSpecialKill(int kill) {
