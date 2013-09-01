@@ -79,7 +79,6 @@ public class mod_Undercast extends BaseMod {
         achievementHandler = new UndercastKillsHandler();
         guiAchievement = new UndercastGuiAchievement2(mc);
         UndercastGuiAchievement gui = new UndercastGuiAchievement(Minecraft.getMinecraft());
-        gui.addFakeAchievementToMyList((new Achievement(27, "custom", 1, 4, Item.ingotIron, (Achievement) null)), true, "Herobrine", "ModLoader enabled!", "Using the hacky way.");
         Minecraft.getMinecraft().guiAchievement = gui;
         
         
