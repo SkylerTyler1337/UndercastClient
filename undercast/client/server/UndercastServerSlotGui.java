@@ -93,10 +93,10 @@ public abstract class UndercastServerSlotGui {
     private boolean field_77243_s;
     private int field_77242_t;
     private DoubleBuffer doubleBuffer;
-    private UndercastServerGUI parent;
+    private Boolean inGame;
 
-    public UndercastServerSlotGui(UndercastServerGUI guiservers, int par2, int par3, int par4, int par5, int par6) {
-        this.parent = guiservers;
+    public UndercastServerSlotGui(Boolean inGame, int par2, int par3, int par4, int par5, int par6) {
+        this.inGame = inGame;
         this.width = par2;
         this.height = par3;
         this.top = par4;
@@ -312,24 +312,24 @@ public abstract class UndercastServerSlotGui {
         }
 
         this.bindAmountScrolled();
-        if (this.parent.inGame) {
+        if (this.inGame) {
             this.enableClipping(this.top, this.bottom);
         }
         GL11.glDisable(GL11.GL_LIGHTING);
         GL11.glDisable(GL11.GL_FOG);
         Tessellator var18 = Tessellator.instance;
-        if (!this.parent.inGame) {
+        if (!this.inGame) {
             Minecraft.getMinecraft().func_110434_K().func_110577_a(new ResourceLocation("textures/gui/options_background.png"));
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         }
-        if (this.parent.inGame) {
+        if (this.inGame) {
             GL11.glEnable(GL11.GL_BLEND);
             GL11.glDisable(GL11.GL_TEXTURE_2D);
             GL11.glColor4f(0.0F, 0.0F, 0.0F, 0.5F);
         }
         float var17 = 32.0F;
         var18.startDrawingQuads();
-        if (!this.parent.inGame) {
+        if (!this.inGame) {
             var18.setColorOpaque_I(2105376);
         }
         var18.addVertexWithUV((double) this.left, (double) this.bottom, 0.0D, (double) ((float) this.left / var17), (double) ((float) (this.bottom + (int) this.amountScrolled) / var17));
@@ -337,7 +337,7 @@ public abstract class UndercastServerSlotGui {
         var18.addVertexWithUV((double) this.right, (double) this.top, 0.0D, (double) ((float) this.right / var17), (double) ((float) (this.top + (int) this.amountScrolled) / var17));
         var18.addVertexWithUV((double) this.left, (double) this.top, 0.0D, (double) ((float) this.left / var17), (double) ((float) (this.top + (int) this.amountScrolled) / var17));
         var18.draw();
-        if (this.parent.inGame) {
+        if (this.inGame) {
             GL11.glDisable(GL11.GL_BLEND);
             GL11.glEnable(GL11.GL_TEXTURE_2D);
         }
@@ -381,7 +381,7 @@ public abstract class UndercastServerSlotGui {
 
         GL11.glDisable(GL11.GL_DEPTH_TEST);
         byte var20 = 4;
-        if (!this.parent.inGame) {
+        if (!this.inGame) {
             this.overlayBackground(0, this.top, 255, 255);
             this.overlayBackground(this.bottom, this.height, 255, 255);
         }
@@ -454,7 +454,7 @@ public abstract class UndercastServerSlotGui {
         GL11.glEnable(GL11.GL_ALPHA_TEST);
         GL11.glDisable(GL11.GL_BLEND);
 
-        if (this.parent.inGame) {
+        if (this.inGame) {
             disableClipping();
         }
     }

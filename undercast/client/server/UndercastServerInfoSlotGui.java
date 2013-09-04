@@ -16,7 +16,7 @@ class UndercastServerInfoSlotGui extends UndercastServerSlotGui {
      * @param servers    list of servers
      */
     public UndercastServerInfoSlotGui(UndercastServerGUI guiservers) {
-        super(guiservers, guiservers.width, guiservers.height, 32, guiservers.height - 64, 36);
+        super(guiservers.inGame, guiservers.width, guiservers.height, 32, guiservers.height - 64, 36);
         this.parent = guiservers;
     }
 

@@ -1,28 +1,28 @@
-package undercast.client.controls;
+package undercast.client.settings;
 
-import net.minecraft.src.Minecraft;
 import net.minecraft.src.*;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
-public class GuiControlsScrollPanel extends GuiSlot {
+import undercast.client.UndercastKeybinding;
+import undercast.client.server.UndercastServerSlotGui;
+
+public class GuiControlsScrollPanel extends UndercastServerSlotGui {
     private GuiUndercastControls controls;
-    private GameSettings options;
     private Minecraft mc;
     private int _mouseX;
     private int _mouseY;
     private int selected = -1;
 
-    public GuiControlsScrollPanel(GuiUndercastControls controls, GameSettings options, Minecraft mc) {
-        super(mc, controls.width, controls.height, 16, (controls.height - 32) + 4, 25);
+    public GuiControlsScrollPanel(GuiUndercastControls controls, Minecraft mc) {
+        super(true, controls.width, controls.height, 32, (controls.height - 64) + 4, 25);
         this.controls = controls;
-        this.options = options;
         this.mc = mc;
     }
 
     @Override
     protected int getSize() {
-        return this.options.keyBindings.length;
+        return UndercastKeybinding.keybinds.size();
     }
 
     @Override
@@ -30,10 +30,6 @@ public class GuiControlsScrollPanel extends GuiSlot {
         if(!flag) {
             if(this.selected == -1) {
                 this.selected = i;
-            } else {
-                this.options.setKeyBinding(this.selected, -100);
-                this.selected = -1;
-                KeyBinding.resetKeyBindingArrayAndHash();
             }
         }
     }
@@ -51,16 +47,8 @@ public class GuiControlsScrollPanel extends GuiSlot {
     public void drawScreen(int mX, int mY, float f) {
         this._mouseX = mX;
         this._mouseY = mY;
-
-        if(this.selected != -1 && !Mouse.isButtonDown(0) && Mouse.getDWheel() == 0) {
-            if(Mouse.next() && Mouse.getEventButtonState()) {
-                this.options.setKeyBinding(this.selected, -100 + Mouse.getEventButton());
-                this.selected = -1;
-                KeyBinding.resetKeyBindingArrayAndHash();
-            }
-        }
-
-        super.drawScreen(mX, mY, f);
+        
+       super.drawScreen(mX, mY, f);
     }
 
     @Override
@@ -74,26 +62,25 @@ public class GuiControlsScrollPanel extends GuiSlot {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.controls.drawTexturedModalRect(xPosition, yPosition, 0, 46 + k * 20, width / 2, height);
         this.controls.drawTexturedModalRect(xPosition + width / 2, yPosition, 200 - width / 2, 46 + k * 20, width / 2, height);
-        this.controls.drawString(this.mc.fontRenderer, this.options.getKeyBindingDescription(index), xPosition + width + 4, yPosition + 6, 0xFFFFFFFF);
+        this.controls.drawString(this.mc.fontRenderer, UndercastKeybinding.keybinds.get(index).keyDescription, xPosition + width + 4, yPosition + 6, 0xFFFFFFFF);
         boolean conflict = false;
 
-        for(int x = 0; x < this.options.keyBindings.length; x++) {
-            if(x != index && this.options.keyBindings[x].keyCode == this.options.keyBindings[index].keyCode) {
+        for(int x = 0; x < UndercastKeybinding.keybinds.size(); x++) {
+            if(x != index && UndercastKeybinding.keybinds.get(x).keyCode == UndercastKeybinding.keybinds.get(index).keyCode) {
                 conflict = true;
                 break;
             }
         }
 
-        String str = (conflict ? EnumChatFormatting.RED : "") + this.options.getOptionDisplayString(index);
+        String str = (conflict ? EnumChatFormatting.RED : "") + GameSettings.getKeyDisplayString(UndercastKeybinding.keybinds.get(index).keyCode);
         str = (index == this.selected ? EnumChatFormatting.WHITE + "> " + EnumChatFormatting.YELLOW + "??? " + EnumChatFormatting.WHITE + "<" : str);
         this.controls.drawCenteredString(this.mc.fontRenderer, str, xPosition + (width / 2), yPosition + (height - 8) / 2, 0xFFFFFFFF);
     }
 
     public boolean keyTyped(char c, int i) {
         if(this.selected != -1) {
-            this.options.setKeyBinding(this.selected, i);
+            UndercastKeybinding.keybinds.get(this.selected).setKeyCode(i);
             this.selected = -1;
-            KeyBinding.resetKeyBindingArrayAndHash();
             return false;
         }
 

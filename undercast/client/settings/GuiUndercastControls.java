@@ -1,4 +1,4 @@
-package undercast.client.controls;
+package undercast.client.settings;
 
 import net.minecraft.src.GameSettings;
 import net.minecraft.src.GuiButton;
@@ -12,32 +12,20 @@ public class GuiUndercastControls extends GuiScreen {
      */
     private GuiScreen parentScreen;
 
-    /**
-     * The title string that is displayed in the top-center of the screen.
-     */
-    protected String screenTitle = "Controls";
-
-    /**
-     * Reference to the GameSettings object.
-     */
-    private GameSettings options;
-
     private GuiControlsScrollPanel scrollPane;
 
-    public GuiUndercastControls(GuiScreen par1GuiScreen, GameSettings par2GameSettings) {
+    public GuiUndercastControls(GuiScreen par1GuiScreen) {
         this.parentScreen = par1GuiScreen;
-        this.options = par2GameSettings;
     }
 
     /**
      * Adds the buttons (and other controls) to the screen in question.
      */
     public void initGui() {
-        this.scrollPane = new GuiControlsScrollPanel(this, this.options, this.mc);
+        this.scrollPane = new GuiControlsScrollPanel(this, this.mc);
         StringTranslate stringtranslate = mod_Undercast.getStringTranslate();
         this.buttonList.add(new GuiButton(200, this.width / 2 - 100, this.height - 24, stringtranslate.translateKey("gui.done")));
-        scrollPane.registerScrollButtons(7, 8);
-        this.screenTitle = stringtranslate.translateKey("controls.title");
+        scrollPane.registerScrollButtons(null,7, 8);
     }
 
     /**
@@ -70,8 +58,9 @@ public class GuiUndercastControls extends GuiScreen {
      */
     public void drawScreen(int par1, int par2, float par3) {
         this.drawDefaultBackground();
+        // Draw label at top of screen
+        drawCenteredString(fontRenderer, "Undercast mod settings", width / 2, (height/2)-100, 0x4444bb);
         this.scrollPane.drawScreen(par1, par2, par3);
-        this.drawCenteredString(this.fontRenderer, this.screenTitle, this.width / 2, 4, 0xffffff);
         super.drawScreen(par1, par2, par3);
     }
 }

@@ -28,7 +28,6 @@ import undercast.client.achievements2.UndercastAchievement;
 import undercast.client.achievements2.UndercastGuiAchievement2;
 import undercast.client.achievements.UndercastGuiAchievement;
 import undercast.client.achievements.UndercastKillsHandler;
-import undercast.client.controls.UndercastControls;
 import undercast.client.internetTools.ServersCommandParser;
 import undercast.client.internetTools.FriendHandler;
 import undercast.client.server.UndercastServerGUI;
@@ -45,7 +44,6 @@ public class mod_Undercast extends BaseMod {
     public static boolean brightActive;
     public float brightLevel = (float) 20.0D;
     public float defaultLevel = mc.gameSettings.gammaSetting;
-    private UndercastControls undercastControls;
     private PlayTimeCounterThread playTimeCounter;
     private UndercastKillsHandler achievementHandler;
     public static UndercastGuiAchievement2 guiAchievement;
@@ -86,9 +84,6 @@ public class mod_Undercast extends BaseMod {
 
         //check for update
         new UndercastUpdaterThread();
-
-        //load the new controls menu
-        undercastControls = new UndercastControls();
         
         //get key updates
         UndercastKeybinding.modInstance = this;
@@ -279,7 +274,6 @@ public class mod_Undercast extends BaseMod {
     public boolean onTickInGUI(float tick, Minecraft mc, GuiScreen screen){
         // update the keys
         UndercastKeybinding.onTick();
-        undercastControls.onTickInGUI(tick, mc, screen);
         this.addOvercastButton();
         // Listen for disconnect, as it isn't properly called
         if(UndercastData.isOC && screen instanceof GuiMainMenu) {

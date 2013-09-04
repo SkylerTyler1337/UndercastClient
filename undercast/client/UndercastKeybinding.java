@@ -2,6 +2,7 @@ package undercast.client;
 
 import java.util.ArrayList;
 
+import net.minecraft.src.GameSettings;
 import net.minecraft.src.mod_Undercast;
 
 import org.lwjgl.input.Keyboard;
@@ -32,6 +33,11 @@ public class UndercastKeybinding {
             this.isDown = true;
             modInstance.keyboardEvent(this);
         }
+    }
+    
+    public void setKeyCode(int newCode) {
+        keyCode = newCode;
+        mod_Undercast.CONFIG.setProperty(this.keyName, GameSettings.getKeyDisplayString(this.keyCode));
     }
     
     static {
