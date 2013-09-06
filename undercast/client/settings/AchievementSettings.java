@@ -23,16 +23,17 @@ public class AchievementSettings extends GuiScreen {
         int x1 = width / 2 - 150;
         int x2 = width / 2 + 10;
         int y = height / 2 - 60;
-        for (int i = 0; i < toggleSettings.length / 2; i++) {
+        for (int i = 0; i <= toggleSettings.length / 2; i++) {
             this.buttonList.add(new SettingsToggleButton(i, x1, y+(i*25), 150, 20, "", enabledStrings[i], disabledStrings[i], toggleSettings[i]));
         }
         y = height / 2 - 60;
-        for (int i = toggleSettings.length / 2; i < toggleSettings.length; i++) {
-            this.buttonList.add(new SettingsToggleButton(i, x2, y+((i - toggleSettings.length / 2)*25), 150, 20, "", enabledStrings[i], disabledStrings[i], toggleSettings[i]));
+        for (int i = toggleSettings.length / 2 + 1; i < toggleSettings.length; i++) {
+            this.buttonList.add(new SettingsToggleButton(i, x2, y + ((i - toggleSettings.length / 2 - 1) * 25), 150, 20, "", enabledStrings[i], disabledStrings[i], toggleSettings[i]));
         }
-        int x = width / 2 - 75;
+        int x = width / 2 - 150;
         y = y + 40 + toggleSettings.length / 2 * 25;
-        this.buttonList.add(new GuiButton(1, x, y, 150, 20, "Back"));
+        this.buttonList.add(new GuiButton(-1, x, y, 150, 20, "Back"));
+        this.buttonList.add(new GuiButton(-2, x + 160, y, 150, 20, "Animation >"));
     }
 
     @Override
@@ -59,8 +60,10 @@ public void drawScreen(int par1, int par2, float par3) {
         if (guibutton instanceof SettingsToggleButton) {
             SettingsToggleButton button = (SettingsToggleButton) guibutton;
             button.buttonPressed();
-        } else {
+        } else if (guibutton.id == -1){
             ModLoader.openGUI(mc.thePlayer, parentScreen);
+        } else if(guibutton.id == -2){
+           ModLoader.openGUI(mc.thePlayer, new AchievementAnimationSettings(this));
         }
     }
 

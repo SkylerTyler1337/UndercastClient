@@ -24,8 +24,8 @@ import undercast.client.UndercastKeybinding;
 import undercast.client.UndercastData.ServerType;
 import undercast.client.UndercastData.Teams;
 import undercast.client.UndercastMenuButton;
-import undercast.client.achievements2.UndercastAchievement;
-import undercast.client.achievements2.UndercastGuiAchievement2;
+import undercast.client.achievements.UndercastAchievement;
+import undercast.client.achievements.EnableModloaderGuiAchievement;
 import undercast.client.achievements.UndercastGuiAchievement;
 import undercast.client.achievements.UndercastKillsHandler;
 import undercast.client.internetTools.ServersCommandParser;
@@ -46,7 +46,7 @@ public class mod_Undercast extends BaseMod {
     public float defaultLevel = mc.gameSettings.gammaSetting;
     private PlayTimeCounterThread playTimeCounter;
     private UndercastKillsHandler achievementHandler;
-    public static UndercastGuiAchievement2 guiAchievement;
+    public static UndercastGuiAchievement guiAchievement;
     public static FriendHandler friendHandler;
     private int buttonListSize;
     private Integer buttonListSizeOfGuiOptions;
@@ -75,8 +75,8 @@ public class mod_Undercast extends BaseMod {
         new UndercastData();
 
         achievementHandler = new UndercastKillsHandler();
-        guiAchievement = new UndercastGuiAchievement2(mc);
-        UndercastGuiAchievement gui = new UndercastGuiAchievement(Minecraft.getMinecraft());
+        guiAchievement = new UndercastGuiAchievement(mc);
+        EnableModloaderGuiAchievement gui = new EnableModloaderGuiAchievement(Minecraft.getMinecraft());
         Minecraft.getMinecraft().guiAchievement = gui;
         
         

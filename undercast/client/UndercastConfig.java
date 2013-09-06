@@ -63,6 +63,9 @@ public class UndercastConfig {
     public static String keySettings;
     public static boolean lessObstructive;
     public static String ignoreVersionUpdateMessage;
+    public static boolean achievementAnimation;
+    public static double achievementAnimationDuration;
+    public static boolean displaySkinBorder;
     public static int configVersion;
 
     /**
@@ -119,6 +122,9 @@ public class UndercastConfig {
         defaults.setProperty("keySettings", "P");
         defaults.setProperty("lessObstructive", "false");
         defaults.setProperty("ignoreVersionUpdateMessage", "0.0.0");
+        defaults.setProperty("achievementAnimation", "true");
+        defaults.setProperty("achievementAnimationDuration", "1.0");
+        defaults.setProperty("displaySkinBorder", "true");
         // if the value is missing, it should force an update. Don't change it.
         defaults.setProperty("configVersion", "0");
     }
@@ -212,6 +218,9 @@ public class UndercastConfig {
             config.setProperty("keySettings", "P");
             config.setProperty("lessObstructive", "false");
             config.setProperty("ignoreVersionUpdateMessage", "0.0.0");
+            config.setProperty("achievementAnimation", "true");
+            config.setProperty("achievementAnimationDuration", "1.0");
+            config.setProperty("displaySkinBorder", "true");
             config.setProperty("configVersion", ""+version);
 
             config.store(new FileOutputStream(CONFIG_PATH + FILE_NAME),"This is the Unoffical Undercast Mod Config" + "\nCustomize it to your taste" + "\nkeyGui = Ingame Stats" +"\nkeyGui2 = Ingame Server Menu" + "\nkeyGui3 = Full Bright\n");
@@ -270,6 +279,9 @@ public class UndercastConfig {
         keySettings = this.getStringProperty("keySettings");
         lessObstructive = this.getBoolProperty("lessObstructive");
         ignoreVersionUpdateMessage = this.getStringProperty("ignoreVersionUpdateMessage");
+        achievementAnimation = this.getBoolProperty("achievementAnimation");
+        achievementAnimationDuration = this.getDoubleProperty("achievementAnimationDuration");
+        displaySkinBorder = this.getBoolProperty("displaySkinBorder");
         configVersion = this.getIntProperty("configVersion");
 
         checkForConfigUpdate();
@@ -298,6 +310,12 @@ public class UndercastConfig {
         saveConfig();
     }
 
+    public void setProperty(String prop, double value) {
+        String s = String.valueOf(value);
+        config.setProperty(prop, s);
+        saveConfig();
+    }
+
     public String getStringProperty(String prop) {
         return config.getProperty(prop);
     }
@@ -317,6 +335,11 @@ public class UndercastConfig {
         return Boolean.parseBoolean(s);
     }
 
+    public double getDoubleProperty(String prop) {
+        String s = config.getProperty(prop);
+        return Double.parseDouble(s);
+    }
+
     public static String getDefaultPropertyValue(String prop) {
         return defaults.getProperty(prop);
     }
@@ -334,6 +357,11 @@ public class UndercastConfig {
     public static boolean getDefaultBoolProperty(String prop) {
         String s = defaults.getProperty(prop);
         return Boolean.parseBoolean(s);
+    }
+
+    public static double getDefaultDoubleProperty(String prop) {
+        String s = defaults.getProperty(prop);
+        return Double.parseDouble(s);
     }
 
     public void saveConfig() {
@@ -453,6 +481,15 @@ public class UndercastConfig {
                 }
                 if(ignoreVersionUpdateMessage.equals("0.0.0")) {
                     config.setProperty("ignoreVersionUpdateMessage", "0.0.0");
+                }
+                if(achievementAnimation == true) {
+                    config.setProperty("achievementAnimation", "true");
+                }
+                if(achievementAnimationDuration == 1.0F) {
+                    config.setProperty("achievementAnimationDuration", "1.0");
+                }
+                if(displaySkinBorder == true) {
+                    config.setProperty("displaySkinBorder", "true");
                 }
             case 13:
                 //Next version

@@ -13,7 +13,7 @@ import net.minecraft.src.Achievement;
 import undercast.client.UndercastConfig;
 import undercast.client.UndercastCustomMethods;
 import undercast.client.UndercastData;
-import undercast.client.achievements2.UndercastAchievement;
+import undercast.client.achievements.UndercastAchievement;
 import net.minecraft.src.mod_Undercast;
 
 /**

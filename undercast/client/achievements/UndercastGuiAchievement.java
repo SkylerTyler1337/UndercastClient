@@ -1,44 +1,59 @@
 package undercast.client.achievements;
 
-import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import javax.imageio.ImageIO;
-import net.minecraft.src.Minecraft;
+import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
 
+import undercast.client.achievements.animation.UndercastAchievementAccessor;
+import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenManager;
+import aurelienribon.tweenengine.equations.Bounce;
+import net.minecraft.src.Minecraft;
 import net.minecraft.src.AbstractClientPlayer;
-import net.minecraft.src.EntityRendererProxy;
-import net.minecraft.src.Gui;
-import net.minecraft.src.ResourceLocation;
+import net.minecraft.src.GuiScreen;
 import net.minecraft.src.ScaledResolution;
-import net.minecraft.src.GuiAchievement;
-import net.minecraft.src.RenderHelper;
-import net.minecraft.src.RenderItem;
-import net.minecraft.src.Achievement;
-import net.minecraft.src.StatCollector;
-import net.minecraft.src.ImageBufferDownload;
 import net.minecraft.src.TextureManager;
-import net.minecraft.src.mod_Undercast;
+import net.minecraft.src.ResourceLocation;
 
-public class UndercastGuiAchievement extends GuiAchievement {
+public class UndercastGuiAchievement extends GuiScreen {
 
-    public UndercastGuiAchievement(Minecraft par1Minecraft) {
-        super(par1Minecraft);
+    private Minecraft client;
+    public ArrayList<UndercastAchievement> achievements = new ArrayList();
+    private static final ResourceLocation achievementBackground = new ResourceLocation("textures/gui/achievement/achievement_background.png");
+    ScaledResolution scr = new ScaledResolution(Minecraft.getMinecraft().gameSettings, Minecraft.getMinecraft().displayWidth, Minecraft.getMinecraft().displayHeight);
+    private ArrayList<Integer> usedRank = new ArrayList();
+
+    public UndercastGuiAchievement(Minecraft mc) {
+        client = mc;
+        Tween.registerAccessor(UndercastAchievement.class, new UndercastAchievementAccessor());
     }
-    /**
-     * Enables Modloader
-     */
-    public void updateAchievementWindow() {
-        if(mod_Undercast.enableML && Minecraft.getMinecraft().entityRenderer != null) {
-            mod_Undercast.enableML = false;
-            Minecraft.getMinecraft().entityRenderer = new EntityRendererProxy(Minecraft.getMinecraft());
+
+    public void queueTakenAchievement(UndercastAchievement achievement) {
+        int rank = getFirstAvailableRank();
+        achievement.setRank(rank);
+        achievements.add(achievement);
+        usedRank.add(rank);
+    }
+
+    @Override
+    public void updateScreen() {
+        for (int i = 0; i < achievements.size(); i++) {
+            achievements.get(i).draw();
         }
-        super.updateAchievementWindow();
     }
+    public void removeAchievement(UndercastAchievement achievement){
+        usedRank.remove(new Integer(achievement.getRank()));
+        achievements.remove(achievement);
+    }
+    public int getFirstAvailableRank() {
+        for (int i = 0; i < 20; i++) {
+            if(!usedRank.contains(i)){
+                return i;
+            }
+        }
+        return -1;
+    }
+
 }
