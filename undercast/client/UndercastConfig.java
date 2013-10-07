@@ -107,8 +107,8 @@ public class UndercastConfig {
         defaults.setProperty("showAchievements", "false");
         defaults.setProperty("showKillAchievements", "true");
         defaults.setProperty("showDeathAchievements", "true");
-        defaults.setProperty("showFirstBloodAchievement", "true");
-        defaults.setProperty("showLastKillAchievement", "true");
+        defaults.setProperty("showFirstBloodAchievement", "false");
+        defaults.setProperty("showLastKillAchievement", "false");
         defaults.setProperty("displaySpecialKillMessages", "true");
         defaults.setProperty("displaySpecialObjectives", "true");
         defaults.setProperty("showRevengeAchievement", "true");
@@ -203,8 +203,8 @@ public class UndercastConfig {
             config.setProperty("showAchievements", "false");
             config.setProperty("showKillAchievements", "true");
             config.setProperty("showDeathAchievements", "true");
-            config.setProperty("showFirstBloodAchievement", "true");
-            config.setProperty("showLastKillAchievement", "true");
+            config.setProperty("showFirstBloodAchievement", "false");
+            config.setProperty("showLastKillAchievement", "false");
             config.setProperty("displaySpecialKillMessages", "true");
             config.setProperty("displaySpecialObjectives", "true");
             config.setProperty("showRevengeAchievement", "true");
@@ -415,11 +415,11 @@ public class UndercastConfig {
                     config.setProperty("showDeathAchievements", "true");
                 }
             case 5:
-                if(showFirstBloodAchievement == true) {
-                    config.setProperty("showFirstBloodAchievement", "true");
+                if(showFirstBloodAchievement == false) {
+                    config.setProperty("showFirstBloodAchievement", "false");
                 }
-                if(showLastKillAchievement == true) {
-                    config.setProperty("showLastKillAchievement", "true");
+                if(showLastKillAchievement == false) {
+                    config.setProperty("showLastKillAchievement", "false");
                 }
                 if(showMatchTime == true) {
                     config.setProperty("showMatchTime", "true");
