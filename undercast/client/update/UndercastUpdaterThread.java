@@ -42,8 +42,8 @@ public class UndercastUpdaterThread extends Thread{
             readline = in.readLine();
             readline2 = in.readLine();
             readline3 = in.readLine();
-            readline4 = in.readLine();
             emergencyParser = Boolean.parseBoolean(in.readLine());
+            readline4 = in.readLine();
             UndercastData.emergencyParser = emergencyParser;
             UndercastData.latestVersion = readline;
         } catch (Exception e) {

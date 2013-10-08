@@ -30,6 +30,11 @@ public class ServerLocationReader {
         String line;
         ServerLocation currentLocation = ServerLocation.Both;
         try {
+            if(!(new File(CONFIG_PATH + FILE_NAME).exists())) {
+                isReading = false;
+                downloadTheLatestVersion();
+                return;
+            }
             reader = new BufferedReader(new FileReader(CONFIG_PATH + FILE_NAME));
             line = reader.readLine();
             if(!line.equalsIgnoreCase("[VERSION]")) {
@@ -138,7 +143,7 @@ public class ServerLocationReader {
             
             // copy the data line by line
             while(line != null) {
-                writer.write(line);
+                writer.write(line + "\r\n");
                 line = reader.readLine();
             }
             
