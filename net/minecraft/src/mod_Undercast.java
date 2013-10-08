@@ -20,6 +20,7 @@ import undercast.client.UndercastChatHandler;
 import undercast.client.UndercastConfig;
 import undercast.client.UndercastCustomMethods;
 import undercast.client.UndercastData;
+import undercast.client.UndercastData.ServerLocation;
 import undercast.client.UndercastKeybinding;
 import undercast.client.UndercastData.ServerType;
 import undercast.client.UndercastData.Teams;
@@ -203,7 +204,7 @@ public class mod_Undercast extends BaseMod {
                 }
             }
             // Show next map
-            if (CONFIG.showNextMap && !UndercastData.isLobby) {
+            if (CONFIG.showNextMap && !UndercastData.isLobby && !(UndercastData.isEU && UndercastData.currentServerLocation == ServerLocation.Both)) {
                 if (UndercastData.getNextMap() != null) {
                     mc.fontRenderer.drawStringWithShadow((UndercastConfig.lessObstructive ? "N: " : "Next Map: ") + "\u00A7d" + UndercastData.getNextMap(), width, height, 16777215);
                     height += 8;

@@ -3,6 +3,7 @@ package undercast.client.server;
 import net.minecraft.src.Minecraft;
 import net.minecraft.src.Tessellator;
 import undercast.client.UndercastData;
+import undercast.client.UndercastData.ServerLocation;
 
 import java.util.ArrayList;
 
@@ -28,8 +29,8 @@ class UndercastServerInfoSlotGui extends UndercastServerSlotGui {
             UndercastServer server = UndercastData.sortedServerInformation[i];
             parent.drawString(Minecraft.getMinecraft().fontRenderer, getServerName(server), j + 2, k + 1, 16777215);
             parent.drawString(Minecraft.getMinecraft().fontRenderer, Integer.toString(server.getPlayerCount()), j + 198, k + 1, 8421504);
-            parent.drawString(Minecraft.getMinecraft().fontRenderer, server.getCurrentMap(), j + 2, k + 12, getMatchColor(server));
-            parent.drawString(Minecraft.getMinecraft().fontRenderer, "Next: \u00A73" + server.getNextMap(), j + 2, k + 12 + 11, 8421504);
+            parent.drawString(Minecraft.getMinecraft().fontRenderer, (!UndercastData.isEU && UndercastData.locationIndex == 1 && server.location == ServerLocation.Both) ? "Unknown" : server.getCurrentMap(), j + 2, k + 12, getMatchColor(server));
+            parent.drawString(Minecraft.getMinecraft().fontRenderer, (UndercastData.locationIndex == 1 && server.location == ServerLocation.Both) ? "Next: \u00A77Unknown" : "Next: \u00A73" + server.getNextMap(), j + 2, k + 12 + 11, 8421504);
         } catch (Exception e) {
         }
 
@@ -67,6 +68,11 @@ class UndercastServerInfoSlotGui extends UndercastServerSlotGui {
     }
 
     private int getMatchColor(UndercastServer server) {
+        // if you toggle the location button, it shows everything orange while not deleting the state
+        if((UndercastData.isEU && UndercastData.locationIndex == 0) || (!UndercastData.isEU && UndercastData.locationIndex == 1)) {
+            return 0xF87431;
+        }
+
         switch(server.matchState) {
         case Started:
             return 0xFFFF00; // yellow
