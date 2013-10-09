@@ -114,23 +114,25 @@ public class FriendHandler {
         return !(isListening && flag);
     }
     private static void removeChatMessage(){
-        try {
-            List chatLines;
-            // get the lines
-            chatLines = (List)ModLoader.getPrivateValue(GuiNewChat.class, Minecraft.getMinecraft().ingameGUI.getChatGUI(), 3);
-            // remove the message (20 most recent chat messages are enough)
-            for(int c = 0; c < 20; c++) {
-                ChatLine line = (ChatLine)chatLines.get(c);
-                if(StringUtils.stripControlCodes(line.getChatLineString()).contains("Your Friends") || StringUtils.stripControlCodes(line.getChatLineString()).contains(" is online") || (StringUtils.stripControlCodes(line.getChatLineString()).contains(" seen ") && (StringUtils.stripControlCodes(line.getChatLineString()).contains(" on ")))) {
-                    chatLines.remove(c);
-                    break;
+        if(!UndercastData.forgeDetected) {
+            try {
+                List chatLines;
+                // get the lines
+                chatLines = (List)ModLoader.getPrivateValue(GuiNewChat.class, Minecraft.getMinecraft().ingameGUI.getChatGUI(), 3);
+                // remove the message (20 most recent chat messages are enough)
+                for(int c = 0; c < 20; c++) {
+                    ChatLine line = (ChatLine)chatLines.get(c);
+                    if(StringUtils.stripControlCodes(line.getChatLineString()).contains("Your Friends") || StringUtils.stripControlCodes(line.getChatLineString()).contains(" is online") || (StringUtils.stripControlCodes(line.getChatLineString()).contains(" seen ") && (StringUtils.stripControlCodes(line.getChatLineString()).contains(" on ")))) {
+                        chatLines.remove(c);
+                        break;
+                    }
                 }
+                // set them back
+                ModLoader.setPrivateValue(GuiNewChat.class, Minecraft.getMinecraft().ingameGUI.getChatGUI(), 3, chatLines);
+            } catch (Exception e) {
+                System.out.println("[UndercastMod]: Getting a private value (chatLines) failed");
+                System.out.println("[UndercastMod]: ERROR: " + e.toString());
             }
-            // set them back
-            ModLoader.setPrivateValue(GuiNewChat.class, Minecraft.getMinecraft().ingameGUI.getChatGUI(), 3, chatLines);
-        } catch (Exception e) {
-            System.out.println("[UndercastMod]: Getting a private value (chatLines) failed");
-            System.out.println("[UndercastMod]: ERROR: " + e.toString());
         }
     }
 }

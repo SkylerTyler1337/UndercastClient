@@ -5,6 +5,7 @@ package net.minecraft.src;
 //You may not remove these comments
 
 import java.awt.image.BufferedImage;
+import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -14,7 +15,10 @@ import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 
+import cpw.mods.fml.common.network.IChatListener;
+
 import net.minecraft.src.Minecraft;
+import undercast.client.ForgeChatListener;
 import undercast.client.PlayTimeCounterThread;
 import undercast.client.UndercastChatHandler;
 import undercast.client.UndercastConfig;
@@ -39,14 +43,13 @@ import undercast.client.update.UndercastUpdaterThread;
 public class mod_Undercast extends BaseMod {
     public final static String MOD_VERSION = "1.6.3";
     public final static String MOD_NAME = "UndercastMod";
-    protected String username = "Not_Found";
     protected Minecraft mc = Minecraft.getMinecraft();
     public static UndercastConfig CONFIG;
     public static boolean brightActive;
     public float brightLevel = (float) 20.0D;
     public float defaultLevel = mc.gameSettings.gammaSetting;
     private PlayTimeCounterThread playTimeCounter;
-    private UndercastKillsHandler achievementHandler;
+    public static UndercastKillsHandler achievementHandler;
     public static UndercastGuiAchievement guiAchievement;
     public static FriendHandler friendHandler;
     private int buttonListSize;
@@ -89,6 +92,20 @@ public class mod_Undercast extends BaseMod {
         
         //get key updates
         UndercastKeybinding.modInstance = this;
+        
+        if(UndercastData.forgeDetected) {
+            // register a Forge Chat Listener
+            try {
+                Class<?> networkRegistry = Class.forName("cpw.mods.fml.common.network.NetworkRegistry");
+                Method getInstance = networkRegistry.getDeclaredMethod("instance", (Class[])null);
+                Object instance = getInstance.invoke(null, (Object[])null);
+                Method registerChatListener = instance.getClass().getDeclaredMethod("registerChatListener", IChatListener.class);
+                registerChatListener.invoke(instance, new ForgeChatListener());
+            } catch(Exception e) {
+                System.out.println("[UndercastMod]: Failed to register Forge Chat Listener");
+                System.out.println("[UndercastMod]: ERROR: " + e.toString());
+            }
+        }
     }
 
     /**
@@ -97,26 +114,8 @@ public class mod_Undercast extends BaseMod {
      * NOTE: only sends none global ares messages
      */
     public void clientChat(String var1) {
-        try {
-            Minecraft mc = ModLoader.getMinecraftInstance();
-            EntityPlayer player = mc.thePlayer;
-            username = mc.thePlayer.username;
-            String messageWithOutJson = ChatMessageComponent.func_111078_c(var1).func_111068_a(true);
-            String message = StringUtils.stripControlCodes(messageWithOutJson);
-            // stop global msg and team chat and whispered messages to go through
-            if(!message.startsWith("<") && !message.startsWith("[Team]") && !message.startsWith("(From ") && !message.startsWith("(To ")&& UndercastData.isOC) {
-                new UndercastChatHandler(message, username, player, messageWithOutJson);
-                if(CONFIG.parseMatchState) {
-                    ServersCommandParser.handleChatMessage(message, messageWithOutJson);
-                }
-                if(CONFIG.showAchievements) {
-                    achievementHandler.handleMessage(message, username, player, messageWithOutJson);
-                }
-            }
-            if(UndercastConfig.showFriends){
-                friendHandler.handleMessage(message);
-            }
-        } catch(Exception e) {
+        if(!UndercastData.forgeDetected) {
+            UndercastCustomMethods.handleChatMessage(var1);
         }
     }
 

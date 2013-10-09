@@ -11,6 +11,7 @@ import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.mod_Undercast;
 
 public class UndercastChatHandler {
+    public boolean returnValue = false;
     public UndercastChatHandler(String message, String username, EntityPlayer player, String unstripedMessage) {
         //Friend tracking Joining.
         if (message.contains(" joined the game")) {
@@ -154,7 +155,11 @@ public class UndercastChatHandler {
         }
         //filters [Tip] messages
         else if (message.startsWith("[Tip]") && mod_Undercast.CONFIG.filterTips) {
-            Minecraft.getMinecraft().ingameGUI.getChatGUI().deleteChatLine(0);
+            if(!UndercastData.forgeDetected) {
+                Minecraft.getMinecraft().ingameGUI.getChatGUI().deleteChatLine(0);
+            } else {
+                returnValue = true;
+            }
         }
         // redirection and lobby detection
         else if(message.contains("Welcome to the Overcast Network")){

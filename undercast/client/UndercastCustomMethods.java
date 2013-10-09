@@ -4,10 +4,12 @@ package undercast.client;
 //You may not claim this to be your own
 //You may not remove these comments
 
+import net.minecraft.src.ChatMessageComponent;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.Minecraft;
 import net.minecraft.src.ChatAllowedCharacters;
 import net.minecraft.src.MathHelper;
+import net.minecraft.src.ModLoader;
 import net.minecraft.src.Packet;
 import net.minecraft.src.StringUtils;
 import net.minecraft.src.mod_Undercast;
@@ -26,6 +28,7 @@ import undercast.client.UndercastData.MatchState;
 import undercast.client.UndercastData.ServerLocation;
 import undercast.client.UndercastData.ServerType;
 import undercast.client.UndercastData.Teams;
+import undercast.client.internetTools.ServersCommandParser;
 import undercast.client.server.UndercastServer;
 
 public class UndercastCustomMethods {
@@ -462,5 +465,41 @@ public class UndercastCustomMethods {
             }
         }
         return false;
+    }
+    
+    /**
+     * Handle the chat message (called by ML & Forge)
+     * @return true if Forge should remove the message
+     */
+    
+    public static boolean handleChatMessage(String msg) {
+        boolean returnValue = false;
+        try {
+            Minecraft mc = ModLoader.getMinecraftInstance();
+            EntityPlayer player = mc.thePlayer;
+            String messageWithOutJson = ChatMessageComponent.func_111078_c(msg).func_111068_a(true);
+            String message = StringUtils.stripControlCodes(messageWithOutJson);
+            // stop global msg and team chat and whispered messages to go through
+            if(!message.startsWith("<") && !message.startsWith("[Team]") && !message.startsWith("(From ") && !message.startsWith("(To ")&& UndercastData.isOC) {
+                if(new UndercastChatHandler(message, mod_Undercast.getUsername(), player, messageWithOutJson).returnValue) {
+                    returnValue = true;
+                }
+                if(UndercastConfig.parseMatchState) {
+                    if(ServersCommandParser.handleChatMessage(message, messageWithOutJson)) {
+                        returnValue = true;
+                    }
+                }
+                if(UndercastConfig.showAchievements) {
+                    mod_Undercast.achievementHandler.handleMessage(message, mod_Undercast.getUsername(), player, messageWithOutJson);
+                }
+            }
+            if(UndercastConfig.showFriends){
+                if(mod_Undercast.friendHandler.handleMessage(message)) {
+                    returnValue = true;
+                }
+            }
+        } catch(Exception e) {
+        }
+        return returnValue;
     }
 }
