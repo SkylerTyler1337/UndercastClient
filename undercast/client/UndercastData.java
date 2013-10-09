@@ -81,7 +81,8 @@ public class UndercastData implements InformationLoaderDelegate, LocationReaderD
     public static MatchTimer matchTimer;
     public static String currentGSClass = "Unknown";
     public static PlayerStats stats;
-    public static Integer[] parsedPages;
+    public static Integer[] parsedPagesUS;
+    public static Integer[] parsedPagesEU;
     public static boolean isObjectiveReload = false;
     public static int coresDifference;
     public static int woolsDifference;
@@ -144,11 +145,14 @@ public class UndercastData implements InformationLoaderDelegate, LocationReaderD
         serverInformation = new UndercastServer[999];
         serverCount = 0;
         filteredServerCount = 0;
-        parsedPages = new Integer[4];
-        parsedPages[0] = 1;
-        parsedPages[1] = 2;
-        parsedPages[2] = 3;
-        parsedPages[3] = -1;
+        parsedPagesUS = new Integer[4];
+        parsedPagesUS[0] = 1;
+        parsedPagesUS[1] = 2;
+        parsedPagesUS[2] = 3;
+        parsedPagesUS[3] = -1;
+        parsedPagesEU = new Integer[2];
+        parsedPagesEU[0] = 1;
+        parsedPagesEU[1] = -1;
         for(int c = 0;c < serverInformation.length; c++) {
             serverInformation[c] = new UndercastServer();
         }

@@ -32,7 +32,8 @@ public class UndercastUpdaterThread extends Thread{
         String readline = "";
         String readline2 = "Could not get update information.";
         String readline3 = "1:2:3:-1";
-        String readline4 = "-1";
+        String readline4 = "1:-1";
+        String readline5 = "-1";
         boolean emergencyParser = false; //If we should use the emergency parser
         errorOccured = false;
         try {
@@ -42,8 +43,9 @@ public class UndercastUpdaterThread extends Thread{
             readline = in.readLine();
             readline2 = in.readLine();
             readline3 = in.readLine();
-            emergencyParser = Boolean.parseBoolean(in.readLine());
             readline4 = in.readLine();
+            emergencyParser = Boolean.parseBoolean(in.readLine());
+            readline5 = in.readLine();
             UndercastData.emergencyParser = emergencyParser;
             UndercastData.latestVersion = readline;
         } catch (Exception e) {
@@ -78,12 +80,24 @@ public class UndercastUpdaterThread extends Thread{
                 for (int c = 0; c < pagesInt.length; c++) {
                     pagesInt[c] = Integer.parseInt(pagesStr[c]);
                 }
-                UndercastData.parsedPages = pagesInt;
+                UndercastData.parsedPagesUS = pagesInt;
+            } catch (Exception e) {
+            }
+        }
+        if (readline4 != null) {
+            try {
+                Integer[] pagesInt;
+                String[] pagesStr = readline4.split("[:]{1}");
+                pagesInt = new Integer[pagesStr.length];
+                for (int c = 0; c < pagesInt.length; c++) {
+                    pagesInt[c] = Integer.parseInt(pagesStr[c]);
+                }
+                UndercastData.parsedPagesEU = pagesInt;
             } catch (Exception e) {
             }
         }
         try {
-        UndercastData.remoteLocationCacheVersion = Integer.parseInt(readline4);
+        UndercastData.remoteLocationCacheVersion = Integer.parseInt(readline5);
         } catch(Exception e) {
         }
         if(ServerLocationReader.compareLocaleAndRemoteVersion()) {

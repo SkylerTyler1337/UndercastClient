@@ -112,8 +112,8 @@ public class ServersCommandParser {
 
             if (castedByMod) {
                 if(message.contains(FIRST_PAGE_TITLE)) {
-                    for (int c = 1; c < UndercastData.parsedPages.length; c++) {
-                        int page = UndercastData.parsedPages[c];
+                    for (int c = 1; c < (UndercastData.isEU ? UndercastData.parsedPagesEU.length : UndercastData.parsedPagesUS.length); c++) {
+                        int page = UndercastData.isEU ? UndercastData.parsedPagesEU[c] : UndercastData.parsedPagesUS[c];
                         if(page < 0) {
                             page = pages + (page + 1); // + 1 is for not removing anything from pages (keep in mind that I'm adding a negative value)
                         }
