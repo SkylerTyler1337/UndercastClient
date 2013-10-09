@@ -94,7 +94,7 @@ public class UndercastData implements InformationLoaderDelegate, LocationReaderD
     public static ArrayList<String> killerList = new ArrayList<String>();
     public static int localLocationCacheVersion = -1;
     public static int remoteLocationCacheVersion = -1;
-    
+    public static boolean forgeDetected = false;
 
     public static boolean guiShowing;
     public static UndercastKeybinding keybind;
@@ -174,6 +174,16 @@ public class UndercastData implements InformationLoaderDelegate, LocationReaderD
             System.out.println("[UndercastMod]: ERROR: " + e.toString());
             e.printStackTrace();
         }
+        // Look for Forge
+        try {
+            Class forgeCommonHandlerClass = Class.forName("cpw.mods.fml.common.FMLCommonHandler");
+
+            if(forgeCommonHandlerClass != null) {
+                this.forgeDetected = true;
+            }
+        } catch(Exception ex) {
+        }
+
         ServerLocationReader.setDelegate((LocationReaderDelegate)this);
         Thread t = new Thread() {
             @Override

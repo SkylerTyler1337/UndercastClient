@@ -77,9 +77,10 @@ public class mod_Undercast extends BaseMod {
 
         achievementHandler = new UndercastKillsHandler();
         guiAchievement = new UndercastGuiAchievement(mc);
-        EnableModloaderGuiAchievement gui = new EnableModloaderGuiAchievement(Minecraft.getMinecraft());
-        Minecraft.getMinecraft().guiAchievement = gui;
-        
+        if(!UndercastData.forgeDetected) {
+            EnableModloaderGuiAchievement gui = new EnableModloaderGuiAchievement(Minecraft.getMinecraft());
+            Minecraft.getMinecraft().guiAchievement = gui;
+        }
         
         friendHandler = new FriendHandler();
 
