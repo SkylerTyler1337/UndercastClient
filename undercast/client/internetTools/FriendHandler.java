@@ -54,8 +54,8 @@ public class FriendHandler {
                 if (!UndercastData.friends.containsKey(friend)) {
                     if (message.contains(" is online on ")) {
                         String server;
-                        if(message.contains(",")) {
-                            if(message.contains(", EU")) {
+                        if (message.contains(",")) {
+                            if (message.contains(", EU")) {
                                 server = message.substring(message.lastIndexOf(" is online on ") + 14, message.indexOf(",")) + UndercastData.locationNames[1];
                             } else {
                                 server = message.substring(message.lastIndexOf(" is online on ") + 14, message.indexOf(",")) + UndercastData.locationNames[0];

@@ -9,6 +9,7 @@ import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -52,6 +53,7 @@ public class mod_Undercast extends BaseMod {
     public static UndercastKillsHandler achievementHandler;
     public static UndercastGuiAchievement guiAchievement;
     public static FriendHandler friendHandler;
+    boolean friendDebugging = false;
     private int buttonListSize;
     private Integer buttonListSizeOfGuiOptions;
     public static boolean enableML = true;
@@ -242,6 +244,20 @@ public class mod_Undercast extends BaseMod {
             if (UndercastConfig.showScore && !UndercastData.isLobby && UndercastData.score != 0) {
                 mc.fontRenderer.drawStringWithShadow((UndercastConfig.lessObstructive ? "Sc: " : "Score: ") + "\u00A79" + UndercastData.score, width, height, 16777215);
                 height += 8;
+            }
+        }
+        
+        if (friendDebugging) {
+            int height2 = 2;
+            for (Iterator<String> ir = UndercastData.friends.keySet().iterator(); ir.hasNext();) {
+                String key = ir.next();
+                String value = UndercastData.friends.get(key);
+                if (value != "offline") {
+                    mc.fontRenderer.drawStringWithShadow("\u00A79" + key + ":" + value, 310, height2, 16777215);
+                } else {
+                    mc.fontRenderer.drawStringWithShadow(key + ":" + value, 310, height2, 16777215);
+                }
+                height2 += 8;
             }
         }
         
