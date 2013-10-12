@@ -249,7 +249,7 @@ public class UndercastData implements InformationLoaderDelegate, LocationReaderD
                     if(UndercastCustomMethods.isSpecialObjective(UndercastData.stats.wools + i)) {
                         SpecialObjectiveLogger.logSpecialObjective(UndercastData.stats.wools + i, "Wool", UndercastData.server , UndercastData.map);
                         if(UndercastConfig.displaySpecialObjectives) {
-                            player.addChatMessage("[UndercastMod] \u00A7lSPECIAL WOOL: \u00A7c" + UndercastData.stats.wools + i);
+                            player.addChatMessage("[UndercastMod] \u00A7lSPECIAL WOOL: \u00A7c" + String.valueOf(UndercastData.stats.wools + i));
                         }
                     }
                     i++;
@@ -259,7 +259,7 @@ public class UndercastData implements InformationLoaderDelegate, LocationReaderD
                     if(UndercastCustomMethods.isSpecialObjective(UndercastData.stats.cores + i)) {
                         SpecialObjectiveLogger.logSpecialObjective(UndercastData.stats.cores + i, "Core", UndercastData.server , UndercastData.map);
                         if(UndercastConfig.displaySpecialObjectives) {
-                            player.addChatMessage("[UndercastMod] \u00A7lSPECIAL CORE: \u00A7c" + UndercastData.stats.cores + i);
+                            player.addChatMessage("[UndercastMod] \u00A7lSPECIAL CORE: \u00A7c" + String.valueOf(UndercastData.stats.cores + i));
                         }
                     }
                     i++;
@@ -269,7 +269,7 @@ public class UndercastData implements InformationLoaderDelegate, LocationReaderD
                     if(UndercastCustomMethods.isSpecialObjective(UndercastData.stats.monuments + i)) {
                         SpecialObjectiveLogger.logSpecialObjective(UndercastData.stats.monuments + i, "Monument", UndercastData.server , UndercastData.map);
                         if(UndercastConfig.displaySpecialObjectives) {
-                            player.addChatMessage("[UndercastMod] \u00A7lSPECIAL MONUMENT: \u00A7c" + UndercastData.stats.monuments + i);
+                            player.addChatMessage("[UndercastMod] \u00A7lSPECIAL MONUMENT: \u00A7c" + String.valueOf(UndercastData.stats.monuments + i));
                         }
                     }
                     i++;
