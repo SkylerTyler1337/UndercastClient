@@ -22,7 +22,7 @@ import net.minecraft.src.ResourceLocation;
 public class UndercastAchievement implements TweenCallback {
 
     private static final ResourceLocation achievementBackground = new ResourceLocation("textures/gui/achievement/achievement_background.png");
-    private static final ResourceLocation ingameWidgets = new ResourceLocation("UndercastMod", "border.png");
+    private static final ResourceLocation ingameWidgets = new ResourceLocation("textures/gui/widgets.png");
     public String killerName;
     public String line1;
     public String line2;
@@ -91,7 +91,7 @@ public class UndercastAchievement implements TweenCallback {
         if (UndercastConfig.displaySkinBorder) {
             // Drawing skin border
             GL11.glColor4f(1.0F, 1.0F, 1.0F, alpha);
-            Minecraft.getMinecraft().func_110434_K().func_110577_a(new ResourceLocation("undercast", "border.png"));
+            Minecraft.getMinecraft().func_110434_K().func_110577_a(ingameWidgets);
             this.drawTexturedModalRect((int) posX + 6, (int) posY + 6, 0, 0, 20, 20);
         }
         // Drawing skin
