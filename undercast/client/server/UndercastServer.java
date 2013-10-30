@@ -22,7 +22,7 @@ public class UndercastServer {
         nextMap = "";
         type = ServerType.Unknown;
         matchState = MatchState.Unknown;
-        location = ServerLocation.Both;
+        location = ServerLocation.US;
     }
 
     public String getServerName() {

@@ -10,7 +10,6 @@ import java.net.URL;
 
 import undercast.client.UndercastConfig;
 import undercast.client.UndercastData;
-import undercast.client.server.ServerLocationReader;
 
 import net.minecraft.src.mod_Undercast;
 
@@ -33,8 +32,6 @@ public class UndercastUpdaterThread extends Thread{
         String readline2 = "Could not get update information.";
         String readline3 = "1:2:3:-1";
         String readline4 = "1:-1";
-        String readline5 = "-1";
-        boolean emergencyParser = false; //If we should use the emergency parser
         errorOccured = false;
         try {
             //download link
@@ -44,9 +41,6 @@ public class UndercastUpdaterThread extends Thread{
             readline2 = in.readLine();
             readline3 = in.readLine();
             readline4 = in.readLine();
-            emergencyParser = Boolean.parseBoolean(in.readLine());
-            readline5 = in.readLine();
-            UndercastData.emergencyParser = emergencyParser;
             UndercastData.latestVersion = readline;
         } catch (Exception e) {
             UndercastData.setUpdate(false);
@@ -97,11 +91,7 @@ public class UndercastUpdaterThread extends Thread{
             }
         }
         try {
-        UndercastData.remoteLocationCacheVersion = Integer.parseInt(readline5);
         } catch(Exception e) {
-        }
-        if(ServerLocationReader.compareLocaleAndRemoteVersion()) {
-            ServerLocationReader.downloadTheLatestVersion();
         }
         finished = true;
     }

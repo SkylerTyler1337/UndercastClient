@@ -321,7 +321,7 @@ public class UndercastCustomMethods {
       // extract the servers
       ArrayList<UndercastServer> filteredServers = new ArrayList<UndercastServer>(UndercastData.serverCount);
       for(int c = 0; c < UndercastData.serverCount; c++) {
-          if((shownType == ServerType.Unknown || UndercastData.sortedServerInformation[c].type == shownType) && ((UndercastData.locationIndex == 0 && UndercastData.sortedServerInformation[c].location == ServerLocation.US) || (UndercastData.locationIndex == 1 && UndercastData.sortedServerInformation[c].location == ServerLocation.EU) || UndercastData.sortedServerInformation[c].location == ServerLocation.Both)) {
+          if((shownType == ServerType.Unknown || UndercastData.sortedServerInformation[c].type == shownType) && ((UndercastData.locationIndex == 0 && UndercastData.sortedServerInformation[c].location == ServerLocation.US) || (UndercastData.locationIndex == 1 && UndercastData.sortedServerInformation[c].location == ServerLocation.EU))) {
               filteredServers.add(UndercastData.sortedServerInformation[c]);
           }
       }
@@ -501,5 +501,16 @@ public class UndercastCustomMethods {
         } catch(Exception e) {
         }
         return returnValue;
+    }
+
+    public static ServerLocation getLocationForString(String s) {
+        if(s == null) {
+            return ServerLocation.US;
+        }
+        if(s.contains("eu") || s.contains("EU") || s.contains("eU") || s.contains("Eu")) {
+            return ServerLocation.EU;
+        } else {
+            return ServerLocation.US;
+        }
     }
 }

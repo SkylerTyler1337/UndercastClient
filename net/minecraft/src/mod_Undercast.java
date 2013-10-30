@@ -206,7 +206,7 @@ public class mod_Undercast extends BaseMod {
                 }
             }
             // Show next map
-            if (CONFIG.showNextMap && !UndercastData.isLobby && !(UndercastData.isEU && UndercastData.currentServerLocation == ServerLocation.Both)) {
+            if (CONFIG.showNextMap && !UndercastData.isLobby) {
                 if (UndercastData.getNextMap() != null) {
                     mc.fontRenderer.drawStringWithShadow((UndercastConfig.lessObstructive ? "N: " : "Next Map: ") + "\u00A7d" + UndercastData.getNextMap(), width, height, 16777215);
                     height += 8;
