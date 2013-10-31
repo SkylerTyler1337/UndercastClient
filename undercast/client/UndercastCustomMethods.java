@@ -287,7 +287,7 @@ public class UndercastCustomMethods {
           // extract the server names to an Array list
           ArrayList<String> serverNames = new ArrayList<String>(UndercastData.serverCount);
           for(int c = 0; c < UndercastData.serverCount; c++) {
-              serverNames.add(c, UndercastData.serverInformation[c].name);
+              serverNames.add(c, UndercastData.serverInformation[c].name + ":" + UndercastData.serverInformation[c].location);
           }
 
           // sort the names
@@ -296,7 +296,7 @@ public class UndercastCustomMethods {
           // put the whole server into order
           for(int c = 0; c < serverNames.size(); c++) {
               for(int i = 0; i < UndercastData.serverCount; i++) {
-                  if(serverNames.get(c).equals(UndercastData.serverInformation[i].name)) {
+                  if(serverNames.get(c).equals(UndercastData.serverInformation[i].name + ":" + UndercastData.serverInformation[i].location)) {
                       UndercastData.sortedServerInformation[c] = UndercastData.serverInformation[i];
                       break;
                   }
